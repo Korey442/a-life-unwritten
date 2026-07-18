@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# secrets — 立ち絵さんPSDやAPIキーは絶対コミットしない
+.env
+.env.local
+*.local
+
+# build output
+dist/
+build/
+
+# 元PSD（別途保管。リポジトリには含めない）
+*.psd
+
+# OS / editor
+.DS_Store
+*.log
+_ignore/
