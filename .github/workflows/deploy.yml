@@ -25,6 +25,9 @@ jobs:
         with:
           node-version: 22 # node --test の glob 展開に必要
           cache: npm
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true # リポジトリのPagesを自動で有効化（設定画面の操作を不要に）
       - run: npm ci
       - run: npm test
       - run: npm run build
