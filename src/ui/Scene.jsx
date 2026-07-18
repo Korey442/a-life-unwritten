@@ -15,7 +15,7 @@ export default function Scene({ world, loading, onCostume }) {
   const p = world.player;
   const presentNpcs = Object.values(world.npcs).filter((n) => n.alive && n.present);
   return (
-    <div style={{ position: "relative", width: 360, height: 470, borderRadius: 14, overflow: "hidden", border: "1px solid #e0dccf", flexShrink: 0, background: "#cdd8e0" }}>
+    <div style={{ position: "relative", width: "min(360px, 100%)", height: 470, borderRadius: 14, overflow: "hidden", border: "1px solid #e0dccf", background: "#cdd8e0", margin: "0 auto" }}>
       <Background hour={world.time.hour} place={world.location} />
       <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 4 }}>
         <Figure src={playerSprite(p)} label={p.name} dim={loading} />
