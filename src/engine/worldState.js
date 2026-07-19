@@ -40,7 +40,7 @@ export function buildWorld(player) {
     // 物語の正典は STORY.md。act=章。異変前は平時。
     story: { act: 1, anomaly: false },
     npcs: {
-      // ミリナ: 主人公のAI。相棒であり最大の謎（立ち絵は未作成のため当面 stranger 素材で代用）。
+      // ミリナ: 主人公のAI。相棒であり最大の謎（立ち絵 assets/chars/npc_milina_*.png）。
       milina: { id: "milina", name: "ミリナ", note: "あなたのAI。何かが違う。", affinity: 55, trust: 45, alive: true, present: true, sprite: "milina", emotion: "neutral" },
       // 遥: 幼馴染。現実側の起点。序盤は不在（別の場所）。
       haruka: { id: "haruka", name: "遥", note: "幼馴染", affinity: 45, trust: 50, alive: true, present: false, sprite: "haruka", emotion: "happy" },
