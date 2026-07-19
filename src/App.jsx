@@ -50,6 +50,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showStats, setShowStats] = useState(false);
+  const [mQuests, setMQuests] = useState(false); // モバイル：クエストのオーバーレイ表示
   const [hasSave, setHasSave] = useState(false);
   const logRef = useRef(null);
 
@@ -141,48 +142,70 @@ export default function App() {
   }
 
   // ---- play ----
+  const offeredCount = (world.quests || []).filter((q) => q.status === "offered").length;
+  const net = inNet(world);
   return (
-    <Shell>
-      <div style={{ maxWidth: 980, margin: "0 auto" }}>
+    <div className="play-shell">
+      <div className="play-status">
         <StatusBar world={world} showStats={showStats} onToggle={() => setShowStats(!showStats)} />
+        {!net && (
+          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: -4 }}>
+            <button className="only-mobile" onClick={() => setMQuests(true)}
+              style={{ padding: "4px 12px", fontSize: 12, borderRadius: 14, border: "1px solid #d8d3c4", background: "#fdfcf8", color: theme.sub, cursor: "pointer", alignItems: "center", gap: 4 }}>
+              クエスト{offeredCount > 0 ? ` (${offeredCount})` : ""}
+            </button>
+          </div>
+        )}
+      </div>
 
-        <div style={{ display: "flex", gap: 16, alignItems: "stretch", flexWrap: "wrap" }}>
+      <div className="play-body">
+        <div className="stage">
           <Scene world={world} loading={loading} onCostume={setCostume} />
+        </div>
 
-          <div style={{ flex: 1, minWidth: 280, display: "flex", flexDirection: "column" }}>
-            <div ref={logRef} style={{ ...logBox, flex: 1 }}>
-              {world.log.map((e, i) => (
-                <div key={i} style={{ marginBottom: 14 }}>
-                  <div style={{ fontSize: 11, color: "#b5af9e", marginBottom: 3 }}>{e.day}日目 {String(e.hour).padStart(2, "0")}:{String(e.minute).padStart(2, "0")}</div>
-                  <div style={{ fontSize: 15, color: e.kind === "deadline" ? "#b5543a" : theme.ink, lineHeight: 1.85, whiteSpace: "pre-wrap" }}>{e.text}</div>
-                </div>
-              ))}
-              {loading && <div style={{ fontSize: 14, color: "#a8a291", fontStyle: "italic" }}>世界が動いている…</div>}
-            </div>
+        <div className="center">
+          <div className="log" ref={logRef} style={{ background: "#fbf9f3", border: "1px solid #e0dccf", borderRadius: 12, padding: 16 }}>
+            {world.log.map((e, i) => (
+              <div key={i} style={{ marginBottom: 14 }}>
+                <div style={{ fontSize: 11, color: "#b5af9e", marginBottom: 3 }}>{e.day}日目 {String(e.hour).padStart(2, "0")}:{String(e.minute).padStart(2, "0")}</div>
+                <div style={{ fontSize: 15, color: e.kind === "deadline" ? "#b5543a" : theme.ink, lineHeight: 1.85, whiteSpace: "pre-wrap" }}>{e.text}</div>
+              </div>
+            ))}
+            {loading && <div style={{ fontSize: 14, color: "#a8a291", fontStyle: "italic" }}>世界が動いている…</div>}
+          </div>
 
+          <div className="controls">
             {error && <div style={{ ...rejBox, borderColor: "#e0b0a0" }}><span style={{ fontSize: 12, color: "#b5543a" }}>{error}</span></div>}
             {rejected.length > 0 && <div style={rejBox}>{rejected.map((r, i) => <div key={i} style={{ fontSize: 12, color: "#9a6a4a" }}>⚠ {r}</div>)}</div>}
-
-            {inNet(world)
+            {net
               ? <NetPanel world={world} onApproach={approach} onRetreat={retreat} />
               : <>
                   <DiveBar world={world} onDive={dive} />
                   <ActionInput onAct={act} loading={loading} />
                 </>}
           </div>
-
-          {!inNet(world) && (
-            <div style={{ width: 300, minWidth: 260, flex: "1 1 260px" }}>
-              <QuestLog world={world} onAccept={accept} onDecline={decline} loading={loading} />
-            </div>
-          )}
         </div>
 
-        <div style={{ textAlign: "center", fontSize: 10, color: "#b5af9e", marginTop: 16 }}>
-          立ち絵素材：立ち絵さん（キャラクター作成セット）／ 世界生成：Claude　·
-          <button onClick={reset} style={{ border: "none", background: "none", color: "#b5af9e", cursor: "pointer", fontSize: 10, textDecoration: "underline" }}>最初から</button>
-        </div>
+        {!net && (
+          <div className="side">
+            <QuestLog world={world} onAccept={accept} onDecline={decline} loading={loading} />
+          </div>
+        )}
       </div>
-    </Shell>
+
+      <div className="footer-credit" style={{ fontSize: 10, color: "#b5af9e" }}>
+        立ち絵素材：立ち絵さん ／ 世界生成：Claude　·
+        <button onClick={reset} style={{ border: "none", background: "none", color: "#b5af9e", cursor: "pointer", fontSize: 10, textDecoration: "underline" }}>最初から</button>
+      </div>
+
+      {mQuests && !net && (
+        <div className="qoverlay" onClick={() => setMQuests(false)}>
+          <div className="qbox" onClick={(e) => e.stopPropagation()}>
+            <QuestLog world={world} onAccept={accept} onDecline={decline} loading={loading} />
+            <button onClick={() => setMQuests(false)} style={{ ...btn(theme.accent), width: "100%", marginTop: 8 }}>閉じる</button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
