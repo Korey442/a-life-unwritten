@@ -6,7 +6,8 @@ import { initSkills } from "./skills.js";
 export const STAT_DEFS = { tain: "体力", chi: "知力", cha: "魅力", dex: "器用さ", act: "行動力" };
 export const EMOTIONS = ["neutral", "happy", "angry", "sad", "shy", "surprise"];
 
-export const SAVE_VERSION = 1;
+// v2: ミリナ登場・物語(story)・ネット層(dive)導入でデータ構造が変わったため繰り上げ（旧セーブは破棄）
+export const SAVE_VERSION = 2;
 
 // キャラメイク回答（effects配列）から初期プレイヤーを構築
 export function buildPlayer(answers, name) {
