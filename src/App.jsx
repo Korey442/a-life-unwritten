@@ -3,12 +3,37 @@ import { buildWorld, buildPlayer, SAVE_VERSION } from "./engine/worldState.js";
 import { runTurn } from "./engine/turn.js";
 import { playerAccept, playerDecline } from "./engine/verify.js";
 import { aiCall } from "./engine/client.js";
+import { startDive, resolveEncounter, endDive, inNet } from "./engine/dungeon.js";
+import { LAYER_LIST } from "./data/layers.js";
 import { CREATION_QUESTIONS } from "./data/creationQuestions.js";
 import Scene from "./ui/Scene.jsx";
 import StatusBar from "./ui/StatusBar.jsx";
 import QuestLog from "./ui/QuestLog.jsx";
+import NetPanel from "./ui/NetPanel.jsx";
 import ActionInput from "./ui/ActionInput.jsx";
 import { Shell, theme, inp, btn, choice, logBox, rejBox } from "./ui/styles.jsx";
+
+// 現実(home)からネット層へ潜る導線。復旧済みの層は印を付ける。
+function DiveBar({ world, onDive }) {
+  return (
+    <div style={{ marginBottom: 10 }}>
+      {LAYER_LIST.map((l) => {
+        const restored = world.flags.includes(`restored:${l.id}`);
+        return (
+          <button key={l.id} onClick={() => onDive(l.id)}
+            style={{ width: "100%", textAlign: "left", padding: "10px 14px", marginBottom: 6, borderRadius: 10, cursor: "pointer",
+              border: "1px solid #24406a", background: "linear-gradient(120deg,#132140,#0e1626)", color: "#dbe6f2" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: 13, fontWeight: 700, color: "#8fd0e6" }}>▶ 接続する — {l.title}</span>
+              {restored && <span style={{ fontSize: 10, color: "#5fd08a" }}>復旧済み</span>}
+            </div>
+            <div style={{ fontSize: 11, color: "#8ba0ba", marginTop: 3 }}>ミリナと共にネットの深部へ潜る（体力を消耗）</div>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 const SAVE_KEY = "a-life-unwritten:save:v1";
 const loadSave = () => { try { const s = JSON.parse(localStorage.getItem(SAVE_KEY)); return s?.saveVersion === SAVE_VERSION ? s : null; } catch { return null; } };
@@ -65,6 +90,19 @@ export default function App() {
   const accept = (id) => { const { world: nw, changed } = playerAccept(world, id); if (changed) setWorld(nw); };
   const decline = (id) => { const { world: nw, changed } = playerDecline(world, id); if (changed) setWorld(nw); };
   const setCostume = (v) => setWorld({ ...world, player: { ...world.player, costume: v } });
+
+  // --- ネット層（ダイブ）---
+  const dive = (layerId) => { const { world: nw, ok } = startDive(world, layerId); if (ok) { setRejected([]); setWorld(nw); } };
+  const approach = (key) => {
+    if (!inNet(world)) return;
+    const { world: nw, result } = resolveEncounter(world, key);
+    if (result?.blocked) { setRejected([result.blocked]); return; }
+    setRejected([]);
+    if (result?.cleared) { setWorld(endDive(nw, "cleared").world); return; }
+    if (result?.defeated) { setWorld(endDive(nw, "defeated").world); return; }
+    setWorld(nw);
+  };
+  const retreat = () => { setWorld(endDive(world, "retreat").world); };
 
   function reset() {
     clearSave(); setWorld(null); setAnswers([]); setQi(0); setName(""); setRejected([]); setHasSave(false); setPhase("intro");
@@ -125,12 +163,19 @@ export default function App() {
             {error && <div style={{ ...rejBox, borderColor: "#e0b0a0" }}><span style={{ fontSize: 12, color: "#b5543a" }}>{error}</span></div>}
             {rejected.length > 0 && <div style={rejBox}>{rejected.map((r, i) => <div key={i} style={{ fontSize: 12, color: "#9a6a4a" }}>⚠ {r}</div>)}</div>}
 
-            <ActionInput onAct={act} loading={loading} />
+            {inNet(world)
+              ? <NetPanel world={world} onApproach={approach} onRetreat={retreat} />
+              : <>
+                  <DiveBar world={world} onDive={dive} />
+                  <ActionInput onAct={act} loading={loading} />
+                </>}
           </div>
 
-          <div style={{ width: 300, minWidth: 260, flex: "1 1 260px" }}>
-            <QuestLog world={world} onAccept={accept} onDecline={decline} loading={loading} />
-          </div>
+          {!inNet(world) && (
+            <div style={{ width: 300, minWidth: 260, flex: "1 1 260px" }}>
+              <QuestLog world={world} onAccept={accept} onDecline={decline} loading={loading} />
+            </div>
+          )}
         </div>
 
         <div style={{ textAlign: "center", fontSize: 10, color: "#b5af9e", marginTop: 16 }}>
