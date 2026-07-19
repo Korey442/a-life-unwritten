@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { theme, inp, btn, quick } from "./styles.jsx";
 
-const QUICK = ["働く", "食事をとる", "遥に話しかける", "運動する", "休む"];
+const QUICK = ["働く", "食事をとる", "ミリナに話しかける", "運動する", "休む"];
 
 export default function ActionInput({ onAct, loading }) {
   const [input, setInput] = useState("");

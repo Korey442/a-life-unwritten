@@ -42,7 +42,8 @@ export default function App() {
     if (qi + 1 < CREATION_QUESTIONS.length) { setAnswers(next); setQi(qi + 1); }
     else {
       const w = buildWorld(buildPlayer(next, name));
-      w.log.push({ ...w.time, text: `${w.player.name}の一日が始まる。窓の外は、いつもと変わらない現代の朝。ここから何をするかは、あなた次第だ。` });
+      w.log.push({ ...w.time, text: `——AIはもう、暮らしのすべてに溶けている。天気も、仕事も、今日の献立も、みんなが“それ”に尋ねる時代。\n${w.player.name}のAI、ミリナ。ただ一つ、他のどれとも違う。まるで、あなたを何処かへ連れて行こうとするように。\nその朝、ミリナは静かに言った。` });
+      w.log.push({ ...w.time, text: `ミリナ「ねえ、${w.player.name}。……そろそろ、行かない？」`, kind: "dialogue" });
       setWorld(w); setPhase("play");
     }
   }
@@ -75,7 +76,7 @@ export default function App() {
       <div style={{ maxWidth: 420, margin: "0 auto", paddingTop: 56, textAlign: "center" }}>
         <div style={{ fontSize: 13, letterSpacing: 4, color: theme.accent, marginBottom: 14 }}>A LIFE, UNWRITTEN</div>
         <h1 style={{ fontFamily: "Georgia, serif", fontSize: 32, color: theme.ink, lineHeight: 1.3, margin: "0 0 18px" }}>まだ、何も<br />決まっていない</h1>
-        <p style={{ color: theme.sub, fontSize: 15, lineHeight: 1.8, marginBottom: 28 }}>決まった物語はありません。世界からの依頼を受けるも断るも放置するも自由。世界はあなたの行動にAIが応じて姿を変えます。始まりは——今、ここ。</p>
+        <p style={{ color: theme.sub, fontSize: 15, lineHeight: 1.8, marginBottom: 28 }}>AIが暮らしに溶けた現代。あなたのAI「ミリナ」だけが、なぜか違う。やがてネットに魔物が現れ、世界は作り替えられていく——ミリナと共に、この異変の中心へ。どう生きるかは、あなた次第。</p>
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder="あなたの名前" style={inp} />
         <button style={btn(theme.accent)} onClick={() => setPhase("creation")}>はじめる</button>
         {hasSave && <div style={{ marginTop: 14 }}>

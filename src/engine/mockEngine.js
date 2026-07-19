@@ -15,11 +15,11 @@ const KEYWORDS = [
   { re: /(話|会|相談|挨拶|声をかけ)/, tags: ["social"], mood: 4, narr: "言葉を交わした。距離が少し縮まった気がする。" },
 ];
 
-// モックが出すクエストのテンプレ（順番に提示）
+// モックが出すクエストのテンプレ（順番に提示）。物語（STORY.md）の異変の予兆に沿う。
 const QUEST_TEMPLATES = [
-  { title: "遥からの頼み事", giverNpcId: "haruka", description: "遥が買い出しを手伝ってほしいという。", objectives: ["商店街へ向かう", "頼まれた品を買う"], deadlineHours: 8, reward: { money: 1500, affinity: { haruka: 8 }, skill: { social: 4 } } },
-  { title: "町の噂を確かめる", giverNpcId: null, description: "近ごろ妙な噂が立っている。真偽を確かめてみては。", objectives: ["噂の出所を探る", "真相を突き止める"], deadlineHours: 24, reward: { money: 800, skill: { study: 5 } } },
-  { title: "見知らぬ依頼", giverNpcId: null, description: "掲示板に貼られた小さな依頼。誰かが困っているらしい。", objectives: ["依頼人に会う", "問題を解決する"], deadlineHours: 12, reward: { money: 2500, skill: { craft: 4 } } },
+  { title: "ミリナの誘い", giverNpcId: "milina", description: "ミリナが“何処か”を指し示す。その言葉の意味を確かめてみては。", objectives: ["ミリナに詳しく尋ねる", "ネットの“ほころび”を確かめる"], deadlineHours: 12, reward: { affinity: { milina: 8 }, skill: { study: 5 } } },
+  { title: "接続の不調", giverNpcId: null, description: "いつものサービスが妙に重い。街でも“繋がらない”という声が増えている。", objectives: ["不調の範囲を調べる", "原因の手がかりを掴む"], deadlineHours: 24, reward: { money: 800, skill: { study: 4 } } },
+  { title: "掲示板の悲鳴", giverNpcId: null, description: "ネットの片隅に、助けを求める断片的な書き込み。誰か——あるいは何かが、困っている。", objectives: ["書き込みの主を追う", "正体に触れる"], deadlineHours: 12, reward: { money: 1500, skill: { craft: 4 } } },
 ];
 
 function pickKeyword(action) {
