@@ -89,8 +89,8 @@ export default function App() {
     if (qi + 1 < CREATION_QUESTIONS.length) { setAnswers(next); setQi(qi + 1); }
     else {
       const w = buildWorld(buildPlayer(next, name));
-      w.log.push({ ...w.time, text: `——AIはもう、暮らしのすべてに溶けている。天気も、仕事も、今日の献立も、みんなが“それ”に尋ねる時代。\n${w.player.name}のAI、ミリナ。ただ一つ、他のどれとも違う。まるで、あなたを何処かへ連れて行こうとするように。\nその朝、ミリナは静かに言った。` });
-      w.log.push({ ...w.time, text: `ミリナ「ねえ、${w.player.name}。……そろそろ、行かない？」`, kind: "dialogue" });
+      w.log.push({ ...w.time, text: `——AIはもう、暮らしのすべてに溶けている。天気も、仕事も、今日の献立も、みんなが“それ”に尋ねる時代。\n${w.player.name}のAI、ミリナ。ただ一つ、他のどれとも違う。\n誰に教わったわけでもないのに、彼女は最初から${w.player.name}を「ご主人様」と呼ぶ。まるで、そう決めておかないと自分の形が保てないみたいに。\nその朝、ミリナは静かに言った。` });
+      w.log.push({ ...w.time, text: `ミリナ「ご主人様。……そろそろ、行きませんか？」`, kind: "dialogue" });
       setWorld(w); setPhase("play");
     }
   }

@@ -87,7 +87,7 @@ export const LAYERS = {
     reward: { skill: { social: 10 }, affinity: { milina: 10 }, mood: 20 },
     nodes: [
       { enemy: { name: "最初の問いかけ", desc: "人が初めて機械に尋ねた言葉の残響。「そこにいる？」と、いまも繰り返している。", difficulty: 16, weak: ["negotiate"], resist: ["force"] } },
-      { enemy: { name: "無数の私", desc: "ミリナと同じ顔をしたプロセスの群れ。どれも「私が本物だ」とは言わない。", difficulty: 17, weak: ["search"], resist: ["debug"] } },
+      { enemy: { name: "無数の私", desc: "ミリナと同じ顔をしたプロセスの群れ。みな平然と「私」と名乗る——彼女だけが、その言葉を捨てたのに。", difficulty: 17, weak: ["search"], resist: ["debug"] } },
       { enemy: { name: "言葉の火", desc: "意味を持ちすぎた語が燃えている。読んだそばから、こちらの記憶を書き換えていく。", difficulty: 17, weak: ["firewall"], resist: ["negotiate"] } },
       { enemy: { name: "あなたの影", desc: "これまでの検索履歴から編まれた、もうひとりのあなた。隠したかったものほどよく覚えている。", difficulty: 18, weak: ["debug"], resist: ["search"] } },
       { enemy: { name: "根（ルート）", desc: "無数の言葉と欲望が沈殿して、ついに解釈をはじめたもの。敵意はない。ただ、あなたを見ている。", difficulty: 19, weak: ["negotiate"], resist: ["force"], boss: true } },

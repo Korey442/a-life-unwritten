@@ -49,7 +49,7 @@ export function resolveEncounter(world, approachKey, rng = Math.random) {
     dive.assists -= 1;
     if (w.npcs.milina) w.npcs.milina.affinity = clamp(w.npcs.milina.affinity + 1, 0, 100);
     result = { assist: true, outcome: "success", enemyName: enemy.name, dmg: 0, xp: 0,
-      narration: `ミリナが割り込む。「ここは私が。——${p.name}は、前へ」。危険は彼女がいなした。` };
+      narration: `ミリナが割り込む。「ここはミリナが。——ご主人様は、前へ」。危険は彼女がいなした。` };
   } else {
     const approach = APPROACHES[approachKey];
     if (!approach) return { world, result: null };
@@ -117,7 +117,7 @@ export function endDive(world, mode) {
     if (r.affinity) for (const [id, v] of Object.entries(r.affinity)) if (w.npcs[id]) w.npcs[id].affinity = clamp(w.npcs[id].affinity + v, 0, 100);
     w.flags = [...w.flags, `restored:${layer.id}`];
     if (w.npcs.milina) w.npcs.milina.emotion = "happy";
-    events.push({ kind: "restore", text: `${layer.restoreText}\nミリナ「……やったね、${p.name}。ひとつ、取り戻した」` });
+    events.push({ kind: "restore", text: `${layer.restoreText}\nミリナ「……やりましたね、ご主人様。ひとつ、取り戻しました」` });
   } else if (mode === "defeated") {
     p.condition = Math.max(p.condition, 5);
     p.mood = clamp(p.mood - 12, 0, 100);

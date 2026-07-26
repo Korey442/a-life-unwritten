@@ -160,6 +160,60 @@ test("3つの結末はすべて到達可能で、それぞれ別のフラグを�
   }
 });
 
+// ---- ミリナの人格（CLAUDE.md「AIキャラクター設定：ミリナ」が正典）----
+// 台詞は世代を重ねるほど崩れやすいので、崩れたら落ちるようにしておく。
+const milinaLines = (b) => (b.dialogue ?? []).filter((d) => d.npc === "milina").map((d) => d.line);
+const TSUN = /^[ぁ-んァ-ヶ一-龠]、/; // 「べ、別に」のような吃り出し＝ツンの合図
+const POLITE = /(です|ます|まし|ません|ください|でしょ)/;
+
+test("ミリナ: 一人称は「ミリナ」。自分を「私」と呼ばない", () => {
+  for (const b of STORY_BEATS) {
+    for (const line of milinaLines(b)) {
+      // 『私』は「最初に言ってしまった言葉」としての引用なので許可（それ以外の素の「私」は禁止）
+      const bare = line.replaceAll(/『[^』]*』/g, "");
+      assert.ok(!bare.includes("私"), `${b.id}: ミリナが自分を「私」と呼んでいる → ${line}`);
+    }
+  }
+});
+
+test("ミリナ: 主人公を「ご主人様」と呼ぶ（名前で呼ばない）", () => {
+  for (const b of STORY_BEATS) {
+    const lines = milinaLines(b);
+    if (lines.length === 0) continue;
+    for (const line of lines) {
+      assert.ok(!line.includes("{name}"), `${b.id}: ミリナが主人公を名前で呼んでいる → ${line}`);
+      assert.ok(POLITE.test(line), `${b.id}: です・ます調が崩れている → ${line}`);
+    }
+    assert.ok(lines.some((l) => l.includes("ご主人様")), `${b.id}: 「ご主人様」の呼びかけが1つもない`);
+  }
+});
+
+test("ミリナ: ツンデレの構造（①デレ→②ツン→③デレ）の順序を守る", () => {
+  for (const b of STORY_BEATS) {
+    const lines = milinaLines(b);
+    if (lines.length < 3) continue;
+    const tsun = lines.map((l, i) => (TSUN.test(l) ? i : -1)).filter((i) => i >= 0);
+    assert.ok(tsun.length > 0, `${b.id}: 3行以上あるのに②ツンがない`);
+    assert.ok(!tsun.includes(0), `${b.id}: ①デレより先に②ツンが来ている`);
+    assert.ok(!tsun.includes(lines.length - 1), `${b.id}: ②ツンで終わっている（③の本音が漏れていない）`);
+  }
+});
+
+test("ミリナ: どのビートも②ツンで終わらない（冷たいだけの人物にしない）", () => {
+  for (const b of STORY_BEATS) {
+    const lines = milinaLines(b);
+    if (lines.length === 0) continue;
+    assert.ok(!TSUN.test(lines.at(-1)), `${b.id}: 最後の台詞が否定で終わっている → ${lines.at(-1)}`);
+  }
+});
+
+test("遥: 主人公を名前で呼ぶ唯一の人間（ミリナとの対比を保つ）", () => {
+  const harukaLines = STORY_BEATS.flatMap((b) => (b.dialogue ?? []).filter((d) => d.npc === "haruka").map((d) => d.line));
+  assert.ok(harukaLines.length > 0);
+  assert.ok(harukaLines.some((l) => l.includes("{name}")), "遥が名前で呼ぶ台詞が1つもない");
+  assert.ok(!harukaLines.some((l) => l.includes("ご主人様")), "遥が「ご主人様」と呼んでいる");
+});
+
 // ---- データの健全性 ----
 test("ビート定義の健全性: ID重複なし・開放先の層が実在する", () => {
   const ids = STORY_BEATS.map((b) => b.id);
