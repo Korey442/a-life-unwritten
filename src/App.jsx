@@ -4,25 +4,29 @@ import { runTurn } from "./engine/turn.js";
 import { playerAccept, playerDecline } from "./engine/verify.js";
 import { aiCall } from "./engine/client.js";
 import { startDive, resolveEncounter, endDive, inNet } from "./engine/dungeon.js";
-import { LAYER_LIST } from "./data/layers.js";
+import { availableLayers, isLayerRestored } from "./data/layers.js";
+import { progressStory, resolveStoryChoice, pendingChoice, actTitle, endingOf } from "./engine/story.js";
 import { CREATION_QUESTIONS } from "./data/creationQuestions.js";
 import Scene from "./ui/Scene.jsx";
 import StatusBar from "./ui/StatusBar.jsx";
 import QuestLog from "./ui/QuestLog.jsx";
 import NetPanel from "./ui/NetPanel.jsx";
 import ActionInput from "./ui/ActionInput.jsx";
+import StoryChoice, { EndingBanner } from "./ui/StoryChoice.jsx";
 import { Shell, theme, inp, btn, choice, logBox, rejBox } from "./ui/styles.jsx";
 
-// 現実(home)からネット層へ潜る導線。復旧済みの層は印を付ける。
+// 現実(home)からネット層へ潜る導線。開放済みの層だけが並ぶ（開放は物語ビートが行う）。
 function DiveBar({ world, onDive }) {
+  const layers = availableLayers(world);
+  if (layers.length === 0) return null;
   return (
     <div style={{ marginBottom: 10 }}>
-      {LAYER_LIST.map((l) => {
-        const restored = world.flags.includes(`restored:${l.id}`);
+      {layers.map((l) => {
+        const restored = isLayerRestored(world, l.id);
         return (
           <button key={l.id} onClick={() => onDive(l.id)}
             style={{ width: "100%", textAlign: "left", padding: "10px 14px", marginBottom: 6, borderRadius: 10, cursor: "pointer",
-              border: "1px solid #24406a", background: "linear-gradient(120deg,#132140,#0e1626)", color: "#dbe6f2" }}>
+              border: "1px solid " + (restored ? "#24406a" : "#356a94"), background: "linear-gradient(120deg,#132140,#0e1626)", color: "#dbe6f2" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span style={{ fontSize: 13, fontWeight: 700, color: "#8fd0e6" }}>▶ 接続する — {l.title}</span>
               {restored && <span style={{ fontSize: 10, color: "#5fd08a" }}>復旧済み</span>}
@@ -31,6 +35,23 @@ function DiveBar({ world, onDive }) {
           </button>
         );
       })}
+    </div>
+  );
+}
+
+// ログ1件。物語ビートは章の断章として、他と見分けがつく形で刻む。
+function LogEntry({ e }) {
+  const isStory = e.kind === "story";
+  return (
+    <div style={{ marginBottom: 14, ...(isStory ? { borderLeft: "2px solid #b3a9d6", paddingLeft: 12 } : null) }}>
+      <div style={{ fontSize: 11, color: "#b5af9e", marginBottom: 3 }}>
+        {e.day}日目 {String(e.hour).padStart(2, "0")}:{String(e.minute).padStart(2, "0")}
+      </div>
+      {isStory && e.title && (
+        <div style={{ fontFamily: "Georgia, serif", fontSize: 15, color: "#6a5fa0", letterSpacing: 1, marginBottom: 5 }}>◆ {e.title}</div>
+      )}
+      <div style={{ fontSize: 15, lineHeight: 1.85, whiteSpace: "pre-wrap",
+        color: e.kind === "deadline" ? "#b5543a" : isStory ? "#3d3a4a" : theme.ink }}>{e.text}</div>
     </div>
   );
 }
@@ -93,17 +114,27 @@ export default function App() {
   const setCostume = (v) => setWorld({ ...world, player: { ...world.player, costume: v } });
 
   // --- ネット層（ダイブ）---
-  const dive = (layerId) => { const { world: nw, ok } = startDive(world, layerId); if (ok) { setRejected([]); setWorld(nw); } };
+  // 地上へ戻った直後は物語を進める（復旧が章・層の開放・メインクエストを動かすため、その場で反応させる）
+  const backHome = (w) => progressStory(w, { max: 2 }).world;
+
+  const dive = (layerId) => {
+    const { world: nw, ok, reason } = startDive(world, layerId);
+    if (!ok) { if (reason) setRejected([reason]); return; }
+    setRejected([]); setWorld(nw);
+  };
   const approach = (key) => {
     if (!inNet(world)) return;
     const { world: nw, result } = resolveEncounter(world, key);
     if (result?.blocked) { setRejected([result.blocked]); return; }
     setRejected([]);
-    if (result?.cleared) { setWorld(endDive(nw, "cleared").world); return; }
-    if (result?.defeated) { setWorld(endDive(nw, "defeated").world); return; }
+    if (result?.cleared) { setWorld(backHome(endDive(nw, "cleared").world)); return; }
+    if (result?.defeated) { setWorld(backHome(endDive(nw, "defeated").world)); return; }
     setWorld(nw);
   };
-  const retreat = () => { setWorld(endDive(world, "retreat").world); };
+  const retreat = () => { setWorld(backHome(endDive(world, "retreat").world)); };
+
+  // 物語の選択を確定（非可逆）
+  const chooseStory = (choiceId) => { const { world: nw, ok } = resolveStoryChoice(world, choiceId); if (ok) setWorld(nw); };
 
   function reset() {
     clearSave(); setWorld(null); setAnswers([]); setQi(0); setName(""); setRejected([]); setHasSave(false); setPhase("intro");
@@ -144,10 +175,12 @@ export default function App() {
   // ---- play ----
   const offeredCount = (world.quests || []).filter((q) => q.status === "offered").length;
   const net = inNet(world);
+  const pending = pendingChoice(world); // 物語の選択待ち（終章）
+  const ending = endingOf(world);
   return (
     <div className="play-shell">
       <div className="play-status">
-        <StatusBar world={world} showStats={showStats} onToggle={() => setShowStats(!showStats)} />
+        <StatusBar world={world} chapter={actTitle(world)} showStats={showStats} onToggle={() => setShowStats(!showStats)} />
         {!net && (
           <div style={{ display: "flex", justifyContent: "flex-end", marginTop: -4 }}>
             <button className="only-mobile" onClick={() => setMQuests(true)}
@@ -165,12 +198,7 @@ export default function App() {
 
         <div className="center">
           <div className="log" ref={logRef} style={{ background: "#fbf9f3", border: "1px solid #e0dccf", borderRadius: 12, padding: 16 }}>
-            {world.log.map((e, i) => (
-              <div key={i} style={{ marginBottom: 14 }}>
-                <div style={{ fontSize: 11, color: "#b5af9e", marginBottom: 3 }}>{e.day}日目 {String(e.hour).padStart(2, "0")}:{String(e.minute).padStart(2, "0")}</div>
-                <div style={{ fontSize: 15, color: e.kind === "deadline" ? "#b5543a" : theme.ink, lineHeight: 1.85, whiteSpace: "pre-wrap" }}>{e.text}</div>
-              </div>
-            ))}
+            {world.log.map((e, i) => <LogEntry key={i} e={e} />)}
             {loading && <div style={{ fontSize: 14, color: "#a8a291", fontStyle: "italic" }}>世界が動いている…</div>}
           </div>
 
@@ -179,10 +207,14 @@ export default function App() {
             {rejected.length > 0 && <div style={rejBox}>{rejected.map((r, i) => <div key={i} style={{ fontSize: 12, color: "#9a6a4a" }}>⚠ {r}</div>)}</div>}
             {net
               ? <NetPanel world={world} onApproach={approach} onRetreat={retreat} />
-              : <>
-                  <DiveBar world={world} onDive={dive} />
-                  <ActionInput onAct={act} loading={loading} />
-                </>}
+              : pending
+                ? <StoryChoice pending={pending} onChoose={chooseStory} loading={loading} />
+                : <>
+                    {/* 結末に到達しても世界は回り続ける（強制的に終わらせない） */}
+                    {ending && <div style={{ marginBottom: 10 }}><EndingBanner label={ending} /></div>}
+                    <DiveBar world={world} onDive={dive} />
+                    <ActionInput onAct={act} loading={loading} />
+                  </>}
           </div>
         </div>
 

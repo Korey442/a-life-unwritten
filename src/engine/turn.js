@@ -1,7 +1,8 @@
-// 1ターンのオーケストレーション: L4 tick → L3 生成 → L2 検証適用 → L4 締切処理。
+// 1ターンのオーケストレーション: L4 tick → L3 生成 → L2 検証適用 → L4 締切処理 → L4 物語進行。
 // aiCall を注入可能にして、AI無しでも（モックで）テストできる。
 import { tick, markOffered, processDeadlines } from "./pacing.js";
 import { verifyApply } from "./verify.js";
+import { progressStory } from "./story.js";
 
 export async function runTurn(world, action, aiCall) {
   // L4: ターンを進める（クールダウン等の基準）
@@ -28,5 +29,8 @@ export async function runTurn(world, action, aiCall) {
     };
   }
 
-  return { world: finalWorld, rejected, deadlineEvents: events, res };
+  // L4: 物語を進める（決定論）。条件を満たしたビートが1件だけ発火し、章・層の開放・メインクエストを動かす。
+  const { world: afterStory, fired } = progressStory(finalWorld);
+
+  return { world: afterStory, rejected, deadlineEvents: events, storyBeats: fired, res };
 }

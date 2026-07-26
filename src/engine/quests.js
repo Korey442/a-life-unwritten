@@ -44,6 +44,9 @@ export function makeQuest(spec, time) {
     deadline: normalizeDeadline(spec.deadline),
     progress: 0,
     reward: normalizeReward(spec.reward),
+    // main:true = 物語（data/story.js）が発行する背骨のクエスト。L4の提示枠には数えない。
+    // AI(L3)の offer からは verify 側で必ず false に落とす（枠の迂回を防ぐ）。
+    main: !!spec.main,
     tags: Array.isArray(spec.tags) ? spec.tags.slice(0, 4) : [],
     createdAt: { ...time },
     resolvedAt: null,
@@ -79,6 +82,9 @@ export const byStatus = (world, status) => (world.quests || []).filter((q) => q.
 export const offered = (world) => byStatus(world, STATUS.OFFERED);
 export const active = (world) => byStatus(world, STATUS.ACTIVE);
 export const openQuests = (world) => (world.quests || []).filter((q) => OPEN_STATUSES.includes(q.status));
+// 提示上限の対象（メインクエストは物語の背骨なので枠外）
+export const openSideQuests = (world) => openQuests(world).filter((q) => !q.main);
+export const offeredSide = (world) => offered(world).filter((q) => !q.main);
 export const findQuest = (world, id) => (world.quests || []).find((q) => q.id === id) || null;
 
 export function allObjectivesDone(q) {

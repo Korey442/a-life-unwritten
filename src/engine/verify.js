@@ -102,11 +102,12 @@ function applyOffers(w, offers, rejected) {
   for (const spec of offers) {
     if (slots <= 0) { rejected.push("提示枠を超えたクエストは見送られた。"); break; }
     if (!spec || typeof spec !== "object") continue;
+    // AIはメインクエスト（物語の背骨）を作れない。main を騙って提示枠を迂回させない。
+    let s = { ...spec, main: false };
     // 依頼主が無効なら紐付けを外す（クエスト自体は生かす）
-    let s = spec;
     if (spec.giverNpcId && !(w.npcs[spec.giverNpcId]?.alive)) {
       rejected.push(`依頼主が不明なため、クエスト「${spec.title ?? "?"}」は依頼主なしで提示された。`);
-      s = { ...spec, giverNpcId: null };
+      s.giverNpcId = null;
     }
     const quest = makeQuest(s, w.time);
     if (openTitles.has(quest.title) || findQuest(w, quest.id)) {
@@ -158,7 +159,8 @@ function applyFails(w, fails, rejected) {
 }
 
 // 報酬を検証済みチャネルで適用（達成時のみ）。money/affinity/skill。
-function applyReward(w, reward, rejected) {
+// 物語(engine/story.js)のクエスト達成もこの同じチャネルを通す＝報酬の入口を一本化する。
+export function applyReward(w, reward, rejected) {
   if (!reward) return;
   if (Number.isFinite(Number(reward.money))) w.money = Math.max(0, w.money + Math.round(Number(reward.money)));
   if (reward.affinity) {

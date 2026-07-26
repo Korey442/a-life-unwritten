@@ -1,7 +1,7 @@
 // ネット層（ダンジョン）の状態機械。現実↔ネットのダイブ、ノード進行、遭遇解決。
 // 判定は決定論的（checks.js）＝AI不要で遊べる芯。世界は非破壊で更新する。
 import { clamp, advance } from "./time.js";
-import { LAYERS } from "../data/layers.js";
+import { LAYERS, isLayerUnlocked } from "../data/layers.js";
 import { APPROACHES, skillCheck } from "./checks.js";
 
 export const DIVE = { TIME_PER_NODE: 20, ASSISTS: 2 };
@@ -16,11 +16,12 @@ export const currentEnemy = (w) => currentNode(w)?.enemy ?? null;
 export const diveProgress = (w) => (inNet(w) ? { index: w.dive.index, total: w.dive.nodes.length } : null);
 
 // 現実(home)からダイブ開始。ミリナが扉を開く。
+// 層の開放は物語ビート（data/story.js）が flag `unlocked:<id>` を立てて行う＝物語より先へは潜れない。
 export function startDive(world, layerId) {
   const layer = LAYERS[layerId];
   if (!layer || world.location !== "home") return { world, ok: false };
+  if (!isLayerUnlocked(world, layerId)) return { world, ok: false, reason: "その層への扉は、まだ開いていない。" };
   const w = structuredClone(world);
-  w.story = { ...(w.story || {}), anomaly: true };
   w.location = "net";
   w.dive = {
     layerId, title: layer.title,

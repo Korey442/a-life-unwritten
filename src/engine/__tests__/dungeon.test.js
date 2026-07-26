@@ -5,7 +5,12 @@ import { skillCheck, successOdds, APPROACHES, PARTIAL_BAND } from "../checks.js"
 import { startDive, resolveEncounter, endDive, inNet, currentEnemy, diveProgress, DIVE } from "../dungeon.js";
 import { LAYERS } from "../../data/layers.js";
 
-const world = () => buildWorld(buildPlayer([], "テスト"));
+// 層の開放は物語ビートが行う（flag `unlocked:<id>`）。ダンジョン単体のテストでは直接立てる。
+const world = () => {
+  const w = buildWorld(buildPlayer([], "テスト"));
+  w.flags.push("unlocked:sns_ruins");
+  return w;
+};
 const fixedRng = (v) => () => v; // dice = 1 + floor(v*10)
 
 // ---- checks ----
@@ -27,13 +32,22 @@ test("successOdds: 0〜100%を返し、難度が上がると下がる", () => {
 });
 
 // ---- dive lifecycle ----
-test("startDive: home→net、dive状態と anomaly が立つ", () => {
+test("startDive: home→net、dive状態が立つ", () => {
   const { world: w, ok } = startDive(world(), "sns_ruins");
   assert.equal(ok, true);
   assert.ok(inNet(w));
-  assert.equal(w.story.anomaly, true);
   assert.equal(currentEnemy(w).name, LAYERS.sns_ruins.nodes[0].enemy.name);
   assert.ok(w.flags.includes("dived_once"));
+});
+
+test("startDive: 未開放の層には潜れない（物語より先へは進めない）", () => {
+  const w0 = buildWorld(buildPlayer([], "テスト")); // 開放フラグなし
+  const { world: w, ok, reason } = startDive(w0, "sns_ruins");
+  assert.equal(ok, false);
+  assert.equal(inNet(w), false);
+  assert.ok(reason);
+  // 開放済みでも、別の層はまだ閉じている
+  assert.equal(startDive(world(), "core_root").ok, false);
 });
 
 test("resolveEncounter: 成功で前進、失敗は留まり体力が減る", () => {

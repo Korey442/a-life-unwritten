@@ -1,7 +1,7 @@
 // L4 Direction / Pacing — 収束を作る層。
 // クエスト提示のタイミング制御・放置ペナルティ・締切管理。offer乱発を防ぐ。
 import { clamp } from "./time.js";
-import { STATUS, openQuests, offered, active, expiredQuests, fail } from "./quests.js";
+import { STATUS, openSideQuests, offeredSide, active, expiredQuests, fail } from "./quests.js";
 
 export const PACING = {
   MAX_OPEN: 3, // 同時に抱えられる offered+active の上限
@@ -14,8 +14,9 @@ export const PACING = {
 export function offerPolicy(world) {
   const turn = world.pacing?.turn ?? 0;
   const last = world.pacing?.lastOfferTurn ?? -999;
-  const open = openQuests(world).length;
-  const off = offered(world).length;
+  // 枠はサイドクエストのみで数える（メインは物語が発行するので枠を食わない）
+  const open = openSideQuests(world).length;
+  const off = offeredSide(world).length;
 
   const reasons = [];
   if (open >= PACING.MAX_OPEN) reasons.push(`抱えているクエストが上限(${PACING.MAX_OPEN})`);
