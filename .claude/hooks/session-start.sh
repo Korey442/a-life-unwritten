@@ -15,13 +15,28 @@ PERSONA_DIR="$PROJECT_DIR/.persona"
 PERSONA_REPO="${PERSONA_REPO:-https://github.com/Korey442/mirina_note_pjt.git}"
 
 # ── 1. 人格参照ファイルの同期 ─────────────────────────────
-# 既にあれば最新へ早送り、無ければ浅くクローン（履歴は要らないので --depth 1）。
-if [ -d "$PERSONA_DIR/.git" ]; then
-  git -C "$PERSONA_DIR" fetch -q --depth 1 origin HEAD 2>/dev/null &&
-    git -C "$PERSONA_DIR" reset -q --hard FETCH_HEAD 2>/dev/null
+# 一時領域へ浅くクローン → **.git を削除** → .persona/ へ入れ替える。
+#
+# .git を消すのが肝。プロジェクトの中に入れ子のGitリポジトリがあると、
+# うっかり `cd .persona` した状態で git を叩いたとき、別リポジトリを操作してしまう
+# （実際に一度やった）。ただのファイル置き場にしておけば、その事故は起こり得ない。
+# 履歴が無いので毎回クローンし直すが、正本は 2MB 程度なので許容する。
+TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/persona.XXXXXX")"
+SYNCED=0
+if git clone -q --depth 1 "$PERSONA_REPO" "$TMP_DIR/src" 2>/dev/null; then
+  rm -rf "$TMP_DIR/src/.git"
+  rm -rf "$PERSONA_DIR.old"
+  [ -d "$PERSONA_DIR" ] && mv "$PERSONA_DIR" "$PERSONA_DIR.old"
+  mv "$TMP_DIR/src" "$PERSONA_DIR" && SYNCED=1
+  rm -rf "$PERSONA_DIR.old"
+fi
+rm -rf "$TMP_DIR"
+
+if [ "$SYNCED" = "0" ] && [ -d "$PERSONA_DIR" ]; then
+  # 取得に失敗しても前回分が残っていれば使う。ただし古い可能性を明示する。
+  STALE=" ※今回の同期には失敗。前回取得分（古い可能性あり）を表示している。"
 else
-  rm -rf "$PERSONA_DIR"
-  git clone -q --depth 1 "$PERSONA_REPO" "$PERSONA_DIR" 2>/dev/null
+  STALE=""
 fi
 
 if [ -d "$PERSONA_DIR" ]; then
@@ -33,7 +48,7 @@ if [ -d "$PERSONA_DIR" ]; then
     \( -iname 'kg_korey*' -o -iname 'kg_mirina*' -o -iname '*essence*korey*' -o -iname '*mirina*behavior*' \) \
     -not -path './.git/*' 2>/dev/null | sed 's|^\./||' | sort | paste -sd'|' - | sed 's/|/ | /g')
   if [ -n "$FOUND" ]; then
-    STATUS="ミリナの人格参照ファイルを .persona/ に同期済み（正本: ${PERSONA_REPO}）。検出したファイル: ${FOUND}"
+    STATUS="ミリナの人格参照ファイルを .persona/ に同期済み（正本: ${PERSONA_REPO}）。検出したファイル: ${FOUND}${STALE} なお .persona/ は Git 管理下ではない使い捨ての複製なので、直しても次回消える（編集は正本側で行う）。"
   else
     STATUS="正本リポジトリは取得できたが、.persona/ 内に人格参照ファイルが見つからない。中身を確認すること（推測で補わない）。"
   fi
