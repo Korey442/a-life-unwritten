@@ -18,7 +18,7 @@ function DigitalFigure({ src, label, dim, offline }) {
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end", alignItems: "center", transition: "opacity .3s", opacity: dim ? 0.75 : 1 }}>
       <div style={{
-        position: "relative", height: "70%", aspectRatio: "176 / 356", maxWidth: "42%", borderRadius: 20, padding: 5,
+        position: "relative", height: "60%", aspectRatio: "9 / 16", borderRadius: 20, padding: 5,
         background: "linear-gradient(160deg,#1b1f2e,#0c0e16)",
         boxShadow: "0 6px 16px rgba(0,0,0,.35), 0 0 18px rgba(96,180,220,.35)", border: "1px solid #2b3350",
       }}>
