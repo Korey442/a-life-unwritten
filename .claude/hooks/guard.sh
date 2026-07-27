@@ -5,19 +5,28 @@
 #   - 元に戻せる操作（読み取り・リポジトリ内の編集・テスト実行など）は自動で許可し、
 #     承認ウインドウを出さない。承認待ちで止まらなければ、やり直しによる浪費も起きない。
 #   - 取り返しのつかない操作だけ ask にし、「何をどうする操作か」を日本語で添える。
-#     ご主人様が中身を読まずにOKを押さざるを得ない状況を作らないこと自体が目的。
+#     中身を読まずにOKを押さざるを得ない状況を作らないこと自体が目的。
 #   - 明確に事故でしかないものだけ deny。
+#
+# 設置場所:
+#   ~/.claude/hooks/guard.sh  … そのユーザーの全プロジェクトに適用（推奨）
+#   <repo>/.claude/hooks/     … そのリポジトリだけ（クラウドセッションにも付いていく）
+#   このスクリプトは特定のリポジトリに依存しない。プロジェクト固有のルールは
+#   <repo>/.claude/guard.local.sh に置くと自動で読み込まれる。
 #
 # 限界（承知の上で使うこと）:
 #   これは「事故」を止める仕組みであって、悪意ある回避を防ぐものではない。
 #   eval / bash -c / xargs 経由などは中身まで解析できないため、まとめて ask に落とす。
-#   一覧に無いコマンドは自動で許可される。危険なものに気づいたら DANGER に足すこと。
+#   一覧に無いコマンドは自動で許可される。危険なものに気づいたら足すこと。
 
 set -uo pipefail
 
 input=$(cat)
 tool=$(printf '%s' "$input" | jq -r '.tool_name // ""')
-repo="${CLAUDE_PROJECT_DIR:-/home/user/a-life-unwritten}"
+
+# 対象リポジトリ。Claude Code が渡す CLAUDE_PROJECT_DIR を優先し、無ければ git から引く。
+repo="${CLAUDE_PROJECT_DIR:-}"
+[ -z "$repo" ] && repo=$(git rev-parse --show-toplevel 2>/dev/null || true)
 
 # allow は理由を出さない（UIを汚さない）。ask/deny は理由を必ず添える。
 allow() {
@@ -51,25 +60,68 @@ passthrough() { exit 0; }
 
 has() { printf '%s' "$cmd" | grep -Eq "$1"; }
 
+# ── 入力の取り出し（ルール読み込み前に済ませる）────────────────
+cmd=""; path=""; detail="操作: ${tool}"
+
+if [ "$tool" = "Bash" ]; then
+  raw=$(printf '%s' "$input" | jq -r '.tool_input.command // ""')
+  detail="コマンド: $(printf '%s' "$raw" | head -c 300)"
+
+  # ヒアドキュメントの本文は「データ」であって実行される命令ではない。
+  # 判定対象から外さないと、危険な操作を *説明した文章*（コミットメッセージ、
+  # ドキュメント、このガード自体の解説）が誤って引っかかる。実際に起きた。
+  # ※ 本文をシェルに食わせる `bash <<EOF` 形式は下の「解析できない実行形態」で拾う。
+  cmd=$(printf '%s' "$raw" | awk '
+    BEGIN { skip = 0; delim = "" }
+    skip == 1 {
+      line = $0; sub(/[ \t]+$/, "", line)
+      if (line == delim) skip = 0
+      next
+    }
+    {
+      if (match($0, /<<-?[ \t]*[^ \t|;&<>]+/)) {
+        d = substr($0, RSTART, RLENGTH)
+        sub(/^<<-?[ \t]*/, "", d)
+        gsub(/[^A-Za-z0-9_]/, "", d)
+        if (d != "") { delim = d; skip = 1 }
+      }
+      print
+    }')
+fi
+
 case "$tool" in
-  # ── 読み取り専用・副作用なし ────────────────────────────────
+  Edit|Write|NotebookEdit)
+    path=$(printf '%s' "$input" | jq -r '.tool_input.file_path // ""')
+    detail="対象: ${path}"
+    ;;
+esac
+
+# git は `git -C <path>` 形式で呼ばれることが多く、"git" とサブコマンドの間に
+# オプションが挟まる。ここを吸収する接頭辞。素の `git push` にも一致する。
+G='git([[:space:]]+-[[:alnum:]-]+([[:space:]]+[^[:space:]]+)?)*[[:space:]]+'
+
+# ── プロジェクト固有ルール ──────────────────────────────────
+# <repo>/.claude/guard.local.sh があれば先に評価する。
+# その中では allow / ask / deny / has / $cmd / $path / $tool / $G が使える。
+if [ -n "$repo" ] && [ -f "$repo/.claude/guard.local.sh" ]; then
+  . "$repo/.claude/guard.local.sh"
+fi
+
+# ── 汎用ルール ──────────────────────────────────────────────
+case "$tool" in
+  # 読み取り専用・副作用なし
   Read|Grep|Glob|NotebookRead|ToolSearch|WebFetch|WebSearch|Skill|TodoWrite|\
   TaskCreate|TaskUpdate|TaskList|TaskGet|AskUserQuestion)
     allow
     ;;
 
-  # ── ファイル編集 ───────────────────────────────────────────
+  # ファイル編集
   Edit|Write|NotebookEdit)
-    path=$(printf '%s' "$input" | jq -r '.tool_input.file_path // ""')
-    detail="対象: ${path}"
     case "$path" in
-      "$repo"/.persona/*)
-        deny "使い捨て複製への書き込み" \
-             ".persona/ は次回のセッション開始時に正本から上書きされるため、ここへの変更は必ず失われる。編集するなら正本リポジトリ mirina_note_pjt 側。" ;;
-      "$repo"/.claude/*)
+      "${repo:-__none__}"/.claude/*)
         ask "ガード設定そのものの変更" \
             "承認ルール（このガード）やフックの挙動が変わる。安全網を緩める変更でないか確認を。" ;;
-      "$repo"/*)
+      "${repo:-__none__}"/*)
         allow ;;   # リポジトリ内 = git で復元できる
       *)
         ask "リポジトリ外のファイルへの書き込み" \
@@ -77,44 +129,11 @@ case "$tool" in
     esac
     ;;
 
-  # ── シェル ────────────────────────────────────────────────
+  # シェル
   Bash)
-    raw=$(printf '%s' "$input" | jq -r '.tool_input.command // ""')
-    # 表示は元のまま。長すぎる場合だけ切る（承認画面を読めるものにするため）
-    detail="コマンド: $(printf '%s' "$raw" | head -c 300)"
-
-    # ヒアドキュメントの本文は「データ」であって実行される命令ではない。
-    # 判定対象から外さないと、危険な操作を *説明した文章*（コミットメッセージ、
-    # ドキュメント、このガード自体の解説）が誤って引っかかる。実際に起きた。
-    # ※ 本文をシェルに食わせる `bash <<EOF` 形式は下の「解析できない実行形態」で拾う。
-    cmd=$(printf '%s' "$raw" | awk '
-      BEGIN { skip = 0; delim = "" }
-      skip == 1 {
-        line = $0; sub(/[ \t]+$/, "", line)
-        if (line == delim) skip = 0
-        next
-      }
-      {
-        if (match($0, /<<-?[ \t]*[^ \t|;&<>]+/)) {
-          d = substr($0, RSTART, RLENGTH)
-          sub(/^<<-?[ \t]*/, "", d)
-          gsub(/[^A-Za-z0-9_]/, "", d)
-          if (d != "") { delim = d; skip = 1 }
-        }
-        print
-      }')
-
-    # CLAUDE.md の規約により git は常に `git -C <path>` 形式で呼ばれる。
-    # そのため "git" と サブコマンド の間に必ずオプションが挟まる。ここを吸収する接頭辞。
-    G='git([[:space:]]+-[[:alnum:]-]+([[:space:]]+[^[:space:]]+)?)*[[:space:]]+'
-
     # ---- 拒否: 事故以外にありえないもの ----
     if has '(^|[^[:alnum:]_-])rm[[:space:]]+(-[[:alnum:]-]+[[:space:]]+)*(/|~|\$HOME|\$\{HOME\})([[:space:]]|$)'; then
       deny "ルート/ホームディレクトリの削除" "作業環境ごと破壊される。"
-    fi
-    if has "${G}"'(add|commit)[^&|;]*\.persona'; then
-      deny ".persona/ を Git に載せる操作" \
-           "CLAUDE.md の規約で禁止。人格ファイルの正本は別リポジトリで、複製をコミットすると二重管理になる。"
     fi
     if has "${G}"'push[^&|;]*(--force|--force-with-lease|[[:space:]]-f([[:space:]]|$))[^&|;]*(main|master)([[:space:]]|$)'; then
       deny "main/master への強制プッシュ" "共有ブランチの履歴が消える。他の作業も巻き込む。"
@@ -122,7 +141,7 @@ case "$tool" in
 
     # ---- 要確認: 取り返しがつかない / 外に出る ----
     has "${G}"'push' && \
-      ask "リモートへのプッシュ" "GitHub 上のブランチが更新される。公開されたものは取り消しても記録に残る。"
+      ask "リモートへのプッシュ" "リモートのブランチが更新される。公開されたものは取り消しても記録に残る。"
     has "${G}"'reset[^&|;]*--hard' && \
       ask "作業内容の破棄 (reset --hard)" "コミットしていない変更が完全に消える。git では復元できない。"
     has "${G}"'(clean[^&|;]*-[[:alnum:]]*f|checkout[[:space:]]+--[[:space:]]|restore([[:space:]]|$))' && \
@@ -150,14 +169,13 @@ case "$tool" in
     allow
     ;;
 
-  # ── MCP: 読み取りは通し、外部に影響するものは確認 ─────────
-  mcp__github__*|mcp__Claude_Code_Remote__*)
-    detail="操作: ${tool}"
+  # MCP: 読み取りは通し、外部に影響するものは確認
+  mcp__*)
     case "$tool" in
       *_get*|*_list*|*_search*|*_read*|*get_me*)
         allow ;;
       *create_pull_request*|*merge*|*push_files*|*issue_write*|*comment*|*review*|*create_or_update_file*|*delete_file*)
-        ask "GitHub 上での外部に見える操作" \
+        ask "外部に見える操作" \
             "他の人から見える場所に反映される。通知も飛ぶため、取り消しても見られた事実は残る。" ;;
       *add_repo*|*register_repo_root*)
         ask "リポジトリをセッションに追加" "このセッションから読み書きできる範囲が広がる。" ;;
