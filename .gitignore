@@ -13,6 +13,10 @@ build/
 # 元PSD（別途保管。リポジトリには含めない）
 *.psd
 
+# ミリナの人格参照ファイル（正本は mirina_note_pjt。SessionStartフックが毎回同期する）
+# 実体をここにコミットしないこと——正本が二箇所になると必ず片方が古くなる
+.persona/
+
 # OS / editor
 .DS_Store
 *.log
