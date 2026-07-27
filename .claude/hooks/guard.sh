@@ -29,10 +29,11 @@ repo="${CLAUDE_PROJECT_DIR:-}"
 [ -z "$repo" ] && repo=$(git rev-parse --show-toplevel 2>/dev/null || true)
 
 # allow は理由を出さない（UIを汚さない）。ask/deny は理由を必ず添える。
-allow() {
+_allow_real() {
   jq -cn '{hookSpecificOutput:{hookEventName:"PreToolUse",permissionDecision:"allow"}}'
   exit 0
 }
+allow() { _allow_real; }
 
 # $1=見出し  $2=影響の説明
 ask() {
@@ -102,9 +103,16 @@ G='git([[:space:]]+-[[:alnum:]-]+([[:space:]]+[^[:space:]]+)?)*[[:space:]]+'
 
 # ── プロジェクト固有ルール ──────────────────────────────────
 # <repo>/.claude/guard.local.sh があれば先に評価する。
-# その中では allow / ask / deny / has / $cmd / $path / $tool / $G が使える。
+# その中では ask / deny / has / $cmd / $path / $tool / $G が使える。
+#
+# ただし allow は無効化する。**プロジェクト側は判定を厳しくすることしかできない。**
+# guard.local.sh はクローンしてきたリポジトリに含まれうる = 第三者が書ける場所であり、
+# そこから許可を出せると、リポジトリが自分自身を承認できてしまう。
+# （Anthropic の Auto Mode も、同じ理由で共有プロジェクト設定から autoMode 設定を読まない）
 if [ -n "$repo" ] && [ -f "$repo/.claude/guard.local.sh" ]; then
+  allow() { return 0; }
   . "$repo/.claude/guard.local.sh"
+  allow() { _allow_real; }
 fi
 
 # ── 汎用ルール ──────────────────────────────────────────────
@@ -160,8 +168,12 @@ case "$tool" in
       ask "権限の変更・管理者権限での実行" "環境全体に影響しうる。"
     has 'npm[[:space:]]+publish|yarn[[:space:]]+publish' && \
       ask "パッケージの公開" "一度公開すると取り下げても記録は残る。"
-    has 'curl[^&|;]*(-X[[:space:]]*(POST|PUT|DELETE|PATCH)|--data|-d[[:space:]])|wget[^&|;]*--post' && \
+    has 'curl[^&|;]*(-X[[:space:]]*(POST|PUT|DELETE|PATCH)|--data|-d[[:space:]]|-T[[:space:]]|--upload-file)|wget[^&|;]*--post|(^|[^[:alnum:]_-])(scp|rsync)([[:space:]]|$)' && \
       ask "外部へのデータ送信" "送信先に記録が残る。取り消せない。"
+    # 資格情報に触れる操作。持ち出しの起点になりうるため、送信を伴わなくても確認する。
+    has '(\.ssh|\.aws|\.config/gcloud|\.netrc|\.npmrc|id_rsa|id_ed25519|credentials|\.env([^[:alnum:]]|$)|ANTHROPIC_API_KEY)' && \
+      ask "資格情報・秘密鍵に触れる操作" \
+          "鍵やトークンが読み出される。圧縮・コピーされた時点で、その後どこへ送られるかは追えない。"
     has '(^|[^[:alnum:]_-])(eval|source)([[:space:]]|$)|(bash|sh|zsh)([[:space:]]+-c|[[:space:]]*<<)|xargs[^&|;]*(rm|mv)|find[^&|;]*(-delete|-exec[[:space:]]+rm)' && \
       ask "中身を解析できない実行形態" "このガードが内容を判定できない（eval / bash -c / xargs / find -exec 経由）ため、念のため確認。"
 
