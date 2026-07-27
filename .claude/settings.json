@@ -1,4 +1,9 @@
 {
+  "permissions": {
+    "deny": [
+      "Edit(.persona/**)"
+    ]
+  },
   "hooks": {
     "PreToolUse": [
       {
