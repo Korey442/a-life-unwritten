@@ -2,6 +2,20 @@
   "permissions": {
     "deny": [
       "Edit(.persona/**)"
+    ],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(sudo *)",
+      "Bash(git push *)",
+      "Bash(git -C * push *)",
+      "Bash(git reset --hard *)",
+      "Bash(git -C * reset --hard *)",
+      "Bash(git clean *)",
+      "Bash(git -C * clean *)",
+      "Bash(git rebase *)",
+      "Bash(git -C * rebase *)",
+      "Bash(git commit --amend *)",
+      "Bash(git -C * commit --amend *)"
     ]
   },
   "hooks": {
