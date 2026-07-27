@@ -57,7 +57,10 @@ export default function QuestLog({ world, onAccept, onDecline, loading }) {
       {list.map((q) => (
         <div key={q.id} style={card}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
-            <strong style={{ fontSize: 14, color: theme.ink }}>{q.title}</strong>
+            <strong style={{ fontSize: 14, color: theme.ink }}>
+              {q.main && <span style={{ fontSize: 10, fontWeight: 700, color: "#6a5fa0", border: "1px solid #cec6e6", borderRadius: 4, padding: "1px 5px", marginRight: 6, verticalAlign: 2 }}>物語</span>}
+              {q.title}
+            </strong>
             {q.status === STATUS.ACTIVE && <span style={{ fontSize: 11, color: q.deadline ? "#b5543a" : "#a8a291" }}>{fmtRemaining(world.time, q.deadline)}</span>}
             {["completed", "failed", "declined"].includes(q.status) && <span style={{ fontSize: 11, fontWeight: 700, color: STATUS_COLOR[q.status] }}>{STATUS_LABEL[q.status]}</span>}
           </div>

@@ -6,8 +6,8 @@ import { initSkills } from "./skills.js";
 export const STAT_DEFS = { tain: "体力", chi: "知力", cha: "魅力", dex: "器用さ", act: "行動力" };
 export const EMOTIONS = ["neutral", "happy", "angry", "sad", "shy", "surprise"];
 
-// v2: ミリナ登場・物語(story)・ネット層(dive)導入でデータ構造が変わったため繰り上げ（旧セーブは破棄）
-export const SAVE_VERSION = 2;
+// v3: 物語ビート(story.beats/pending/ending)と層の開放フラグ導入で構造変更（旧セーブは破棄）
+export const SAVE_VERSION = 3;
 
 // キャラメイク回答（effects配列）から初期プレイヤーを構築
 export function buildPlayer(answers, name) {
@@ -38,8 +38,9 @@ export function buildWorld(player) {
     location: "home",
     money: 42000,
     player,
-    // 物語の正典は STORY.md。act=章。異変前は平時。
-    story: { act: 1, anomaly: false },
+    // 物語の正典は STORY.md、ビートは data/story.js、進行は engine/story.js。
+    // act=章 / anomaly=異変の発生 / beats=発火済みビート（非可逆） / pending=選択待ち / ending=結末
+    story: { act: 1, anomaly: false, beats: [], pending: null, ending: null },
     npcs: {
       // ミリナ: 主人公のAI。デジタル存在なので digital:true（Scene で端末画面として描画）。
       milina: { id: "milina", name: "ミリナ", note: "あなたのAI。何かが違う。", affinity: 55, trust: 45, alive: true, present: true, digital: true, sprite: "milina", emotion: "neutral" },

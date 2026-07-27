@@ -1,0 +1,60 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(.persona/**)"
+    ],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(sudo *)",
+      "Bash(git push *)",
+      "Bash(git -C * push *)",
+      "Bash(git reset --hard *)",
+      "Bash(git -C * reset --hard *)",
+      "Bash(git clean *)",
+      "Bash(git -C * clean *)",
+      "Bash(git rebase *)",
+      "Bash(git -C * rebase *)",
+      "Bash(git commit --amend *)",
+      "Bash(git -C * commit --amend *)",
+      "PowerShell(Remove-Item *)",
+      "PowerShell(rm *)",
+      "PowerShell(del *)",
+      "PowerShell(* -Verb RunAs*)",
+      "PowerShell(git push *)",
+      "PowerShell(git -C * push *)",
+      "PowerShell(git reset --hard *)",
+      "PowerShell(git -C * reset --hard *)",
+      "PowerShell(git clean *)",
+      "PowerShell(git -C * clean *)",
+      "PowerShell(git rebase *)",
+      "PowerShell(git -C * rebase *)",
+      "PowerShell(git commit --amend *)",
+      "PowerShell(git -C * commit --amend *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/guard.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh",
+            "timeout": 120,
+            "statusMessage": "ミリナの参照ファイルと依存を用意中..."
+          }
+        ]
+      }
+    ]
+  }
+}

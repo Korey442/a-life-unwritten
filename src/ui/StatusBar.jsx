@@ -4,12 +4,15 @@ import { SKILL_DEFS, skillRank } from "../engine/skills.js";
 import { fmt } from "../engine/time.js";
 import { theme, miniBtn } from "./styles.jsx";
 
-export default function StatusBar({ world, showStats, onToggle }) {
+export default function StatusBar({ world, chapter, showStats, onToggle }) {
   const p = world.player;
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
-        <div style={{ fontFamily: "Georgia, serif", fontSize: 17, color: theme.ink }}>{fmt(world.time)}</div>
+        <div>
+          <div style={{ fontFamily: "Georgia, serif", fontSize: 17, color: theme.ink }}>{fmt(world.time)}</div>
+          {chapter && <div style={{ fontSize: 11, letterSpacing: 2, color: "#8a7fb0", marginTop: 1 }}>{chapter}</div>}
+        </div>
         <div style={{ display: "flex", gap: 14, alignItems: "center", fontSize: 14, color: theme.sub }}>
           <span>¥{world.money.toLocaleString()}</span><span>体調 {p.condition}</span><span>気分 {p.mood}</span>
           <button style={miniBtn} onClick={onToggle}>{showStats ? "閉じる" : "能力/スキル"}</button>

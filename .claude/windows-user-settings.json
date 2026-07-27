@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "ask": [
+      "Bash(rm *)",
+      "Bash(sudo *)",
+      "Bash(chmod -R *)",
+      "Bash(git push *)",
+      "Bash(git -C * push *)",
+      "Bash(git reset --hard *)",
+      "Bash(git -C * reset --hard *)",
+      "Bash(git clean *)",
+      "Bash(git -C * clean *)",
+      "Bash(git rebase *)",
+      "Bash(git -C * rebase *)",
+      "Bash(git commit --amend *)",
+      "Bash(git -C * commit --amend *)",
+      "Bash(git branch -D *)",
+      "Bash(git -C * branch -D *)",
+      "PowerShell(Remove-Item *)",
+      "PowerShell(rm *)",
+      "PowerShell(del *)",
+      "PowerShell(* -Verb RunAs*)",
+      "PowerShell(git push *)",
+      "PowerShell(git -C * push *)",
+      "PowerShell(git reset --hard *)",
+      "PowerShell(git -C * reset --hard *)",
+      "PowerShell(git clean *)",
+      "PowerShell(git -C * clean *)",
+      "PowerShell(git rebase *)",
+      "PowerShell(git -C * rebase *)",
+      "PowerShell(git commit --amend *)",
+      "PowerShell(git -C * commit --amend *)",
+      "PowerShell(git branch -D *)",
+      "PowerShell(git -C * branch -D *)"
+    ]
+  }
+}

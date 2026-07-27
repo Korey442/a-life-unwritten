@@ -15,12 +15,22 @@ const KEYWORDS = [
   { re: /(話|会|相談|挨拶|声をかけ)/, tags: ["social"], mood: 4, narr: "言葉を交わした。距離が少し縮まった気がする。" },
 ];
 
-// モックが出すクエストのテンプレ（順番に提示）。物語（STORY.md）の異変の予兆に沿う。
-const QUEST_TEMPLATES = [
-  { title: "ミリナの誘い", giverNpcId: "milina", description: "ミリナが“何処か”を指し示す。その言葉の意味を確かめてみては。", objectives: ["ミリナに詳しく尋ねる", "ネットの“ほころび”を確かめる"], deadlineHours: 12, reward: { affinity: { milina: 8 }, skill: { study: 5 } } },
-  { title: "接続の不調", giverNpcId: null, description: "いつものサービスが妙に重い。街でも“繋がらない”という声が増えている。", objectives: ["不調の範囲を調べる", "原因の手がかりを掴む"], deadlineHours: 24, reward: { money: 800, skill: { study: 4 } } },
-  { title: "掲示板の悲鳴", giverNpcId: null, description: "ネットの片隅に、助けを求める断片的な書き込み。誰か——あるいは何かが、困っている。", objectives: ["書き込みの主を追う", "正体に触れる"], deadlineHours: 12, reward: { money: 1500, skill: { craft: 4 } } },
-];
+// モックが出すサイドクエストのテンプレ（順番に提示）。章に合わせて出し分ける。
+// メインクエスト（物語の背骨）は data/story.js が発行するので、ここでは扱わない。
+const QUEST_TEMPLATES = {
+  // 平時（第1章）: 日常の頼まれごと。異変の予兆までは匂わせる。
+  calm: [
+    { title: "接続の不調", giverNpcId: null, description: "いつものサービスが妙に重い。街でも“繋がらない”という声が増えている。", objectives: ["不調の範囲を調べる", "原因の手がかりを掴む"], deadlineHours: 24, reward: { money: 800, skill: { study: 4 } } },
+    { title: "遥の買い出し", giverNpcId: "haruka", description: "決済が弾かれて買い物を諦めたらしい。付き合ってやってもいい。", objectives: ["遥と出かける", "買い物を済ませる"], deadlineHours: 12, reward: { affinity: { haruka: 8 }, skill: { social: 4 } } },
+    { title: "掲示板の悲鳴", giverNpcId: null, description: "ネットの片隅に、助けを求める断片的な書き込み。誰か——あるいは何かが、困っている。", objectives: ["書き込みの主を追う", "正体に触れる"], deadlineHours: 12, reward: { money: 1500, skill: { craft: 4 } } },
+  ],
+  // 異変後: 生活そのものが依頼になる。
+  anomaly: [
+    { title: "現金をつくる", giverNpcId: null, description: "電子決済は死んだ。手元の現金だけが今日を食いつなぐ手段になる。", objectives: ["現金を手に入れる手段を探す", "実際に工面する"], deadlineHours: 20, reward: { money: 5000, skill: { craft: 5 } } },
+    { title: "安否をたしかめる", giverNpcId: "haruka", description: "連絡が途切れがちだ。顔を見ないと安心できない。", objectives: ["遥のところへ行く", "無事を確かめる"], deadlineHours: 16, reward: { affinity: { haruka: 12 }, skill: { social: 6 } } },
+    { title: "水と灯り", giverNpcId: null, description: "物流が止まり、当たり前だったものが当たり前でなくなった。備えが要る。", objectives: ["水を確保する", "明かりを確保する"], deadlineHours: 28, reward: { money: 1200, skill: { physical: 6 } } },
+  ],
+};
 
 function pickKeyword(action) {
   return KEYWORDS.find((k) => k.re.test(action)) || null;
@@ -61,7 +71,8 @@ export function mockAiCall(world, action) {
     const turn = world.pacing?.turn ?? 0;
     // 数ターンに一度、テンプレを順に提示
     if (turn % 3 === 0) {
-      const tmpl = QUEST_TEMPLATES[(Math.floor(turn / 3)) % QUEST_TEMPLATES.length];
+      const pool = world.story?.anomaly ? QUEST_TEMPLATES.anomaly : QUEST_TEMPLATES.calm;
+      const tmpl = pool[(Math.floor(turn / 3)) % pool.length];
       const dl = advanceHours(world.time, tmpl.deadlineHours);
       res.questOps.offer.push({
         title: tmpl.title, giverNpcId: tmpl.giverNpcId, description: tmpl.description,
