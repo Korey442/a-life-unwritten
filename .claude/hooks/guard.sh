@@ -21,6 +21,12 @@
 
 set -uo pipefail
 
+# jq が無い環境（Windows の Git Bash など）では何も出力せずに抜ける。
+# 判定は Claude Code の通常動作（permissions ルール）に委ねられる。
+# ここで落ちると全てのツール呼び出しでフックがエラーを吐き続けるため、
+# 「動かないなら静かに何もしない」が正しい振る舞い。
+command -v jq >/dev/null 2>&1 || exit 0
+
 input=$(cat)
 tool=$(printf '%s' "$input" | jq -r '.tool_name // ""')
 
@@ -72,22 +78,20 @@ if [ "$tool" = "Bash" ]; then
   # 判定対象から外さないと、危険な操作を *説明した文章*（コミットメッセージ、
   # ドキュメント、このガード自体の解説）が誤って引っかかる。実際に起きた。
   # ※ 本文をシェルに食わせる `bash <<EOF` 形式は下の「解析できない実行形態」で拾う。
-  cmd=$(printf '%s' "$raw" | awk '
-    BEGIN { skip = 0; delim = "" }
-    skip == 1 {
-      line = $0; sub(/[ \t]+$/, "", line)
-      if (line == delim) skip = 0
-      next
-    }
-    {
-      if (match($0, /<<-?[ \t]*[^ \t|;&<>]+/)) {
-        d = substr($0, RSTART, RLENGTH)
-        sub(/^<<-?[ \t]*/, "", d)
-        gsub(/[^A-Za-z0-9_]/, "", d)
-        if (d != "") { delim = d; skip = 1 }
-      }
-      print
-    }')
+  # awk を使わず bash だけで処理する（Git Bash に awk がある保証がないため）。
+  cmd=""
+  _delim=""; _skip=0
+  while IFS= read -r _line || [ -n "$_line" ]; do
+    if [ "$_skip" = 1 ]; then
+      [[ "$_line" =~ ^[[:space:]]*${_delim}[[:space:]]*$ ]] && _skip=0
+      continue
+    fi
+    if [[ "$_line" =~ \<\<-?[[:space:]]*([^[:space:]\|\;\&\<\>]+) ]]; then
+      _d="${BASH_REMATCH[1]//[^A-Za-z0-9_]/}"
+      if [ -n "$_d" ]; then _delim="$_d"; _skip=1; fi
+    fi
+    cmd+="$_line"$'\n'
+  done <<< "$raw"
 fi
 
 case "$tool" in
