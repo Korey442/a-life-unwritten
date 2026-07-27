@@ -126,6 +126,17 @@
 | `.claude/hooks/install-guard.sh` | `~/.claude/` へ導入し、**全プロジェクト**に適用する |
 | `.claude/hooks/guard.test.sh` | 37ケースの分類テスト |
 
+**Windows で使う場合**（サンドボックスは Windows ネイティブ非対応。WSL2 が必要）
+
+- 承認削減の主役は `.claude/settings.json` の **`permissions`**。**インストール物ゼロで動く**ため、
+  会社PCのように何も入れられない環境でも効く。フックより優先され、フックが `allow` を返しても
+  `deny`/`ask` は評価される。
+- `guard.sh` は `jq` と `awk` に依存するため **Windows では動かない可能性が高い**。
+  さらに Git for Windows が無い場合、シェルツールの名前は `Bash` ではなく `PowerShell` になり、
+  `guard.sh` の分岐に一致しない。そのため ask ルールは **Bash 版と PowerShell 版を両方**置いている。
+- 全プロジェクトに効かせたい場合は `.claude/windows-user-settings.json` の中身を
+  `%USERPROFILE%\.claude\settings.json` にコピーする。**インストール作業は不要。**
+
 **適用範囲**（アカウント単位で同期する仕組みは存在しない。設置場所ごとに効く範囲が違う）
 
 | 設置場所 | 効く範囲 |
