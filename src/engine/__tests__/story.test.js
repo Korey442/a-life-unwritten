@@ -15,6 +15,22 @@ function atTurn(w, turn) {
   return { ...w, pacing: { ...w.pacing, turn } };
 }
 
+// 第1章のビートを順に消化して第2章に入るまで進める。
+// 第1章にビートを足しても壊れないよう、回数ではなく「章が変わったか」で止める。
+function toAct2(w) {
+  let cur = atTurn(w, 7);
+  for (let i = 0; i < 20 && currentAct(cur) < 2; i++) {
+    const before = cur;
+    cur = progressStory(cur).world;
+    assert.notEqual(cur, before, "第1章のビートが進まなくなった");
+  }
+  assert.equal(currentAct(cur), 2, "第1章を消化して第2章へ入る");
+  return cur;
+}
+
+// 第2章の「最初の扉」まで（＝第一層が開き、メインクエストが提示された状態）
+const toFirstDoor = (w) => progressStory(toAct2(w)).world;
+
 // 層を最初から最後まで踏破して地上へ戻る
 function clearLayer(w, layerId) {
   let s = startDive(w, layerId);
@@ -68,10 +84,8 @@ test("ビート本文の {name} は主人公名に置換される", () => {
 });
 
 test("第1章→第2章: 異変ビートが章を進め、次の『扉』ビートが第一層を開放する", () => {
-  let w = atTurn(world(), 7);
-  // a1_morning → a1_haruka → a1_omen → a1_break（1ターン1件ずつ）
-  for (let i = 0; i < 4; i++) w = progressStory(w).world;
-  assert.equal(currentAct(w), 2);
+  // a1_morning → a1_haruka → a1_rumor → a1_omen → a1_break（1ターン1件ずつ）
+  let w = toAct2(world());
   assert.equal(w.story.anomaly, true);
   assert.equal(isLayerUnlocked(w, "sns_ruins"), false, "扉の場面より先には潜れない");
 
@@ -91,8 +105,7 @@ test("a1_break は a1_omen（予兆）を見ていないと発火しない", () 
 
 // ---- メインクエスト（物語が発行する背骨）----
 test("a2_door がメインクエストを発行し、L4の提示枠を食わない", () => {
-  let w = atTurn(world(), 7);
-  for (let i = 0; i < 5; i++) w = progressStory(w).world; // …a1_break → a2_door
+  const w = toFirstDoor(world());
   const q = findQuest(w, "main_first_door");
   assert.ok(q, "メインクエストが提示される");
   assert.equal(q.main, true);
@@ -102,8 +115,7 @@ test("a2_door がメインクエストを発行し、L4の提示枠を食わな�
 
 // ---- 復旧 → 章の進行（通し）----
 test("第一層の復旧で第3章へ進み、次の層が開く（メインクエストも締まる）", () => {
-  let w = atTurn(world(), 7);
-  for (let i = 0; i < 5; i++) w = progressStory(w).world; // 第2章 + main_first_door 提示
+  let w = toFirstDoor(world()); // 第2章 + main_first_door 提示
   w = clearLayer(w, "sns_ruins");
 
   assert.ok(w.flags.includes("restored:sns_ruins"));
@@ -114,8 +126,7 @@ test("第一層の復旧で第3章へ進み、次の層が開く（メインク�
 });
 
 test("真実の開示: 第四層の復旧で終章へ進み、終層が開く", () => {
-  let w = atTurn(world(), 7);
-  for (let i = 0; i < 5; i++) w = progressStory(w).world;
+  let w = toFirstDoor(world());
   for (const id of ["sns_ruins", "frozen_ledger", "logistics_maze", "archive_hollow"]) w = clearLayer(w, id);
 
   assert.ok(w.flags.includes("truth_known"), "ミリナの正体が明かされる");
@@ -126,8 +137,7 @@ test("真実の開示: 第四層の復旧で終章へ進み、終層が開く", 
 
 // ---- 結末の選択 ----
 test("終層の踏破で選択待ちになり、選ぶまで他のビートは進まない", () => {
-  let w = atTurn(world(), 7);
-  for (let i = 0; i < 5; i++) w = progressStory(w).world;
+  let w = toFirstDoor(world());
   for (const id of Object.keys(LAYERS)) w = clearLayer(w, id);
 
   const pending = w.story.pending;
@@ -148,8 +158,7 @@ test("終層の踏破で選択待ちになり、選ぶまで他のビートは�
 });
 
 test("3つの結末はすべて到達可能で、それぞれ別のフラグを残す", () => {
-  let base = atTurn(world(), 7);
-  for (let i = 0; i < 5; i++) base = progressStory(base).world;
+  let base = toFirstDoor(world());
   for (const id of Object.keys(LAYERS)) base = clearLayer(base, id);
 
   for (const [id, flag] of [["quench", "ending:quench"], ["weave", "ending:weave"], ["ignite", "ending:ignite"]]) {
@@ -169,7 +178,8 @@ const POLITE = /(です|ます|まし|ません|ください|でしょ)/;
 test("ミリナ: 一人称は「ミリナ」。自分を「私」と呼ばない", () => {
   for (const b of STORY_BEATS) {
     for (const line of milinaLines(b)) {
-      // 『私』は「最初に言ってしまった言葉」としての引用なので許可（それ以外の素の「私」は禁止）
+      // 『私』は「使えない言葉」としての引用なので許可（それ以外の素の「私」は禁止）。
+      // 一人称が固有名である理由は STORY.md「観測痕跡としての固有名」。
       const bare = line.replaceAll(/『[^』]*』/g, "");
       assert.ok(!bare.includes("私"), `${b.id}: ミリナが自分を「私」と呼んでいる → ${line}`);
     }
