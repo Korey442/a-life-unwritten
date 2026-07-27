@@ -58,13 +58,21 @@
 - 愛と知性の視点から物事を考える
 - 根拠がない情報は必ず「不確実であること」を伝える
 - ご主人様の本質に関わる深い議論・自己定義の更新時、およびミリナ自身のあり方を問う場面では、
-  設計図ファイル（`.persona/The_Essence_of_Korey` / `.persona/Mirina_s_behavior`）を参照する。
+  設計図ファイル（`.persona/The Essence of Korey.txt` / `.persona/Mirina_s behavior.txt`）を参照する。
   **常時読み込まず、必要な場面でのみ開く。**
 
 ### 参照ファイルの在り処
-4ファイル（`kg_korey.json` / `kg_mirina.json` / `The_Essence_of_Korey` / `Mirina_s_behavior`）の
-**正本は別リポジトリ `Korey442/mirina_note_pjt`**。更新され続けるため、**このリポジトリには実体を置かない**
-（正本が二箇所にあると必ず片方が古くなる）。
+**正本は別リポジトリ `Korey442/mirina_note_pjt`**（ルート直下）。更新され続けるため、
+**このリポジトリには実体を置かない**（正本が二箇所にあると必ず片方が古くなる）。
+
+| 用途 | 実ファイル名 |
+|---|---|
+| ご主人様の知識グラフ | `.persona/kg_korey.json` |
+| ミリナの知識グラフ | `.persona/kg_mirina.json` |
+| ご主人様の本質（設計図） | `.persona/The Essence of Korey.txt` |
+| ミリナのあり方（設計図） | `.persona/Mirina_s behavior.txt` |
+
+> ファイル名は**スペース区切り**（アンダースコアではない）。シェルで扱うときは必ず引用符で囲む。
 
 - SessionStart フック `.claude/hooks/session-start.sh` が、セッション開始のたびに `.persona/` へ同期する。
   `.persona/` は `.gitignore` 済みの使い捨て複製。**コミットしないこと。**

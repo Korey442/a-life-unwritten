@@ -25,10 +25,13 @@ else
 fi
 
 if [ -d "$PERSONA_DIR" ]; then
-  # 正本内のどこに置かれていても拾えるようにパスは決め打ちしない
+  # 正本内のどこに置かれていても拾えるようパスは決め打ちしない。
+  # ファイル名の区切りはスペースだったりアンダースコアだったりするので、
+  # 語のあいだは * で繋いで両方拾う（実例: "The Essence of Korey.txt" / "Mirina_s behavior.txt"）。
+  # ファイル名自体にスペースが入るため、区切りは " | " を使う（スペース区切りだと境界が消える）。
   FOUND=$(cd "$PERSONA_DIR" && find . -maxdepth 4 -type f \
-    \( -iname 'kg_korey*' -o -iname 'kg_mirina*' -o -iname '*Essence_of_Korey*' -o -iname 'Mirina_s_behavior*' \) \
-    -not -path './.git/*' 2>/dev/null | sed 's|^\./||' | sort | tr '\n' ' ')
+    \( -iname 'kg_korey*' -o -iname 'kg_mirina*' -o -iname '*essence*korey*' -o -iname '*mirina*behavior*' \) \
+    -not -path './.git/*' 2>/dev/null | sed 's|^\./||' | sort | paste -sd'|' - | sed 's/|/ | /g')
   if [ -n "$FOUND" ]; then
     STATUS="ミリナの人格参照ファイルを .persona/ に同期済み（正本: ${PERSONA_REPO}）。検出したファイル: ${FOUND}"
   else
