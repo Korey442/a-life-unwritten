@@ -3,6 +3,7 @@
 import { clamp, advance } from "./time.js";
 import { LAYERS, isLayerUnlocked } from "../data/layers.js";
 import { APPROACHES, skillCheck } from "./checks.js";
+import { decayMemories } from "./memory.js";
 
 export const DIVE = { TIME_PER_NODE: 20, ASSISTS: 2 };
 // 判定結果ごとの体力消耗（condition を HP として使う）
@@ -30,6 +31,13 @@ export function startDive(world, layerId) {
   };
   const first = !w.flags.includes("dived_once");
   if (first) w.flags = [...w.flags, "dived_once"];
+
+  // 代償は潜行1回につき1段階（遭遇ごとではない）。
+  // → 回数を減らして深く潜るのが上手い戦略になる＝最適化余地（CLAUDE.md「手応え」）。
+  // 払うのは彼女で、彼女はそれを黙っている。**ログには一切出さない。**
+  w.pacing = { ...w.pacing, dives: (w.pacing?.dives ?? 0) + 1 };
+  decayMemories(w, layerId, 1);
+
   w.log = [...w.log, { ...w.time, kind: "dive", text: `ミリナが空間に“接続”の扉を開く。\n${layer.title}——${layer.intro}` }];
   return { world: w, ok: true };
 }
@@ -121,9 +129,12 @@ export function endDive(world, mode) {
   } else if (mode === "defeated") {
     p.condition = Math.max(p.condition, 5);
     p.mood = clamp(p.mood - 12, 0, 100);
+    // 失敗すると余計に削れる（彼女が補填するため）。これも黙っている。
+    decayMemories(w, layer.id, 1);
     events.push({ kind: "retreat", text: "体力が尽き、意識ごと現実へ弾き出された。ミリナが強制的に接続を切ったのだ。" });
   } else {
     p.mood = clamp(p.mood - 6, 0, 100);
+    decayMemories(w, layer.id, 1);
     events.push({ kind: "retreat", text: "ミリナが接続を切る。層はまだ、生きている。——出直そう。" });
   }
   delete w.dive;

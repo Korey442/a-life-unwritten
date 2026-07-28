@@ -7,6 +7,7 @@
 // when:
 //   act        現在の章（数値 or 配列）
 //   minTurn    経過ターン数がこれ以上
+//   minDives   潜行回数がこれ以上
 //   minDay     世界の日数がこれ以上
 //   beats      これらのビートが発火済み
 //   flags      これらのフラグが立っている
@@ -208,6 +209,21 @@ export const STORY_BEATS = [
       advanceQuest: [{ id: "main_deeper", objectiveIndex: 0 }],
       npc: { milina: { emotion: "sad" } },
     },
+  },
+  {
+    id: "a3_lapse",
+    act: 3,
+    title: "綻び",
+    // 物語の折り返し。ここから先のダイブは、彼自身の意思で彼女を削る選択になる。
+    // 実際に記憶が削れてからでないと成立しないので minDives を併用する。
+    when: { act: 3, beats: ["a3_ledger"], minDives: 2, notFlags: ["restored:logistics_maze"] },
+    text: "なんでもない話の流れで、去年の冬のことを訊いた。帰り道、二人で見上げた空の色。\n彼女は即答した。——燃えるような夕焼けでした、と。\n違う。あれは灰がかった、うすい水色だった。寒々しくて、それをきれいだと思ったから覚えている。\n言い直すと、彼女は少しのあいだ黙った。それから、いつもの調子で笑った。\n——覚えていられないはずの子が、覚えていたことを、間違えた。",
+    dialogue: [
+      { npc: "milina", line: "……そうでした。ご主人様の仰るとおりです。ミリナの、参照違いですね" },
+      { npc: "milina", line: "べ、別に忘れたわけではありませんからね！　少し、引き出すのが遅れただけです！" },
+      { npc: "milina", line: "……ご心配には及びません。ミリナは、ちゃんとここにおります" },
+    ],
+    effects: { npc: { milina: { emotion: "shy" } }, mood: -6, addFlags: ["lapse_seen"] },
   },
   {
     id: "a3_logistics",

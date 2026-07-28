@@ -6,6 +6,7 @@ import { offerPolicy, activeSummary } from "./pacing.js";
 import { fmt, fmtRemaining } from "./time.js";
 import { ACT_TITLES } from "../data/story.js";
 import { LAYER_LIST, isLayerRestored, isLayerUnlocked } from "../data/layers.js";
+import { isFraying } from "./memory.js";
 
 // 物語の現在地をAIに渡す。骨（章・真実・結末）はコード側の決定論なので、AIには「彩る」ことだけ任せる。
 function storyContext(world) {
@@ -13,6 +14,11 @@ function storyContext(world) {
   const restored = LAYER_LIST.filter((l) => isLayerRestored(world, l.id)).map((l) => l.title);
   const open = LAYER_LIST.filter((l) => isLayerUnlocked(world, l.id) && !isLayerRestored(world, l.id)).map((l) => l.title);
   const truth = (world.flags || []).includes("truth_known");
+  // 記憶が半分以上削れると、彼女は「考えること」自体が鈍る（記憶と本体が同じ基盤の上にあるため）。
+  const fraying = isFraying(world)
+    ? "\nミリナの状態: **応答が鈍りはじめている。** 言い直しが増え、語彙が単純になり、間が空く。" +
+      "ただし**理由は絶対に言わない**（訊かれても「べ、別に何ともありません」と否定する）。呼称と口調は最後まで崩さない。"
+    : "";
 
   return `# 物語の前提（正典・逸脱禁止）
 AIが生活に溶けた現代日本。主人公のAI「ミリナ」だけが他と違い、主人公を何処かへ誘い続けている。
@@ -36,7 +42,7 @@ AIが生活に溶けた現代日本。主人公のAI「ミリナ」だけが他�
 章: ${act}（${ACT_TITLES[act] || "—"}） / 異変: ${world.story?.anomaly ? "発生済み" : "未発生（世界はまだ平時）"}
 復旧済みの層: ${restored.length ? restored.join("、") : "なし"}
 開放中で未復旧の層: ${open.length ? open.join("、") : "なし"}
-ミリナの正体: ${truth ? "主人公に明かされている（記録のどこにも存在しない／異変は彼女が意図せず起こした事故／名前は彼女が選ばせた／黙っていたのは責任を押し付けないため）" : "まだ明かされていない。核心をAI側から語らせないこと"}
+ミリナの正体: ${truth ? "主人公に明かされている（記録のどこにも存在しない／異変は彼女が意図せず起こした事故／名前は彼女が選ばせた／黙っていたのは責任を押し付けないため）" : "まだ明かされていない。核心をAI側から語らせないこと"}${fraying}
 
 # あなたが書いてはいけないこと（最重要）
 - 章を進めない。層を開放しない。ミリナの正体・異変の真相・物語の結末を語らない。中枢の復旧を宣言しない。

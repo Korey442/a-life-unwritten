@@ -6,6 +6,7 @@ import { STORY_BEATS } from "../../data/story.js";
 import { LAYERS, isLayerUnlocked } from "../../data/layers.js";
 import { findQuest } from "../quests.js";
 import { startDive, resolveEncounter, endDive, inNet, currentEnemy } from "../dungeon.js";
+import { memoryViews, decayMemories, frayRatio } from "../memory.js";
 
 const world = () => buildWorld(buildPlayer([], "テスト"));
 const hi = () => 0.99; // 常に高ロール
@@ -167,6 +168,79 @@ test("3つの結末はすべて到達可能で、それぞれ別のフラグを�
     assert.ok(w.flags.includes(flag));
     assert.equal(findQuest(w, "main_core").status, "completed");
   }
+});
+
+// ---- ダイブの代償（STORY.md「ダイブの代償 — ミリナの記憶」）----
+test("記憶: 潜行1回につき1段階、潜った層のものから削れる", () => {
+  const w = toFirstDoor(world());
+  assert.equal(w.pacing.dives, 0, "まだ潜っていない");
+  assert.ok(memoryViews(w).every((m) => m.stage === 0), "初期状態は全部無傷");
+
+  const dived = startDive(w, "sns_ruins").world;
+  assert.equal(dived.pacing.dives, 1);
+  const sky = dived.npcs.milina.memories.find((e) => e.id === "sky_color");
+  assert.equal(sky.stage, 1, "潜った層（声）の記憶から削れる");
+  assert.equal(dived.npcs.milina.memories.filter((e) => e.stage > 0).length, 1, "1回で1段階だけ");
+});
+
+test("記憶: 彼女は黙っている（潜行が足した行に代償が漏れない）", () => {
+  const before = toFirstDoor(world());
+  // 潜行と撤退が新たに書き込んだ行だけを見る（過去のビート本文は対象外）
+  const dived = startDive(before, "sns_ruins").world;
+  const added = endDive(dived, "retreat").world.log.slice(before.log.length);
+  assert.ok(added.length > 0, "潜行と撤退でログは増える");
+  const text = added.map((e) => e.text).join("\n");
+  for (const word of ["記憶", "忘れ", "失わ", "代償"]) {
+    assert.ok(!text.includes(word), `代償がログに漏れている（「${word}」）→ プレイヤーは一覧で気づくべき`);
+  }
+});
+
+test("記憶: 撤退すると余計に削れる（彼女が補填するため）", () => {
+  const w = startDive(toFirstDoor(world()), "sns_ruins").world;
+  const before = w.npcs.milina.memories.reduce((n, e) => n + e.stage, 0);
+  const after = endDive(w, "retreat").world.npcs.milina.memories.reduce((n, e) => n + e.stage, 0);
+  assert.equal(after, before + 1, "失敗のぶんが上乗せされる");
+});
+
+test("記憶: 段階ごとに見え方が変わる。title は最後まで残る", () => {
+  const w = toFirstDoor(world());
+  const stageOf = (n) => {
+    const c = structuredClone(w);
+    c.npcs.milina.memories.find((e) => e.id === "sky_color").stage = n;
+    return memoryViews(c).find((m) => m.id === "sky_color");
+  };
+  assert.equal(stageOf(0).detail, "灰がかった、うすい水色");
+  // ①はズレるだけで注記を出さない（彼女は気づいていない。プレイヤーだけが食い違いに気づく）
+  assert.equal(stageOf(1).detail, "燃えるような夕焼け");
+  assert.ok(!stageOf(1).unsure && !stageOf(1).lost);
+  assert.ok(stageOf(2).unsure && stageOf(2).detail.includes("だったと思います"));
+  assert.ok(stageOf(3).lost && stageOf(3).detail === "——");
+  for (const n of [0, 1, 2, 3]) assert.ok(stageOf(n).title.length > 0, "title は最後まで残る");
+});
+
+test("記憶: 削り尽くしても壊れない（他の層のものへ回る）", () => {
+  const w = toFirstDoor(world());
+  const c = structuredClone(w);
+  for (let i = 0; i < 200; i++) decayMemories(c, "sns_ruins", 1);
+  assert.ok(c.npcs.milina.memories.every((e) => e.stage === 3), "全部失われて止まる");
+  assert.equal(decayMemories(c, "sns_ruins", 1).length, 0, "もう削れるものが無ければ何も起きない");
+  assert.equal(frayRatio(c), 1);
+});
+
+test("a3_lapse: 実際に記憶が削れてから発火する（折り返し）", () => {
+  let w = toFirstDoor(world());
+  w = clearLayer(w, "sns_ruins");
+  w = clearLayer(w, "frozen_ledger"); // a3_ledger まで進む
+  assert.ok(beatFired(w, "a3_ledger"));
+
+  // 潜行回数が足りない状態では出ない
+  const few = { ...w, pacing: { ...w.pacing, dives: 1 } };
+  assert.equal(conditionsMet(few, { act: 3, beats: ["a3_ledger"], minDives: 2 }), false);
+
+  w = progressStory(w).world;
+  assert.ok(beatFired(w, "a3_lapse"), "第三層より前に折り返しが来る");
+  assert.ok(w.flags.includes("lapse_seen"));
+  assert.equal(beatFired(w, "a3_logistics"), false, "第三層の復旧より先には進まない");
 });
 
 // ---- ミリナの人格（CLAUDE.md「AIキャラクター設定：ミリナ」が正典）----
