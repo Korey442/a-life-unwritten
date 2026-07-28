@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { buildWorld, buildPlayer } from "../worldState.js";
-import { progressStory, nextBeat, resolveStoryChoice, currentAct, beatFired, conditionsMet } from "../story.js";
+import { progressStory, nextBeat, resolveStoryChoice, currentAct, beatFired, conditionsMet, fill } from "../story.js";
 import { STORY_BEATS } from "../../data/story.js";
 import { LAYERS, isLayerUnlocked } from "../../data/layers.js";
 import { findQuest } from "../quests.js";
@@ -76,15 +76,15 @@ test("progressStory: 1回につき1ビートだけ発火し、二度は起きな
 });
 
 test("ビート本文の {name} は主人公名に置換される", () => {
-  let w = atTurn(world(), 3);
-  w = progressStory(w, { max: 2 }).world; // a1_morning → a1_haruka
-  const text = w.log.map((e) => e.text).join("\n");
-  assert.ok(text.includes("テスト"), "プレイヤー名が埋まる");
+  const w = atTurn(world(), 3);
+  assert.equal(fill("{name}のところへ行く", w), "テストのところへ行く");
+  // 実際に流したビート本文にプレースホルダが残らないこと
+  const text = progressStory(w, { max: 2 }).world.log.map((e) => e.text).join("\n");
   assert.ok(!text.includes("{name}"), "プレースホルダが残らない");
 });
 
 test("第1章→第2章: 異変ビートが章を進め、次の『扉』ビートが第一層を開放する", () => {
-  // a1_morning → a1_haruka → a1_rumor → a1_omen → a1_break（1ターン1件ずつ）
+  // a1_morning → a1_others → a1_rumor → a1_omen → a1_break（1ターン1件ずつ）
   let w = toAct2(world());
   assert.equal(w.story.anomaly, true);
   assert.equal(isLayerUnlocked(w, "sns_ruins"), false, "扉の場面より先には潜れない");
@@ -99,7 +99,7 @@ test("a1_break は a1_omen（予兆）を見ていないと発火しない", () 
   const beat = nextBeat(w);
   assert.equal(beat.id, "a1_morning", "順序を飛ばさない");
   // 予兆を飛ばした状態を作ると、断絶は候補にならない
-  const skipped = { ...w, story: { ...w.story, beats: ["a1_morning", "a1_haruka"] } };
+  const skipped = { ...w, story: { ...w.story, beats: ["a1_morning", "a1_others"] } };
   assert.equal(nextBeat(skipped).id !== "a1_break", true);
 });
 
@@ -217,11 +217,12 @@ test("ミリナ: どのビートも②ツンで終わらない（冷たいだけ
   }
 });
 
-test("遥: 主人公を名前で呼ぶ唯一の人間（ミリナとの対比を保つ）", () => {
-  const harukaLines = STORY_BEATS.flatMap((b) => (b.dialogue ?? []).filter((d) => d.npc === "haruka").map((d) => d.line));
-  assert.ok(harukaLines.length > 0);
-  assert.ok(harukaLines.some((l) => l.includes("{name}")), "遥が名前で呼ぶ台詞が1つもない");
-  assert.ok(!harukaLines.some((l) => l.includes("ご主人様")), "遥が「ご主人様」と呼んでいる");
+// 名前を持つ人物は主人公とミリナだけ（STORY.md「登場人物」）。世界に証人が一人しかいない状態を保つ。
+test("名前を持つ人物は主人公とミリナだけ", () => {
+  const speakers = new Set(STORY_BEATS.flatMap((b) => (b.dialogue ?? []).map((d) => d.npc)));
+  assert.deepEqual([...speakers].sort(), ["milina"], `ミリナ以外が喋っている → ${[...speakers]}`);
+  const world = buildWorld(buildPlayer([], "テスト"));
+  assert.deepEqual(Object.keys(world.npcs), ["milina"], "初期NPCがミリナだけではない");
 });
 
 // ---- データの健全性 ----

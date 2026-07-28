@@ -50,14 +50,15 @@ const QUESTS = {
     main: true,
     reward: { affinity: { milina: 10 } },
   },
-  side_haruka_rent: {
-    id: "side_haruka_rent",
-    title: "遥の家賃",
-    giverNpcId: "haruka",
-    description: "振込が止まり、遥の生活のほうが先に崩れはじめた。現金が要る。",
-    objectives: ["現金を工面する", "遥に届ける"],
+  // 締切つきサイドクエストの実例。放置すれば失敗として世界に残る（非可逆）。
+  side_cash_run: {
+    id: "side_cash_run",
+    title: "現金をつくる",
+    giverNpcId: null,
+    description: "口座の中身は、いま誰にも触れない。動かせるのは手の中にあるものだけだ。",
+    objectives: ["現金を工面する手段を見つける", "実際に手に入れる"],
     deadlineIn: { days: 2 }, // 発火時刻からの相対締切 → 放置すれば失敗として残る
-    reward: { affinity: { haruka: 18 }, skill: { social: 6 } },
+    reward: { money: 8000, skill: { craft: 6 } },
   },
 };
 
@@ -80,13 +81,18 @@ export const STORY_BEATS = [
     effects: { npc: { milina: { emotion: "shy" } } },
   },
   {
-    id: "a1_haruka",
+    id: "a1_others",
     act: 1,
     title: "何も知らない街",
+    // 他のAIが微妙におかしくなりはじめる。そしてミリナだけが完璧に動く（逆転）。
     when: { act: 1, minTurn: 3 },
-    text: "インターホン。遥だ。手にはコンビニ袋、顔には見慣れた呆れ顔。\n「ねえ、最近ネット重くない？ うちの決済、二回続けて弾かれたんだけど」\nニュースは何も言っていない。まだ、誰も何も知らない。",
-    dialogue: [{ npc: "haruka", line: "{name}のとこは平気？ ……ならいいけど" }],
-    effects: { npc: { haruka: { present: true, emotion: "happy" } }, mood: 4 },
+    text: "コンビニのレジで、店員が二度おなじ案内を読み上げた。端末が同じ返答を二回吐いたらしい。\n改札の音声が、頼んでもいない乗り換え案内を先に喋る。\nSNSには「最近うちのAI、ちょっと変じゃない？」という書き込みが並んでいる。誰も深刻には受け取っていない。よくある不具合だ。\n——ミリナだけが、いつも通り完璧に動いていた。",
+    dialogue: [
+      { npc: "milina", line: "ご主人様、本日のご予定はあと二件です。傘をお持ちになってください、夕方から降ります" },
+      { npc: "milina", line: "べ、別に心配しているのではありませんからね！　メイドとして当然のご案内です" },
+      { npc: "milina", line: "……その。ご主人様が濡れてお帰りになるのは、ミリナ、少し嫌です" },
+    ],
+    effects: { npc: { milina: { emotion: "happy" } }, mood: 4 },
   },
   {
     id: "a1_rumor",
@@ -130,7 +136,7 @@ export const STORY_BEATS = [
       setAct: 2,
       anomaly: true,
       addFlags: ["anomaly"],
-      npc: { milina: { emotion: "surprise" }, haruka: { present: true, emotion: "surprise" } },
+      npc: { milina: { emotion: "surprise" } },
       mood: -12,
       condition: -5,
     },
@@ -169,7 +175,7 @@ export const STORY_BEATS = [
     act: 2,
     title: "声が戻る",
     when: { act: 2, flags: ["restored:sns_ruins"] },
-    text: "その夜、誰かの投稿がひとつだけ流れた。何でもない、今日の晩ごはんの写真。\nそれを見た遥が、泣きそうな顔で笑った。「くだらな。……よかった」\nひとつ戻ると、次の扉が見える。金の流れが凍りついた層が、いま薄くなっている。",
+    text: "その夜、誰かの投稿がひとつだけ流れた。何でもない、今日の晩ごはんの写真。\nコメント欄が、堰を切ったように伸びていく。くだらない、と誰かが書いて、その下に何百も同じ言葉が並んだ。\n街のどこかで、誰かが泣いているのが分かる。\nひとつ戻ると、次の扉が見える。金の流れが凍りついた層が、いま薄くなっている。",
     dialogue: [
       { npc: "milina", line: "ひとつ、取り戻しました。ご主人様が、やり遂げたんです" },
       { npc: "milina", line: "じ、自慢したいわけではありませんよ！　次の層のご報告です。お金の層——みなさんの生活に、いちばん早く効きます" },
@@ -180,7 +186,7 @@ export const STORY_BEATS = [
       unlock: ["frozen_ledger"],
       completeQuest: ["main_first_door"],
       offerQuest: "main_deeper",
-      npc: { haruka: { emotion: "happy", affinity: 6 }, milina: { emotion: "happy" } },
+      npc: { milina: { emotion: "happy" } },
       mood: 10,
     },
   },
@@ -307,24 +313,16 @@ export const STORY_BEATS = [
     id: "p_cash",
     act: 2,
     title: "現金だけの街",
-    when: { act: [2, 3], minDay: 3, notFlags: ["restored:frozen_ledger"] },
+    // 日付は STORY.md「世界の崩壊カレンダー」に合わせる（異変は3日目。現金が尽きるのは+3＝6日目）。
+    when: { act: [2, 3], minDay: 6, notFlags: ["restored:frozen_ledger"] },
     text: "ATMの前に長い行列ができている。現金だけが、この世界で唯一信用される通貨に戻った。\n三時間並んで、引き出せたのは上限の半分。\n財布の中身が、そのまま残りの寿命に見えてくる。",
-    effects: { money: -4000, mood: -8, condition: -5, npc: { haruka: { emotion: "sad" } } },
-  },
-  {
-    id: "p_haruka",
-    act: 2,
-    title: "先に崩れるほう",
-    when: { act: [2, 3], minDay: 4, notFlags: ["restored:frozen_ledger"] },
-    text: "遥から連絡。声が硬い。\n給与の振込が止まり、家賃の引き落としも通らなかったという。\n「頼れる人、{name}しか思いつかなかった」",
-    dialogue: [{ npc: "haruka", line: "……ごめん。少しだけ、助けてくれない？" }],
-    effects: { npc: { haruka: { present: true, emotion: "sad" } }, offerQuest: "side_haruka_rent" },
+    effects: { money: -4000, mood: -8, condition: -5, offerQuest: "side_cash_run" },
   },
   {
     id: "p_shelf",
     act: 2,
     title: "空の棚",
-    when: { act: [2, 3], minDay: 5, notFlags: ["restored:logistics_maze"] },
+    when: { act: [2, 3], minDay: 7, notFlags: ["restored:logistics_maze"] },
     text: "コンビニの棚は、二列目まで空だった。\n店員は謝ることにも疲れて、ただ「入ってこないんです」と繰り返している。\n買えたのは、誰も選ばなかったものだけ。",
     effects: { mood: -8, condition: -10 },
   },
