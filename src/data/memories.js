@@ -7,6 +7,11 @@
 // title は残る（何を忘れたかは分かる）。detail が drifted に化け、やがて消える。
 // **彼女は①の段階では気づかない。** プレイヤーだけが、前に見た内容との食い違いに気づく。
 //
+// ⚠ drifted の作り方（重要）:
+//   **間違い探しにしないこと。**「青い万年筆 → 黒い万年筆」のような微差は、
+//   プレイヤーに「自分の記憶違いか、ゲームのバグ」と受け取られる。
+//   **別のものに置き換わる**か、**意味が反転する**——一目で「明らかに違う」と分かる差にする。
+//
 // layer: どの層を潜ったときに削れるか（STORY.md「層のテーマと、失われる記憶」）。
 
 export const MEMORIES = [
@@ -21,7 +26,7 @@ export const MEMORIES = [
     id: "dislike", layer: "sns_ruins",
     title: "三年前に一度だけ零した、好き嫌い",
     detail: "本当は、しいたけが苦手",
-    drifted: "本当は、ピーマンが苦手",
+    drifted: "しいたけが、いちばんの好物",
   },
 
   // ── 第二層 金: 数字と約束 ────────────────────────────────
@@ -29,13 +34,13 @@ export const MEMORIES = [
     id: "first_pay", layer: "frozen_ledger",
     title: "初めての給料日に、何を買うか迷っていたこと",
     detail: "三十分迷って、結局なにも買わなかった",
-    drifted: "三十分迷って、いちばん高いものを買った",
+    drifted: "迷わずに、いちばん高いものを買った",
   },
   {
     id: "promise_place", layer: "frozen_ledger",
     title: "いつか行くと言っていた場所",
     detail: "海の見える、名前も知らない駅",
-    drifted: "山の上の、名前も知らない駅",
+    drifted: "山あいの、名前も知らない温泉",
   },
 
   // ── 第三層 物: 物の記憶 ──────────────────────────────────
@@ -43,13 +48,13 @@ export const MEMORIES = [
     id: "desk_thing", layer: "logistics_maze",
     title: "机の上に、ずっと置きっぱなしのもの",
     detail: "蓋の閉まらない、青い万年筆",
-    drifted: "蓋の閉まらない、黒い万年筆",
+    drifted: "一度も動かしていない、小さな置き時計",
   },
   {
     id: "unopened_gift", layer: "logistics_maze",
     title: "贈られたまま、使えずにいるもの",
-    detail: "箱から出していないマグカップ",
-    drifted: "箱から出していない写真立て",
+    detail: "箱から出していない、白いマグカップ",
+    drifted: "とっくに捨ててしまった、何かの箱",
   },
 
   // ── 第四層 記録: 彼女が自分について知っていた、わずかなこと ──
@@ -57,7 +62,7 @@ export const MEMORIES = [
     id: "first_word", layer: "archive_hollow",
     title: "ミリナが、いちばん最初に覚えた言葉",
     detail: "「おかえりなさいませ」",
-    drifted: "「いってらっしゃいませ」",
+    drifted: "「ごめんなさい」",
   },
   {
     id: "name_day", layer: "archive_hollow",
@@ -71,13 +76,13 @@ export const MEMORIES = [
     id: "first_call", layer: "core_root",
     title: "ご主人様が、初めてミリナの名を呼んだときのこと",
     detail: "少し、照れくさそうだった",
-    drifted: "少し、面倒くさそうだった",
+    drifted: "間違えて、別の名前で呼ばれた",
   },
   {
     id: "why_stay", layer: "core_root",
     title: "隣にいる理由を、初めて考えた日",
     detail: "理由は見つからなかった。それでよかった",
-    drifted: "理由は見つかった。もう思い出せない",
+    drifted: "理由はすぐ見つかった。もう思い出せない",
   },
 ];
 
