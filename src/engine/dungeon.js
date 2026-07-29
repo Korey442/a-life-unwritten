@@ -38,7 +38,7 @@ export function startDive(world, layerId) {
   w.pacing = { ...w.pacing, dives: (w.pacing?.dives ?? 0) + 1 };
   decayMemories(w, layerId, 1);
 
-  w.log = [...w.log, { ...w.time, kind: "dive", text: `ミリナが空間に“接続”の扉を開く。\n${layer.title}——${layer.intro}` }];
+  w.log = [...w.log, { ...w.time, kind: "dive", text: `ミリナが画面の奥へ“接続”を通す。\n${layer.title}——${layer.intro}` }];
   return { world: w, ok: true };
 }
 
