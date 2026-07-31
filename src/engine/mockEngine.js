@@ -21,13 +21,13 @@ const QUEST_TEMPLATES = {
   // 平時（第1章）: 日常の頼まれごと。異変の予兆までは匂わせる。
   calm: [
     { title: "接続の不調", giverNpcId: null, description: "いつものサービスが妙に重い。街でも“繋がらない”という声が増えている。", objectives: ["不調の範囲を調べる", "原因の手がかりを掴む"], deadlineHours: 24, reward: { money: 800, skill: { study: 4 } } },
-    { title: "遥の買い出し", giverNpcId: "haruka", description: "決済が弾かれて買い物を諦めたらしい。付き合ってやってもいい。", objectives: ["遥と出かける", "買い物を済ませる"], deadlineHours: 12, reward: { affinity: { haruka: 8 }, skill: { social: 4 } } },
+    { title: "弾かれた決済", giverNpcId: null, description: "レジで二度続けて弾かれた。店員も原因が分からないという。", objectives: ["別の支払い手段を探す", "買い物を済ませる"], deadlineHours: 12, reward: { money: 600, skill: { social: 4 } } },
     { title: "掲示板の悲鳴", giverNpcId: null, description: "ネットの片隅に、助けを求める断片的な書き込み。誰か——あるいは何かが、困っている。", objectives: ["書き込みの主を追う", "正体に触れる"], deadlineHours: 12, reward: { money: 1500, skill: { craft: 4 } } },
   ],
   // 異変後: 生活そのものが依頼になる。
   anomaly: [
     { title: "現金をつくる", giverNpcId: null, description: "電子決済は死んだ。手元の現金だけが今日を食いつなぐ手段になる。", objectives: ["現金を手に入れる手段を探す", "実際に工面する"], deadlineHours: 20, reward: { money: 5000, skill: { craft: 5 } } },
-    { title: "安否をたしかめる", giverNpcId: "haruka", description: "連絡が途切れがちだ。顔を見ないと安心できない。", objectives: ["遥のところへ行く", "無事を確かめる"], deadlineHours: 16, reward: { affinity: { haruka: 12 }, skill: { social: 6 } } },
+    { title: "隣の部屋", giverNpcId: null, description: "隣人の物音が二日ばかり聞こえない。放っておくこともできる。", objectives: ["様子を見に行く", "無事を確かめる"], deadlineHours: 16, reward: { mood: 8, skill: { social: 6 } } },
     { title: "水と灯り", giverNpcId: null, description: "物流が止まり、当たり前だったものが当たり前でなくなった。備えが要る。", objectives: ["水を確保する", "明かりを確保する"], deadlineHours: 28, reward: { money: 1200, skill: { physical: 6 } } },
   ],
 };

@@ -2,12 +2,14 @@
 // UIはここを読むだけ。書き換えは必ず L2 verify 経由。
 import { clamp } from "./time.js";
 import { initSkills } from "./skills.js";
+import { initMemories } from "./memory.js";
 
 export const STAT_DEFS = { tain: "体力", chi: "知力", cha: "魅力", dex: "器用さ", act: "行動力" };
 export const EMOTIONS = ["neutral", "happy", "angry", "sad", "shy", "surprise"];
 
 // v3: 物語ビート(story.beats/pending/ending)と層の開放フラグ導入で構造変更（旧セーブは破棄）
-export const SAVE_VERSION = 3;
+// v4: 遥を削除し、ミリナの記憶(npcs.milina.memories)と潜行回数(pacing.dives)を追加
+export const SAVE_VERSION = 4;
 
 // キャラメイク回答（effects配列）から初期プレイヤーを構築
 export function buildPlayer(answers, name) {
@@ -43,9 +45,10 @@ export function buildWorld(player) {
     story: { act: 1, anomaly: false, beats: [], pending: null, ending: null },
     npcs: {
       // ミリナ: 主人公のAI。デジタル存在なので digital:true（Scene で端末画面として描画）。
-      milina: { id: "milina", name: "ミリナ", note: "あなたのAI。何かが違う。", affinity: 55, trust: 45, alive: true, present: true, digital: true, sprite: "milina", emotion: "neutral" },
-      // 遥: 幼馴染。現実側の起点。序盤は不在（別の場所）。
-      haruka: { id: "haruka", name: "遥", note: "幼馴染", affinity: 45, trust: 50, alive: true, present: false, sprite: "haruka", emotion: "happy" },
+      // 名前を持つ人物は主人公とミリナだけ（STORY.md「登場人物」）。名前のいらない相手は
+      // L3 が newNpcs で必要に応じて作る。背骨に関わる人物が要るときは、そのとき役から設計する。
+      // memories: ダイブの代償で削れていく（engine/memory.js）。彼女はそれを黙っている。
+      milina: { id: "milina", name: "ミリナ", note: "あなたのAI。何かが違う。", affinity: 55, trust: 45, alive: true, present: true, digital: true, sprite: "milina", emotion: "neutral", memories: initMemories() },
     },
     flags: [],
     quests: [], // クエスト配列（状態機械の実体）
@@ -53,6 +56,7 @@ export function buildWorld(player) {
     pacing: {
       lastOfferTurn: -999, // 最後にofferした「ターン番号」
       turn: 0, // 経過ターン数
+      dives: 0, // 潜行回数（記憶の消耗と、ビートの minDives 条件に使う）
     },
     log: [],
   };

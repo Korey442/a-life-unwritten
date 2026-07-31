@@ -40,6 +40,8 @@ export function conditionsMet(world, when = {}) {
     if (!acts.includes(currentAct(world))) return false;
   }
   if (when.minTurn !== undefined && (world.pacing?.turn ?? 0) < when.minTurn) return false;
+  // 潜行回数。記憶が実際に削れてからでないと成立しないビート（a3_lapse）に使う。
+  if (when.minDives !== undefined && (world.pacing?.dives ?? 0) < when.minDives) return false;
   if (when.minDay !== undefined && (world.time?.day ?? 1) < when.minDay) return false;
   if (when.beats && !when.beats.every((b) => beatFired(world, b))) return false;
   if (when.flags && !when.flags.every((f) => flags.includes(f))) return false;

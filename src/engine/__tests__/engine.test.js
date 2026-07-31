@@ -63,9 +63,9 @@ test("存在しない/死亡NPCへの好感度変化は却下される", () => {
 
 test("ID重複の新NPCは却下される", () => {
   const w = freshWorld();
-  const { world, rejected } = verifyApply(w, { newNpcs: { haruka: { name: "偽" } } });
-  assert.equal(world.npcs.haruka.name, "遥");
-  assert.ok(rejected.some((r) => r.includes("haruka")));
+  const { world, rejected } = verifyApply(w, { newNpcs: { milina: { name: "偽" } } });
+  assert.equal(world.npcs.milina.name, "ミリナ");
+  assert.ok(rejected.some((r) => r.includes("milina")));
 });
 
 test("受注していないクエストの advance は無効", () => {
@@ -79,15 +79,15 @@ test("受注していないクエストの advance は無効", () => {
 test("達成で報酬（money/affinity/skill）が検証済みチャネルで適用される", () => {
   let w = freshWorld();
   ({ world: w } = verifyApply(w, {
-    questOps: { offer: [{ title: "遥の手伝い", giverNpcId: "haruka", objectives: ["手伝う"], reward: { money: 5000, affinity: { haruka: 10 }, skill: { social: 5 } } }] },
+    questOps: { offer: [{ title: "頼まれごと", giverNpcId: "milina", objectives: ["手伝う"], reward: { money: 5000, affinity: { milina: 10 }, skill: { social: 5 } } }] },
   }));
   const q = Q.offered(w)[0];
   ({ world: w } = playerAccept(w, q.id));
-  const beforeMoney = w.money, beforeAff = w.npcs.haruka.affinity;
+  const beforeMoney = w.money, beforeAff = w.npcs.milina.affinity;
   ({ world: w } = verifyApply(w, { questOps: { complete: [q.id] } }));
   assert.equal(Q.findQuest(w, q.id).status, Q.STATUS.COMPLETED);
   assert.equal(w.money, beforeMoney + 5000);
-  assert.equal(w.npcs.haruka.affinity, beforeAff + 10);
+  assert.equal(w.npcs.milina.affinity, beforeAff + 10);
   assert.equal(w.player.skills.social, 5);
 });
 
@@ -115,13 +115,13 @@ test("offer はMAX_OFFEREDを超えて受理しない", () => {
 test("processDeadlines: 締切超過のactiveはfailed、依頼主の好感度が下がりフラグが残る", () => {
   let w = freshWorld();
   // 過去締切のactiveクエストを直接構築
-  const q = Q.accept(Q.makeQuest({ title: "急ぎの依頼", giverNpcId: "haruka", deadline: { day: 1, hour: 6 } }, { day: 1, hour: 5 }));
+  const q = Q.accept(Q.makeQuest({ title: "急ぎの依頼", giverNpcId: "milina", deadline: { day: 1, hour: 6 } }, { day: 1, hour: 5 }));
   w.quests.push(q);
   w.time = { day: 1, hour: 8, minute: 0 }; // 締切(6時)を過ぎている
-  const affBefore = w.npcs.haruka.affinity;
+  const affBefore = w.npcs.milina.affinity;
   const { world, events } = processDeadlines(w);
   assert.equal(Q.findQuest(world, q.id).status, Q.STATUS.FAILED);
-  assert.equal(world.npcs.haruka.affinity, affBefore - PACING.FAIL_AFFINITY_PENALTY);
+  assert.equal(world.npcs.milina.affinity, affBefore - PACING.FAIL_AFFINITY_PENALTY);
   assert.ok(world.flags.includes(`quest_failed:${q.id}`));
   assert.equal(events.length, 1);
 });
@@ -137,10 +137,10 @@ test("applyTags は有効タグのみ増やし、高値ほど伸びが鈍る", (
 test("統合: 発生→受注→進行→達成", async () => {
   let w = freshWorld();
   const ai = scriptedAI([
-    { narration: "遥が頼み事をしてきた。", questOps: { offer: [{ title: "買い出し", giverNpcId: "haruka", objectives: ["店へ行く", "品を買う"], reward: { money: 1000 } }] } },
+    { narration: "隣人が頼み事をしてきた。", questOps: { offer: [{ title: "買い出し", giverNpcId: "milina", objectives: ["店へ行く", "品を買う"], reward: { money: 1000 } }] } },
     { narration: "店に着いた。", actionTags: ["physical"] },
   ]);
-  ({ world: w } = await runTurn(w, "遥に用件を聞く", ai));
+  ({ world: w } = await runTurn(w, "用件を聞く", ai));
   const q = Q.offered(w)[0];
   assert.ok(q, "クエストが提示される");
 
@@ -160,7 +160,7 @@ test("統合: 発生→受注→進行→達成", async () => {
 test("統合: 放置→締切→失敗（世界からの圧が残る）", async () => {
   let w = freshWorld();
   const ai = scriptedAI([
-    { narration: "締切付きの依頼。", diff: { advanceMin: 0 }, questOps: { offer: [{ title: "時限依頼", giverNpcId: "haruka", objectives: ["やる"], deadline: { day: 1, hour: 8 } }] } },
+    { narration: "締切付きの依頼。", diff: { advanceMin: 0 }, questOps: { offer: [{ title: "時限依頼", giverNpcId: "milina", objectives: ["やる"], deadline: { day: 1, hour: 8 } }] } },
   ]);
   ({ world: w } = await runTurn(w, "話を聞く", ai));
   const q = Q.offered(w)[0];

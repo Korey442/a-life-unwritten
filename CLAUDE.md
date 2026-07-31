@@ -159,6 +159,30 @@
   **テストケースは必ずテストファイルの中に書くこと。** コマンドラインに危険な文字列を直接書くと、
   ガードが（正しく）反応して実行できない。
 
+### Stop フック `stop-hook-git-check.sh` の誤検知（**調べ直さないこと**）
+クラウドセッションでは、このフックが**署名済みのコミットを「Unverified」と誤検知する**。
+毎回調査すると時間を捨てるので、以下を前提として扱う。
+
+**症状**: ターン終了時に `<sha> N noreply@anthropic.com` が並び、
+`git config user.email ...` と `git commit --amend --no-edit --reset-author` を促される。
+
+**原因**: フックは `git log --format='%G?'` が `N` なら未署名とみなす。
+スクリプト自身のコメントに「署名済みだが検証できない場合は `B/U/E` になる」とあるが、
+**それは GPG の話**。この環境は `gpg.format = ssh` かつ `gpg.ssh.allowedSignersFile` が未設定で、
+**検証自体が走らないため署名済みでも `N` になる**
+（公開鍵ファイルは 0 バイト。鍵は `/tmp/code-sign` の内側にあり、ローカル検証は原理的に不可能）。
+
+**対応**:
+1. **`--amend --reset-author` は実行しない。** `user.email` は既に `noreply@anthropic.com` で
+   変えるものが無く、push 済みのコミットなら**履歴の書き換え**になる。
+2. **必要なのは push だけ。** フックの対象は `origin/<branch>..HEAD` なので、push すれば消える。
+3. 念のため確かめるときは**この1行で足りる**。それ以上の調査はしない。
+   `git cat-file commit HEAD | grep -q '^gpgsig' && echo signed`
+
+**注**: スマホ／Web／デスクトップの違いではなく、**クラウド実行環境かどうか**で決まる。
+フック本体は `~/.claude/` にあり root 所有・コンテナ起動時刻なので**環境側が配っている**
+（セッション内で直しても次回には戻る）。恒久的に直すなら環境側の設定になる。
+
 ## アーキテクチャ（4層）
 - L1 `engine/worldState.js` — 確定事実のJSON（決定論的）
 - L2 `engine/verify.js` — 差分・questOps の整合性検証

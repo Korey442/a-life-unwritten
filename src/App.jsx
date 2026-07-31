@@ -11,6 +11,7 @@ import Scene from "./ui/Scene.jsx";
 import StatusBar from "./ui/StatusBar.jsx";
 import QuestLog from "./ui/QuestLog.jsx";
 import NetPanel from "./ui/NetPanel.jsx";
+import Memories from "./ui/Memories.jsx";
 import ActionInput from "./ui/ActionInput.jsx";
 import StoryChoice, { EndingBanner } from "./ui/StoryChoice.jsx";
 import { Shell, theme, inp, btn, choice, logBox, rejBox } from "./ui/styles.jsx";
@@ -219,8 +220,10 @@ export default function App() {
         </div>
 
         {!net && (
-          <div className="side">
+          <div className="side" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <QuestLog world={world} onAccept={accept} onDecline={decline} loading={loading} />
+            {/* ダイブの代償。潜るほど減る。ミリナは認めないので、ここでしか分からない */}
+            {world.flags?.includes("dived_once") && <Memories world={world} />}
           </div>
         )}
       </div>
