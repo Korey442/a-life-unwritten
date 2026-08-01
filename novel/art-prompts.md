@@ -114,53 +114,85 @@ space for a chapter title. 3:4, high detail. Present-day Japan, not science fict
 **ミリナと同じ画面に並べても混ざらないこと**が唯一の要件。設定は `../STORY.md`「容姿」。
 ミリナと違い**参照画像が無い**ので、まずこれで一枚決めて、以後それを参照画像にする。
 
+> ## ⚠ 一度失敗している。同じ穴を踏まないこと
+> 初稿は**濃い褐色肌の、レンガ造りの田舎家に立つ寸胴の女性**が出た。原因は3つとも書き手側にある。
+> 1. `lightly sun-tanned` と書き、さらに `COLOR` にも `tanned skin` を入れた。
+>    **画像AIは日焼けを必ず過剰にかける。** しかも「日本人」と一度も書いていなかった。
+> 2. `COLOR` に `oatmeal, faded brick, olive` と置いた。**色名が背景に漏れて壁を建てた。**
+>    → **色は服にだけ指定し、舞台は必ず名指しする。**
+> 3. 体型の指定がゼロで、`cheap` `loose trousers` `never styled` だけが効いた。
+>    → **体型・身長・髪の長さは必ず明示する。**
+
 ```
-Anime illustration, character reference sheet, full body plus a separate close-up
-of her hands. Present-day Japan. Absolutely not science fiction.
+Anime illustration, clean cel shading, character reference sheet.
+Full body, plus a separate close-up of her hands.
+Modern Japan. Absolutely not science fiction, not fantasy, not rustic Europe.
 
-AGE — deliberately unreadable. She could be in her twenties or her thirties.
-Do not make her look like a teenager. Do not make her look matronly.
-This ambiguity is the point; do not resolve it.
+WHO — a Japanese woman. East Asian features, softly rounded face.
+Her age is deliberately unreadable — she could be in her twenties or her
+thirties, because she looks after herself and it shows. Do not make her look
+like a teenager. Do not make her look middle-aged.
 
-HAIR — black, thick, a little dry at the ends. Gathered up out of the way at the
-back and held with a plain clip. A few strands escaping. Practical, never styled.
+SKIN — fair, clear, even, neutral Japanese skin tone. Absolutely NOT tanned,
+NOT dark, NOT olive, NOT sun-browned. She is careful about sun exposure and
+takes care of her skin. Light, natural, well-applied makeup.
 
-SKIN — lightly sun-tanned, noticeably warmer than the people around her.
-Almost no makeup. Faint shadows under the eyes, easy to miss at first glance.
+HAIR — long, straight, glossy black hair falling past the shoulder blades.
+Visibly well maintained: smooth, neatly trimmed ends, catching the light.
+Show two variants on the sheet — worn down, and gathered into a low loose bun
+with a plain clip for housework.
 
-EXPRESSION — bright, open, amused; she is the one who speaks first. Dark brown eyes.
-A smile that arrives fast and does not explain itself.
+FIGURE — about 160cm, ordinary adult Japanese height, and unmistakably an adult
+woman: a soft, full, feminine figure with a generous bust, gentle waist and
+rounded hips. Warm and enveloping rather than slender or athletic.
+
+EXPRESSION — calm, warm, unhurried, motherly. A gentle smile that reaches the
+eyes. Dark brown eyes with slightly lowered outer corners. She looks like
+someone who notices you have not eaten, and says so before you do.
 
 HANDS — the most important part of this design. Keep them fully visible and in
-focus. Sleeves pushed up past the forearms. Short unpainted nails, cut down.
-Slightly rough fingertips. One small adhesive bandage on a finger.
+focus. Well cared for: smooth skin, no polish. Nails cut short and neatly
+filed — the single practical thing about her appearance. Sleeves pushed back
+from the wrists while she works.
 
-CLOTHES — ordinary, cheap, comfortable, faintly worn: a plain long-sleeve knit,
-loose trousers, house slippers. Nothing branded. Nothing fashionable.
-A cotton apron that is clearly her own and not the room's.
+CLOTHES — ordinary present-day Japanese homewear. Inexpensive but clean and
+chosen with care: a soft knit that follows her figure, a long skirt or
+well-fitting trousers, house slippers. A plain cotton apron, clearly her own.
+Nothing branded, nothing flashy, nothing baggy or shapeless.
 
-ONE GOOD THING — exactly one item that does not match anything else she owns:
-old, genuinely fine, well cared for. Do not centre it or light it specially.
-It should read as something a viewer notices on a second pass.
+ONE GOOD THING — exactly one accessory that does not match the price of
+anything else she owns: old, genuinely fine, quietly well kept. Do not centre
+it, do not light it specially. A viewer should notice it on a second pass.
 
-COLOR — warm earth tones. Black hair, tanned skin, oatmeal, faded brick, olive.
-Deliberately the opposite of a cold blue-white palette.
+SETTING — the entryway and small kitchen of an ordinary modern Japanese
+apartment. Vinyl flooring, a sliding door, a plain refrigerator.
+Nothing rustic, no brick, no exposed timber.
 
-MOOD — capable, cheerful, and tired underneath in a way the picture never states.
+COLOR — soft and warm, ON THE CLOTHING ONLY: cream, dusty rose, pale grey.
+These colours must not dictate the background.
+
+MOOD — beautiful, composed, motherly. Tired underneath in a way the picture
+never states.
 ```
 
 **ネガティブ（共通のものに加えて）**
 ```
-maid outfit, frills, pointed ears, wings, pale blue hair, twin tails,
-school uniform, glamorous, heavy makeup, idol, gyaru, hands hidden,
-hands behind back, long manicured nails, expensive clothes, luxury interior
+tanned skin, dark skin, deep tan, olive skin, sun-browned, gyaru,
+short hair, bob, wavy hair, curly hair, messy hair, unkempt,
+baggy shapeless clothing, cargo pants, rough hands, chapped skin, bandages,
+brick wall, wooden farmhouse, rustic european cottage, stone floor, ivy,
+painterly, oil painting, semi-realistic, maid outfit, frills, pointed ears,
+wings, pale blue hair, twin tails, school uniform, heavy makeup,
+long manicured nails, hands hidden, luxury interior
 ```
 
 **終盤版**（第3章以降で差し替える）
 ```
-Same character. Thinner in the face. The knit hangs looser at the shoulders than
-it did. Hair tied up more tightly and more hastily. Two or three bandages now
-instead of one. The apron is the same apron. She is still smiling.
+Same character, later. Her hair is tied back far more often than it is worn
+down, and the ends have lost their shine. The knit hangs looser at the
+shoulders than it used to. Her makeup is lighter, and then absent. The nails
+are still cut short, but the skin around them has gone dry.
+The apron is the same apron. She is still smiling.
 ```
 
 > ⚠ **ミリナの消耗（輪郭が粒に解ける）を彼女に適用しないこと。** 減り方を分けているのが設計。
