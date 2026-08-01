@@ -109,6 +109,73 @@ space for a chapter title. 3:4, high detail. Present-day Japan, not science fict
 
 ---
 
+## 九条 節奈——キャラクターデザイン
+
+**ミリナと同じ画面に並べても混ざらないこと**が唯一の要件。設定は `../STORY.md`「容姿」。
+ミリナと違い**参照画像が無い**ので、まずこれで一枚決めて、以後それを参照画像にする。
+
+```
+Anime illustration, character reference sheet, full body plus a separate close-up
+of her hands. Present-day Japan. Absolutely not science fiction.
+
+AGE — deliberately unreadable. She could be in her twenties or her thirties.
+Do not make her look like a teenager. Do not make her look matronly.
+This ambiguity is the point; do not resolve it.
+
+HAIR — black, thick, a little dry at the ends. Gathered up out of the way at the
+back and held with a plain clip. A few strands escaping. Practical, never styled.
+
+SKIN — lightly sun-tanned, noticeably warmer than the people around her.
+Almost no makeup. Faint shadows under the eyes, easy to miss at first glance.
+
+EXPRESSION — bright, open, amused; she is the one who speaks first. Dark brown eyes.
+A smile that arrives fast and does not explain itself.
+
+HANDS — the most important part of this design. Keep them fully visible and in
+focus. Sleeves pushed up past the forearms. Short unpainted nails, cut down.
+Slightly rough fingertips. One small adhesive bandage on a finger.
+
+CLOTHES — ordinary, cheap, comfortable, faintly worn: a plain long-sleeve knit,
+loose trousers, house slippers. Nothing branded. Nothing fashionable.
+A cotton apron that is clearly her own and not the room's.
+
+ONE GOOD THING — exactly one item that does not match anything else she owns:
+old, genuinely fine, well cared for. Do not centre it or light it specially.
+It should read as something a viewer notices on a second pass.
+
+COLOR — warm earth tones. Black hair, tanned skin, oatmeal, faded brick, olive.
+Deliberately the opposite of a cold blue-white palette.
+
+MOOD — capable, cheerful, and tired underneath in a way the picture never states.
+```
+
+**ネガティブ（共通のものに加えて）**
+```
+maid outfit, frills, pointed ears, wings, pale blue hair, twin tails,
+school uniform, glamorous, heavy makeup, idol, gyaru, hands hidden,
+hands behind back, long manicured nails, expensive clothes, luxury interior
+```
+
+**終盤版**（第3章以降で差し替える）
+```
+Same character. Thinner in the face. The knit hangs looser at the shoulders than
+it did. Hair tied up more tightly and more hastily. Two or three bandages now
+instead of one. The apron is the same apron. She is still smiling.
+```
+
+> ⚠ **ミリナの消耗（輪郭が粒に解ける）を彼女に適用しないこと。** 減り方を分けているのが設計。
+
+**立ち絵（ゲーム側）**
+- 命名は `assets/chars/npc_setsuna_{emotion}.png`、感情は6種固定
+  （`neutral|happy|angry|sad|shy|surprise`）。
+- **未確認**: 既存の立ち絵は「立ち絵さん（キャラクター作成セット）」由来。日焼け肌・黒髪の
+  まとめ髪・**手が見える構図**がそのキットで作れるかは確認していない。作れない場合は
+  節奈だけ別手段になる（`scripts/render_npc.py` の前提が変わる）。
+- 未使用の `npc_haruka_*.png`（6枚）は glob 取り込みでビルドに乗ったままなので、
+  節奈を入れるときに一緒に消す。
+
+---
+
 ## 実務メモ
 - 章扉は**バストアップで止める**。全身にすると衣装の情報量が勝って、タイトル文字が置けない
 - タイトルが長い（「そろそろ、行きませんか　——A Life, Unwritten」）ので、**上三分の一を空ける**
