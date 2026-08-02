@@ -111,90 +111,84 @@ space for a chapter title. 3:4, high detail. Present-day Japan, not science fict
 
 ## 九条 節奈——キャラクターデザイン
 
-**ミリナと同じ画面に並べても混ざらないこと**が唯一の要件。設定は `../STORY.md`「容姿」。
-ミリナと違い**参照画像が無い**ので、まずこれで一枚決めて、以後それを参照画像にする。
+**参照画像は `ref/setsuna_ref.png`（三稿）。これが正。** 生成時は必ず添えること。
+文章だけだと別人が出るのは、ミリナと同じ。設定は `../STORY.md`「容姿」。
 
-> ## ⚠ 一度失敗している。同じ穴を踏まないこと
-> 初稿は**濃い褐色肌の、レンガ造りの田舎家に立つ寸胴の女性**が出た。原因は3つとも書き手側にある。
-> 1. `lightly sun-tanned` と書き、さらに `COLOR` にも `tanned skin` を入れた。
+> ## ⚠ 三度失敗している。同じ穴を踏まないこと
+> **一稿**: 濃い褐色肌の、レンガ造りの田舎家に立つ寸胴の女性。
+> 1. `lightly sun-tanned` と書き、`COLOR` にも `tanned skin` を入れた。
 >    **画像AIは日焼けを必ず過剰にかける。** しかも「日本人」と一度も書いていなかった。
 > 2. `COLOR` に `oatmeal, faded brick, olive` と置いた。**色名が背景に漏れて壁を建てた。**
 >    → **色は服にだけ指定し、舞台は必ず名指しする。**
-> 3. 体型の指定がゼロで、`cheap` `loose trousers` `never styled` だけが効いた。
->    → **体型・身長・髪の長さは必ず明示する。**
+> 3. 体型の指定がゼロだった。→ **体型・身長・髪の長さは必ず明示する。**
+>
+> **二稿**: 赤い水玉のエプロン、ウェーブの巻き上げ髪、十代寄り。柄と髪を明示して解決。
+>
+> **三稿**（= 現在の参照画像）: 肌・髪・エプロン・ニット・腕時計・手がすべて出た。**採用。**
+>
+> **四稿**: 三稿を「二十代後半に見せる」ため `FACE` に
+> `adult eyes, NOT large round childlike anime eyes` と `No blush` を入れたら、
+> **可愛くなくなって却下**。
+> → **教訓: 若さの記号（大きな目・頬の赤み）を抜くと、この絵の魅力ごと消える。**
+>   **年齢は絵で解かない。** 姉であることは振る舞いが担保する（正典を修正済み）。
+>   同じ理由で `LIGHT` の `flat, even, neutral` も戻した。**暖かい光は残す。**
 
-**本体は 3,105 字**（上限4,000字に収めてある）。ネガティブは別欄なので字数に含めない。
-**削るときの優先順位**は下から——`MOOD` → `FABRIC` → `CLOTHES`。
-**`SKIN` `SETTING` `FIGURE` `HAIR` `FACE` `LIGHT` は削らない。** 6項目とも、抜いた結果が実際に出ている。
-
-> **三稿の結果（良化）**: 肌・髪・エプロン・ニット・腕時計・手はすべて指定どおり出た。
-> 残った失敗は3つで、いずれも**書き方の問題**。
-> 1. **十八〜二十歳に見えた。** 原因は**頬の赤みと大きく丸い目**。
->    **20歳に見えると「姉」の立場が崩れる**（正典）ので、`FACE` に成人の目と blush 禁止を明記した。
-> 2. **台所がまた洋風**（木目のキャビネット、電熱コイル、漆喰壁、レースのカーテン）。
->    `no hanging pots` だけでは足りない。**「システムキッチン」と名指しし、`NO wood grain` を足した。**
-> 3. **画面全体が金色の逆光になった。** これがいちばん設計を壊す。彩度を落として
->    「光るのは腕時計だけ」にしたのに、全部が光った。
->    → 原因は `let the apron be the brightest surface` という書き方。
->    **モデルは「明るくするために光源を足す」と解釈する。**
->    **明るいのは照明のせいではなく、生成りだから**——と書き直した。
+**本体は 2,707 字**（上限4,000字）。ネガティブは別欄なので字数に含めない。
+**`SKIN` `SETTING` `HAIR` `APRON` は削らない。** 4項目とも、抜いた結果が実際に出ている。
 
 ```
-Anime illustration, clean cel shading, character reference sheet, full body.
+Anime illustration, soft painterly rendering, warm and gentle. Vertical, waist-up.
 Modern Japan. Not science fiction, not fantasy, not rustic Europe.
 
-WHO — a young Japanese woman. At a glance she must read as an adult in her mid
-to late twenties: composed, settled, grown-up. East Asian features, softly
-rounded face. Not a teenager, not a schoolgirl, not a girl, not middle-aged.
+CHARACTER — use the attached reference image for her face, hair and clothing.
+Do not redesign her.
 
-SKIN — fair, clear, even Japanese skin tone. NOT tanned, NOT dark, NOT olive,
-NOT sun-browned. She protects her skin and it shows. Light natural makeup.
+WHO — a young Japanese woman living alone, with a quiet motherly warmth.
+Pretty, gentle, approachable. East Asian features, soft rounded face.
+Fair, clear, even Japanese skin tone. NOT tanned, NOT dark, NOT olive.
 
-HAIR — long, perfectly straight, glossy black, reaching mid-back. No waves, no
-curls, no side volume. Blunt neatly trimmed ends, parted to one side, no blunt
-fringe. Two variants: worn down, and gathered LOW at the nape with a plain clip.
+FACE — large soft dark brown eyes with clear lashes. A gentle closed-lip smile.
+A light natural blush across the cheeks. Calm, kind, unhurried. She looks like
+someone who notices you have not eaten, and says so before you do.
 
-FIGURE — about 160cm, unmistakably a grown woman: soft, full, gently rounded,
-womanly waist and hips. Warm and enveloping. Motherly, NOT sexualised — do not
-exaggerate the chest, no clinging fabric, no cleavage.
+HAIR — long, straight, glossy black hair to mid-back, visibly well cared for.
+A soft side-swept fringe, long strands framing the face. No waves, no curls.
 
-FACE — calm, warm, unhurried. A gentle closed-lip smile that reaches the eyes.
-Dark brown eyes, calm and slightly narrow, outer corners lowered — adult eyes,
-NOT large round childlike anime eyes. No blush on the cheeks.
+FIGURE — about 160cm, a soft, gently rounded adult figure, womanly waist and
+hips. Warm and enveloping. Motherly, NOT sexualised — do not exaggerate the
+chest, no clinging fabric, no cleavage.
 
-CLOTHES — ordinary homewear of a young woman with a steady office job living
-alone: modest, clean, chosen with care. Neither poor nor luxurious. A soft knit,
-well-fitting trousers or a long skirt, house slippers.
+CLOTHES — a greige ribbed cotton knit with a wide round neck, sleeves pushed up
+to mid-forearm. Over it a plain undyed off-white cotton apron with a chest bib,
+one front pocket and soft fabric ties at the waist — washed soft, never crisp,
+never starched. Dark brown trousers. No frills, no lace, no ribbons, no print,
+no pattern of any kind. The apron must not be the loudest thing in the picture.
 
-APRON — completely plain and unpatterned, worn over her own clothes: a tool, not
-a uniform. No frills, no lace, no ribbons, no print of any kind. It must not be
-the loudest thing in the picture.
-
-WATCH — a slim old fine gold wristwatch on her left wrist, plainly older and
-finer than anything else she owns, and plainly looked after. The one thing here
-she could not have bought herself. Do not centre or spotlight it.
+WATCH — a slim gold wristwatch with a small round face on her left wrist,
+plainly older and finer than anything else she owns, and plainly looked after.
+The only metallic glint in the frame.
 
 COLOUR — ON THE CLOTHING ONLY, low saturation, warm and muted: apron undyed
-off-white #EDE6DA, knit greige #C9B7A6, trousers dark brown #4A3B32. No jewel
-tones, no purple, no navy, no bright accent. The gold watch is the only glint in
-the frame. These colours MUST NOT reach the background.
+off-white #EDE6DA, knit greige #C9B7A6, trousers dark brown #4A3B32.
+No jewel tones, no purple, no navy, no bright accent colour.
+These colours MUST NOT reach the background.
 
 FABRIC — everything she wears absorbs light rather than reflecting it: matte
-low-gauge ribbed cotton knit, a plain-weave linen-cotton apron washed soft and
-never starched, heavy brushed cotton trousers. No satin, no silk, no sheen.
+low-gauge ribbed cotton knit, plain-weave linen-cotton apron. No satin, no silk.
 
-SETTING — a modern Japanese apartment system kitchen: flat white or pale grey
-laminate cabinet doors, a plain flat wall, a stainless two-burner GAS hob, a
-stainless sink, vinyl floor, white fridge. Modest, tidy, unremarkable.
-NO wood grain anywhere, no electric coil hob, no tiled plaster wall, no lace
-curtain, no hanging pots, no open shelving, nothing rustic or vintage.
+SETTING — a modern Japanese system kitchen. Functional, clean and simple:
+flat handleless cabinet doors in white or pale wood, one uninterrupted worktop,
+a stainless two-burner GAS hob, a wide flat sink, a slim rangehood.
+Uncluttered, tidy, well kept. No dark wood country cabinets, no open wooden
+shelving, no hanging pots, no tiled plaster wall, nothing rustic or vintage.
 
-LIGHT — flat, even, neutral indoor daylight. No golden hour, no sunset, no
-strong backlight, no rim light, no bloom, no warm colour cast. The off-white
-apron is the lightest surface in the frame simply because it is off-white,
-NOT because anything is lit. Keep the whole image low in saturation.
+POSE — standing at the counter, body slightly turned, hands resting easily,
+looking at the viewer.
 
-MOOD — beautiful, composed, motherly. Tired underneath, never stated.
+LIGHT — soft warm daylight from a window to one side. A gentle glow, a faint
+haze in the air. Warm and calm; do not blow out the highlights.
+
+MOOD — pretty, warm, homely, quietly caring.
 ```
 
 **ネガティブ（共通のものに加えて）**
@@ -202,8 +196,8 @@ MOOD — beautiful, composed, motherly. Tired underneath, never stated.
 tanned skin, dark skin, deep tan, olive skin, sun-browned, gyaru,
 short hair, bob, wavy hair, curly hair, curled ends, ringlets, messy hair,
 high ponytail, twin tails, hair ribbons, blunt straight fringe, hime cut,
-teenager, schoolgirl, college student, childlike face, baby face,
-large round eyes, blush, flushed cheeks,
+short bangs,
+teenager, schoolgirl, college student, childlike face,
 huge breasts, breast emphasis, cleavage, tight clinging top,
 polka dots, patterned apron, bright red apron, floral print, loud pattern,
 frilled apron, lace apron, apron with ribbons,
@@ -213,11 +207,10 @@ satin, silk, sheen, glossy fabric, lace, jewel tones, purple, navy blue,
 saturated colours, bright accent colour,
 brick wall, wooden farmhouse, rustic european cottage, stone floor, ivy,
 hanging copper pots, open wooden shelving, western country kitchen,
-wooden cabinets, wood grain, electric coil stove, tiled plaster wall,
-lace curtain, vintage kitchen, golden hour, sunset light, strong backlight,
-rim light, bloom, lens flare, warm colour cast,
-painterly, oil painting, semi-realistic, maid outfit, frills, pointed ears,
-wings, pale blue hair, school uniform, heavy makeup, luxury interior
+dark wooden cabinets, electric coil stove, tiled plaster wall, lace curtain,
+vintage kitchen, cluttered counter,
+maid outfit, frills, pointed ears, wings, pale blue hair, school uniform,
+heavy makeup, luxury interior, harsh flat lighting, blown-out highlights
 ```
 
 **手について（基本プロンプトには入れない）**
