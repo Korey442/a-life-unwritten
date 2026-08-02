@@ -180,8 +180,23 @@ flooring, a plain white refrigerator, a sliding door. Modest and well kept —
 neither cheap nor luxurious. NO hanging copper pots, no open wooden shelving,
 no western country kitchen, nothing rustic.
 
-COLOR — soft and warm, ON THE CLOTHING ONLY: cream, dusty rose, pale grey.
-These colours must not dictate the background.
+COLOUR — ON THE CLOTHING ONLY. Low saturation throughout, warm and muted:
+  · apron — undyed natural cotton, warm off-white, #EDE6DA
+  · knit — greige, a soft dusty warm grey-brown, #C9B7A6
+  · trousers or long skirt — dark chocolate brown, #4A3B32
+No jewel tones. No purple, no navy, no bright accent colour anywhere.
+The only warm glint in the whole picture is the old gold watch.
+These colours describe her clothes and MUST NOT be applied to the background.
+
+FABRIC — everything she wears absorbs light rather than reflecting it.
+The knit is matte low-gauge cotton with visible ribbing and a slight nap.
+The apron is a plain-weave linen-cotton, washed soft — never crisp, never
+starched. The trousers are heavy brushed cotton or fine corduroy.
+No satin, no silk, no sheen, no lace, no frills, no ribbons.
+
+VALUE — because the palette is so desaturated, separate her from the room with
+brightness instead of colour: keep the room dim and let the off-white apron be
+the brightest surface in the frame.
 
 MOOD — beautiful, composed, motherly. Tired underneath in a way the picture
 never states.
@@ -198,6 +213,8 @@ polka dots, patterned apron, bright red apron, floral print, loud pattern,
 frilled apron, lace apron, apron with ribbons,
 baggy shapeless clothing, cargo pants, rough hands, chapped skin, bandages,
 long manicured nails, shabby clothes, poverty, squalor,
+satin, silk, sheen, glossy fabric, lace, jewel tones, purple, navy blue,
+saturated colours, bright accent colour,
 brick wall, wooden farmhouse, rustic european cottage, stone floor, ivy,
 hanging copper pots, open wooden shelving, western country kitchen,
 painterly, oil painting, semi-realistic, maid outfit, frills, pointed ears,
