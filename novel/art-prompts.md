@@ -128,45 +128,57 @@ Anime illustration, clean cel shading, character reference sheet.
 Full body, plus a separate close-up of her hands.
 Modern Japan. Absolutely not science fiction, not fantasy, not rustic Europe.
 
-WHO — a Japanese woman. East Asian features, softly rounded face.
-Her age is deliberately unreadable — she could be in her twenties or her
-thirties, because she looks after herself and it shows. Do not make her look
-like a teenager. Do not make her look middle-aged.
+WHO — a Japanese woman, late twenties to mid thirties. East Asian features,
+softly rounded face. Her age is deliberately unreadable within that range,
+because she looks after herself and it shows. She is not a student and not a
+girl. Do not make her look like a teenager or a college student.
+Do not make her look middle-aged either.
 
 SKIN — fair, clear, even, neutral Japanese skin tone. Absolutely NOT tanned,
 NOT dark, NOT olive, NOT sun-browned. She is careful about sun exposure and
 takes care of her skin. Light, natural, well-applied makeup.
 
-HAIR — long, straight, glossy black hair falling past the shoulder blades.
-Visibly well maintained: smooth, neatly trimmed ends, catching the light.
-Show two variants on the sheet — worn down, and gathered into a low loose bun
-with a plain clip for housework.
+HAIR — long, perfectly straight, glossy black hair reaching the middle of her
+back. No waves, no curls, no curled ends, no volume at the sides. Smooth and
+heavy, with blunt neatly trimmed ends, visibly well maintained. Parted to one
+side, forehead partly visible — no blunt straight fringe.
+Show two variants on the sheet: (1) worn down, (2) gathered LOW at the nape into
+a simple bun with a plain clip for housework — low, not a high ponytail.
 
-FIGURE — about 160cm, ordinary adult Japanese height, and unmistakably an adult
-woman: a soft, full, feminine figure with a generous bust, gentle waist and
-rounded hips. Warm and enveloping rather than slender or athletic.
+FIGURE — about 160cm, ordinary adult Japanese height, and unmistakably a grown
+woman: a soft, full, gently rounded figure — a womanly waist and hips, a natural
+adult bust. Warm and enveloping. Motherly, NOT sexualised: do not exaggerate the
+chest, do not emphasise it with tight or clinging fabric, no cleavage.
 
 EXPRESSION — calm, warm, unhurried, motherly. A gentle smile that reaches the
 eyes. Dark brown eyes with slightly lowered outer corners. She looks like
 someone who notices you have not eaten, and says so before you do.
 
-HANDS — the most important part of this design. Keep them fully visible and in
-focus. Well cared for: smooth skin, no polish. Nails cut short and neatly
-filed — the single practical thing about her appearance. Sleeves pushed back
-from the wrists while she works.
+HANDS — the most important part of this design, and they must not be cropped or
+hidden. INCLUDE A SEPARATE INSET PANEL showing both hands in close-up, filling
+that panel. Well cared for: smooth skin, no polish. Nails cut short and neatly
+filed — the single practical thing about her appearance.
+Sleeves pushed back from the wrists while she works.
 
 CLOTHES — ordinary present-day Japanese homewear. Inexpensive but clean and
 chosen with care: a soft knit that follows her figure, a long skirt or
-well-fitting trousers, house slippers. A plain cotton apron, clearly her own.
-Nothing branded, nothing flashy, nothing baggy or shapeless.
+well-fitting trousers, house slippers. Nothing branded, nothing flashy,
+nothing baggy or shapeless.
 
-ONE GOOD THING — exactly one accessory that does not match the price of
-anything else she owns: old, genuinely fine, quietly well kept. Do not centre
-it, do not light it specially. A viewer should notice it on a second pass.
+APRON — plain and completely unpatterned, in a quiet muted colour (off-white,
+soft grey or dusty blue). Simple cotton, softened by washing, clearly her own
+and brought from somewhere else. NO polka dots, no bright red, no print,
+no pattern of any kind. It must not be the loudest thing in the picture.
 
-SETTING — the entryway and small kitchen of an ordinary modern Japanese
-apartment. Vinyl flooring, a sliding door, a plain refrigerator.
-Nothing rustic, no brick, no exposed timber.
+ONE GOOD THING — a slim, old, genuinely fine gold wristwatch on her left wrist,
+obviously older and better than everything else she owns, and obviously looked
+after. It is the only expensive thing in the frame. Do not centre it, do not
+light it specially — a viewer should notice it on a second pass.
+
+SETTING — the cramped kitchen of a small, old, inexpensive Japanese apartment.
+A two-burner gas range, a shallow stainless steel sink, vinyl flooring, a plain
+white refrigerator, a sliding door. Cheap and tidy. NO hanging copper pots, no
+open wooden shelving, no western country kitchen, nothing rustic.
 
 COLOR — soft and warm, ON THE CLOTHING ONLY: cream, dusty rose, pale grey.
 These colours must not dictate the background.
@@ -178,12 +190,17 @@ never states.
 **ネガティブ（共通のものに加えて）**
 ```
 tanned skin, dark skin, deep tan, olive skin, sun-browned, gyaru,
-short hair, bob, wavy hair, curly hair, messy hair, unkempt,
+short hair, bob, wavy hair, curly hair, curled ends, ringlets, messy hair,
+high ponytail, twin tails, hair ribbons, blunt straight fringe, hime cut,
+teenager, college student, childlike face,
+huge breasts, breast emphasis, cleavage, tight clinging top,
+polka dots, patterned apron, bright red apron, floral print, loud pattern,
 baggy shapeless clothing, cargo pants, rough hands, chapped skin, bandages,
+hands cropped, hands hidden, hands behind back, long manicured nails,
 brick wall, wooden farmhouse, rustic european cottage, stone floor, ivy,
+hanging copper pots, open wooden shelving, western country kitchen,
 painterly, oil painting, semi-realistic, maid outfit, frills, pointed ears,
-wings, pale blue hair, twin tails, school uniform, heavy makeup,
-long manicured nails, hands hidden, luxury interior
+wings, pale blue hair, school uniform, heavy makeup, luxury interior
 ```
 
 **終盤版**（第3章以降で差し替える）
@@ -192,8 +209,13 @@ Same character, later. Her hair is tied back far more often than it is worn
 down, and the ends have lost their shine. The knit hangs looser at the
 shoulders than it used to. Her makeup is lighter, and then absent. The nails
 are still cut short, but the skin around them has gone dry.
-The apron is the same apron. She is still smiling.
+The apron is the same apron, greyer and more worn.
+The old gold watch is still on her wrist, still looked after.
+She is still smiling.
 ```
+
+> **終盤で残す2点**: エプロン（褪せる）と腕時計（褪せない）。
+> **手放さないものがあることで、手放したものが見える。**
 
 > ⚠ **ミリナの消耗（輪郭が粒に解ける）を彼女に適用しないこと。** 減り方を分けているのが設計。
 
