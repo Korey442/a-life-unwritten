@@ -111,8 +111,14 @@ space for a chapter title. 3:4, high detail. Present-day Japan, not science fict
 
 ## 九条 節奈——キャラクターデザイン
 
-**参照画像は `ref/setsuna_ref.png`（三稿）。これが正。** 生成時は必ず添えること。
-文章だけだと別人が出るのは、ミリナと同じ。設定は `../STORY.md`「容姿」。
+**参照画像は2枚。生成時は必ず添えること。** 文章だけだと別人が出るのは、ミリナと同じ。
+
+| ファイル | 何のための正か |
+|---|---|
+| `ref/setsuna_ref.png` | **顔・髪・雰囲気の正**（三稿） |
+| `ref/setsuna_ref_b.png` | **色と衣装の正**（五稿）。生成りニット＋白い無地エプロン。台所も明るい |
+
+設定は `../STORY.md`「容姿」。
 
 > ## ⚠ 三度失敗している。同じ穴を踏まないこと
 > **一稿**: 濃い褐色肌の、レンガ造りの田舎家に立つ寸胴の女性。
@@ -133,7 +139,16 @@ space for a chapter title. 3:4, high detail. Present-day Japan, not science fict
 >   **年齢は絵で解かない。** 姉であることは振る舞いが担保する（正典を修正済み）。
 >   同じ理由で `LIGHT` の `flat, even, neutral` も戻した。**暖かい光は残す。**
 
-**本体は 2,707 字**（上限4,000字）。ネガティブは別欄なので字数に含めない。
+> **五稿（4枚）で分かったこと——大人っぽさは顔ではなく構図で出る。**
+> 四稿で狙って失敗した「二十代半ばに見える」が、**若さの記号を抜かないまま達成された。**
+> 効いているのは目や blush ではなく、**参照画像＋姿勢**（カウンターに立つ、手を前で組む、
+> 伏し目がちの穏やかな笑み）。→ **年齢は `FACE` ではなく `POSE` で操作する。**
+>
+> 残った未達は4つ。**どれも参照画像の色に引っ張られたもの**なので、色は文章で押し切る。
+> 髪が茶色に転ぶ／ニットが紺・深緑に飛ぶ／台所が洋風のまま（**システムキッチンが一度も出ていない**）／
+> 腕時計が両手首に出る。加えて**背景に別人**と**エプロンの刺繍・ロゴ**が一度ずつ出た。
+
+**本体は 3,152 字**（上限4,000字）。ネガティブは別欄なので字数に含めない。
 **`SKIN` `SETTING` `HAIR` `APRON` は削らない。** 4項目とも、抜いた結果が実際に出ている。
 
 ```
@@ -151,22 +166,26 @@ FACE — large soft dark brown eyes with clear lashes. A gentle closed-lip smile
 A light natural blush across the cheeks. Calm, kind, unhurried. She looks like
 someone who notices you have not eaten, and says so before you do.
 
-HAIR — long, straight, glossy black hair to mid-back, visibly well cared for.
+HAIR — long, straight, glossy hair to mid-back, visibly well cared for.
+PURE BLACK — not brown, not dark brown, not chestnut, not highlighted.
 A soft side-swept fringe, long strands framing the face. No waves, no curls.
 
 FIGURE — about 160cm, a soft, gently rounded adult figure, womanly waist and
 hips. Warm and enveloping. Motherly, NOT sexualised — do not exaggerate the
 chest, no clinging fabric, no cleavage.
 
-CLOTHES — a greige ribbed cotton knit with a wide round neck, sleeves pushed up
-to mid-forearm. Over it a plain undyed off-white cotton apron with a chest bib,
+CLOTHES — a ribbed cotton knit in GREIGE, a warm grey-beige — not navy, not
+green, not blue, not pure white. Wide round neck, sleeves pushed up to
+mid-forearm. Over it a plain undyed off-white cotton apron with a chest bib,
 one front pocket and soft fabric ties at the waist — washed soft, never crisp,
-never starched. Dark brown trousers. No frills, no lace, no ribbons, no print,
-no pattern of any kind. The apron must not be the loudest thing in the picture.
+never starched. Dark brown trousers. The apron is COMPLETELY PLAIN: no
+embroidery, no logo, no lettering, no frills, no lace, no ribbons, no print,
+no pattern of any kind. It must not be the loudest thing in the picture.
 
-WATCH — a slim gold wristwatch with a small round face on her left wrist,
-plainly older and finer than anything else she owns, and plainly looked after.
-The only metallic glint in the frame.
+WATCH — a slim gold wristwatch with a small round face, on her LEFT wrist ONLY.
+Her right wrist is bare — no second watch, no bracelet, no bangle.
+It is plainly older and finer than anything else she owns, and plainly looked
+after: the only metallic glint in the frame.
 
 COLOUR — ON THE CLOTHING ONLY, low saturation, warm and muted: apron undyed
 off-white #EDE6DA, knit greige #C9B7A6, trousers dark brown #4A3B32.
@@ -176,11 +195,14 @@ These colours MUST NOT reach the background.
 FABRIC — everything she wears absorbs light rather than reflecting it: matte
 low-gauge ribbed cotton knit, plain-weave linen-cotton apron. No satin, no silk.
 
-SETTING — a modern Japanese system kitchen. Functional, clean and simple:
-flat handleless cabinet doors in white or pale wood, one uninterrupted worktop,
-a stainless two-burner GAS hob, a wide flat sink, a slim rangehood.
-Uncluttered, tidy, well kept. No dark wood country cabinets, no open wooden
-shelving, no hanging pots, no tiled plaster wall, nothing rustic or vintage.
+SETTING — a modern Japanese system kitchen, and nothing else. Functional, clean
+and simple: flat handleless cabinet doors in white or pale wood, one continuous
+seamless worktop, a stainless two-burner GAS hob, a wide flat sink, a slim
+built-in rangehood, a plain flat wall. Uncluttered, tidy, well kept.
+She is ALONE in the frame.
+NOT a western kitchen: no dark wood cabinets, no subway or square wall tiles,
+no lattice or sash windows, no pendant lamp, no hanging utensils, no open wooden
+shelving, no hanging pots, nothing rustic, nothing vintage.
 
 POSE — standing at the counter, body slightly turned, hands resting easily,
 looking at the viewer.
@@ -198,6 +220,11 @@ short hair, bob, wavy hair, curly hair, curled ends, ringlets, messy hair,
 high ponytail, twin tails, hair ribbons, blunt straight fringe, hime cut,
 short bangs,
 teenager, schoolgirl, college student, childlike face,
+brown hair, dark brown hair, chestnut hair, highlighted hair,
+navy knit, green knit, blue top,
+embroidery, logo on clothing, lettering on apron, printed apron,
+bracelet, bangle, watch on right wrist, two watches,
+second person, background person, someone in the background,
 huge breasts, breast emphasis, cleavage, tight clinging top,
 polka dots, patterned apron, bright red apron, floral print, loud pattern,
 frilled apron, lace apron, apron with ribbons,
@@ -208,7 +235,8 @@ saturated colours, bright accent colour,
 brick wall, wooden farmhouse, rustic european cottage, stone floor, ivy,
 hanging copper pots, open wooden shelving, western country kitchen,
 dark wooden cabinets, electric coil stove, tiled plaster wall, lace curtain,
-vintage kitchen, cluttered counter,
+vintage kitchen, cluttered counter, subway tile, square wall tiles,
+lattice window, sash window, pendant lamp, hanging utensils,
 maid outfit, frills, pointed ears, wings, pale blue hair, school uniform,
 heavy makeup, luxury interior, harsh flat lighting, blown-out highlights
 ```
