@@ -123,83 +123,62 @@ space for a chapter title. 3:4, high detail. Present-day Japan, not science fict
 > 3. 体型の指定がゼロで、`cheap` `loose trousers` `never styled` だけが効いた。
 >    → **体型・身長・髪の長さは必ず明示する。**
 
+**本体は 2,757 字**（上限4,000字に収めてある）。ネガティブは別欄なので字数に含めない。
+**削るときの優先順位**は下から——`MOOD` → `LIGHT` → `FACE` → `FABRIC`。
+**`SKIN` `SETTING` `FIGURE` `HAIR` は絶対に削らない。** 4項目とも、抜いた結果が実際に出ている。
+
 ```
-Anime illustration, clean cel shading, character reference sheet. Full body.
-Modern Japan. Absolutely not science fiction, not fantasy, not rustic Europe.
+Anime illustration, clean cel shading, character reference sheet, full body.
+Modern Japan. Not science fiction, not fantasy, not rustic Europe.
 
-WHO — a young Japanese woman. East Asian features, softly rounded face.
-Her age must be hard to place: she is in her early twenties but carries herself
-like someone older, so she could pass for late twenties. Composed, settled,
-grown-up. Do not make her look like a teenager, a schoolgirl or a student.
-Do not make her look middle-aged either.
+WHO — a young Japanese woman, early twenties but composed and grown-up enough
+to pass for late twenties. East Asian features, softly rounded face.
+Not a teenager, not a schoolgirl, not middle-aged.
 
-SKIN — fair, clear, even, neutral Japanese skin tone. Absolutely NOT tanned,
-NOT dark, NOT olive, NOT sun-browned. She is careful about sun exposure and
-takes care of her skin. Light, natural, well-applied makeup.
+SKIN — fair, clear, even Japanese skin tone. NOT tanned, NOT dark, NOT olive,
+NOT sun-browned. She protects her skin and it shows. Light natural makeup.
 
-HAIR — long, perfectly straight, glossy black hair reaching the middle of her
-back. No waves, no curls, no curled ends, no volume at the sides. Smooth and
-heavy, with blunt neatly trimmed ends, visibly well maintained. Parted to one
-side, forehead partly visible — no blunt straight fringe.
-Show two variants on the sheet: (1) worn down, (2) gathered LOW at the nape into
-a simple bun with a plain clip for housework — low, not a high ponytail.
+HAIR — long, perfectly straight, glossy black, reaching mid-back. No waves, no
+curls, no side volume. Blunt neatly trimmed ends, parted to one side, no blunt
+fringe. Two variants: worn down, and gathered LOW at the nape with a plain clip.
 
-FIGURE — about 160cm, ordinary adult Japanese height, and unmistakably a grown
-woman: a soft, full, gently rounded figure — a womanly waist and hips, a natural
-adult bust. Warm and enveloping. Motherly, NOT sexualised: do not exaggerate the
-chest, do not emphasise it with tight or clinging fabric, no cleavage.
+FIGURE — about 160cm, unmistakably a grown woman: soft, full, gently rounded,
+womanly waist and hips. Warm and enveloping. Motherly, NOT sexualised — do not
+exaggerate the chest, no clinging fabric, no cleavage.
 
-EXPRESSION — calm, warm, unhurried, motherly. A gentle smile that reaches the
-eyes. Dark brown eyes with slightly lowered outer corners. She looks like
-someone who notices you have not eaten, and says so before you do.
+FACE — calm, warm, unhurried. A gentle smile that reaches the eyes. Dark brown
+eyes, outer corners slightly lowered, kind.
 
-HANDS — visible, unhidden, natural. Nails cut short and neatly filed, no polish.
-Sleeves pushed back from the wrists while she works.
+CLOTHES — ordinary homewear of a young woman with a steady office job living
+alone: modest, clean, chosen with care. Neither poor nor luxurious. A soft knit,
+well-fitting trousers or a long skirt, house slippers.
 
-CLOTHES — ordinary present-day Japanese homewear, the wardrobe of a young woman
-with a steady office job living alone: modest, unremarkable, clean and chosen
-with care. A soft knit that follows her figure, a long skirt or well-fitting
-trousers, house slippers. Not poor, not shabby, not luxurious.
-Nothing branded, nothing flashy, nothing baggy or shapeless.
+APRON — completely plain and unpatterned, worn over her own clothes: a tool, not
+a uniform. No frills, no lace, no ribbons, no print of any kind. It must not be
+the loudest thing in the picture.
 
-APRON — plain and completely unpatterned, in a quiet muted colour (off-white,
-soft grey or dusty blue). Simple cotton, softened by washing, worn over her own
-clothes and clearly brought from elsewhere — a tool, not a uniform.
-NO frills, no lace, no ribbons, no polka dots, no bright red, no print, no
-pattern of any kind. It must not be the loudest thing in the picture.
+WATCH — a slim old fine gold wristwatch on her left wrist, plainly older and
+finer than anything else she owns, and plainly looked after. The one thing here
+she could not have bought herself. Do not centre or spotlight it.
 
-ONE GOOD THING — a slim, old, genuinely fine gold wristwatch on her left wrist,
-plainly older and finer than anything else she owns, and plainly looked after.
-It is the one thing in the frame she could not have bought herself.
-Do not centre it, do not light it specially — a viewer should notice it on a
-second pass.
+COLOUR — ON THE CLOTHING ONLY, low saturation, warm and muted: apron undyed
+off-white #EDE6DA, knit greige #C9B7A6, trousers dark brown #4A3B32. No jewel
+tones, no purple, no navy, no bright accent. The gold watch is the only glint in
+the frame. These colours MUST NOT reach the background.
+
+FABRIC — everything she wears absorbs light rather than reflecting it: matte
+low-gauge ribbed cotton knit, a plain-weave linen-cotton apron washed soft and
+never starched, heavy brushed cotton trousers. No satin, no silk, no sheen.
 
 SETTING — the small tidy kitchen of an ordinary modern Japanese apartment for a
-single working adult. A two-burner gas range, a stainless steel sink, vinyl
-flooring, a plain white refrigerator, a sliding door. Modest and well kept —
-neither cheap nor luxurious. NO hanging copper pots, no open wooden shelving,
-no western country kitchen, nothing rustic.
+single working adult. Two-burner gas range, stainless sink, vinyl floor, plain
+white fridge, sliding door. Modest and well kept, neither cheap nor luxurious.
+No hanging pots, no open wooden shelving, nothing rustic.
 
-COLOUR — ON THE CLOTHING ONLY. Low saturation throughout, warm and muted:
-  · apron — undyed natural cotton, warm off-white, #EDE6DA
-  · knit — greige, a soft dusty warm grey-brown, #C9B7A6
-  · trousers or long skirt — dark chocolate brown, #4A3B32
-No jewel tones. No purple, no navy, no bright accent colour anywhere.
-The only warm glint in the whole picture is the old gold watch.
-These colours describe her clothes and MUST NOT be applied to the background.
+LIGHT — keep the room dim and let the off-white apron be the brightest surface
+in the frame. Separate her from the background by brightness, not by colour.
 
-FABRIC — everything she wears absorbs light rather than reflecting it.
-The knit is matte low-gauge cotton with visible ribbing and a slight nap.
-The apron is a plain-weave linen-cotton, washed soft — never crisp, never
-starched. The trousers are heavy brushed cotton or fine corduroy.
-No satin, no silk, no sheen, no lace, no frills, no ribbons.
-
-VALUE — because the palette is so desaturated, separate her from the room with
-brightness instead of colour: keep the room dim and let the off-white apron be
-the brightest surface in the frame.
-
-MOOD — beautiful, composed, motherly. Tired underneath in a way the picture
-never states.
+MOOD — beautiful, composed, motherly. Tired underneath, never stated.
 ```
 
 **ネガティブ（共通のものに加えて）**
