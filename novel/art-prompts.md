@@ -124,14 +124,13 @@ space for a chapter title. 3:4, high detail. Present-day Japan, not science fict
 >    → **体型・身長・髪の長さは必ず明示する。**
 
 ```
-Anime illustration, clean cel shading, character reference sheet.
-Full body, plus a separate close-up of her hands.
+Anime illustration, clean cel shading, character reference sheet. Full body.
 Modern Japan. Absolutely not science fiction, not fantasy, not rustic Europe.
 
-WHO — a Japanese woman, late twenties to mid thirties. East Asian features,
-softly rounded face. Her age is deliberately unreadable within that range,
-because she looks after herself and it shows. She is not a student and not a
-girl. Do not make her look like a teenager or a college student.
+WHO — a young Japanese woman. East Asian features, softly rounded face.
+Her age must be hard to place: she is in her early twenties but carries herself
+like someone older, so she could pass for late twenties. Composed, settled,
+grown-up. Do not make her look like a teenager, a schoolgirl or a student.
 Do not make her look middle-aged either.
 
 SKIN — fair, clear, even, neutral Japanese skin tone. Absolutely NOT tanned,
@@ -154,31 +153,32 @@ EXPRESSION — calm, warm, unhurried, motherly. A gentle smile that reaches the
 eyes. Dark brown eyes with slightly lowered outer corners. She looks like
 someone who notices you have not eaten, and says so before you do.
 
-HANDS — the most important part of this design, and they must not be cropped or
-hidden. INCLUDE A SEPARATE INSET PANEL showing both hands in close-up, filling
-that panel. Well cared for: smooth skin, no polish. Nails cut short and neatly
-filed — the single practical thing about her appearance.
+HANDS — visible, unhidden, natural. Nails cut short and neatly filed, no polish.
 Sleeves pushed back from the wrists while she works.
 
-CLOTHES — ordinary present-day Japanese homewear. Inexpensive but clean and
-chosen with care: a soft knit that follows her figure, a long skirt or
-well-fitting trousers, house slippers. Nothing branded, nothing flashy,
-nothing baggy or shapeless.
+CLOTHES — ordinary present-day Japanese homewear, the wardrobe of a young woman
+with a steady office job living alone: modest, unremarkable, clean and chosen
+with care. A soft knit that follows her figure, a long skirt or well-fitting
+trousers, house slippers. Not poor, not shabby, not luxurious.
+Nothing branded, nothing flashy, nothing baggy or shapeless.
 
 APRON — plain and completely unpatterned, in a quiet muted colour (off-white,
-soft grey or dusty blue). Simple cotton, softened by washing, clearly her own
-and brought from somewhere else. NO polka dots, no bright red, no print,
-no pattern of any kind. It must not be the loudest thing in the picture.
+soft grey or dusty blue). Simple cotton, softened by washing, worn over her own
+clothes and clearly brought from elsewhere — a tool, not a uniform.
+NO frills, no lace, no ribbons, no polka dots, no bright red, no print, no
+pattern of any kind. It must not be the loudest thing in the picture.
 
 ONE GOOD THING — a slim, old, genuinely fine gold wristwatch on her left wrist,
-obviously older and better than everything else she owns, and obviously looked
-after. It is the only expensive thing in the frame. Do not centre it, do not
-light it specially — a viewer should notice it on a second pass.
+plainly older and finer than anything else she owns, and plainly looked after.
+It is the one thing in the frame she could not have bought herself.
+Do not centre it, do not light it specially — a viewer should notice it on a
+second pass.
 
-SETTING — the cramped kitchen of a small, old, inexpensive Japanese apartment.
-A two-burner gas range, a shallow stainless steel sink, vinyl flooring, a plain
-white refrigerator, a sliding door. Cheap and tidy. NO hanging copper pots, no
-open wooden shelving, no western country kitchen, nothing rustic.
+SETTING — the small tidy kitchen of an ordinary modern Japanese apartment for a
+single working adult. A two-burner gas range, a stainless steel sink, vinyl
+flooring, a plain white refrigerator, a sliding door. Modest and well kept —
+neither cheap nor luxurious. NO hanging copper pots, no open wooden shelving,
+no western country kitchen, nothing rustic.
 
 COLOR — soft and warm, ON THE CLOTHING ONLY: cream, dusty rose, pale grey.
 These colours must not dictate the background.
@@ -192,16 +192,24 @@ never states.
 tanned skin, dark skin, deep tan, olive skin, sun-browned, gyaru,
 short hair, bob, wavy hair, curly hair, curled ends, ringlets, messy hair,
 high ponytail, twin tails, hair ribbons, blunt straight fringe, hime cut,
-teenager, college student, childlike face,
+teenager, schoolgirl, college student, childlike face,
 huge breasts, breast emphasis, cleavage, tight clinging top,
 polka dots, patterned apron, bright red apron, floral print, loud pattern,
+frilled apron, lace apron, apron with ribbons,
 baggy shapeless clothing, cargo pants, rough hands, chapped skin, bandages,
-hands cropped, hands hidden, hands behind back, long manicured nails,
+long manicured nails, shabby clothes, poverty, squalor,
 brick wall, wooden farmhouse, rustic european cottage, stone floor, ivy,
 hanging copper pots, open wooden shelving, western country kitchen,
 painterly, oil painting, semi-realistic, maid outfit, frills, pointed ears,
 wings, pale blue hair, school uniform, heavy makeup, luxury interior
 ```
+
+**手について（基本プロンプトには入れない）**
+
+節奈の手は**構図の話**であって、キャラクターデザインの要素ではない。基本シートに
+「手のクローズアップを出せ」と書くと、それだけで一枚の情報量を食う。
+**手を見せたい場面（料理・冷蔵庫・皿）を描くときに、その絵のプロンプトで指定する。**
+根拠は正典の「ミリナには手がない」なので、**対比が要る絵でだけ効かせればいい。**
 
 **終盤版**（第3章以降で差し替える）
 ```
@@ -209,6 +217,7 @@ Same character, later. Her hair is tied back far more often than it is worn
 down, and the ends have lost their shine. The knit hangs looser at the
 shoulders than it used to. Her makeup is lighter, and then absent. The nails
 are still cut short, but the skin around them has gone dry.
+The kitchen behind her is the same kitchen, with less in it.
 The apron is the same apron, greyer and more worn.
 The old gold watch is still on her wrist, still looked after.
 She is still smiling.
@@ -216,6 +225,7 @@ She is still smiling.
 
 > **終盤で残す2点**: エプロン（褪せる）と腕時計（褪せない）。
 > **手放さないものがあることで、手放したものが見える。**
+> 部屋は貧しくならない。**物が減るだけ。** 元から貧困ではないので、そこを間違えると別の話になる。
 
 > ⚠ **ミリナの消耗（輪郭が粒に解ける）を彼女に適用しないこと。** 減り方を分けているのが設計。
 
