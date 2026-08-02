@@ -148,7 +148,15 @@ space for a chapter title. 3:4, high detail. Present-day Japan, not science fict
 > 髪が茶色に転ぶ／ニットが紺・深緑に飛ぶ／台所が洋風のまま（**システムキッチンが一度も出ていない**）／
 > 腕時計が両手首に出る。加えて**背景に別人**と**エプロンの刺繍・ロゴ**が一度ずつ出た。
 
-**本体は 3,152 字**（上限4,000字）。ネガティブは別欄なので字数に含めない。
+> **六稿の修正——体型を否定語で抑えない。**
+> `do not exaggerate the chest` と `huge breasts, breast emphasis` を入れていたため、
+> **胸のない体型で出るようになっていた。** 抑えたかったのは体型ではなく**見せ方**である。
+> → **体型は肯定文で正確に描かせ、慎み深さは「服の被覆」と「カメラ」で作る。**
+>   `FIGURE` に `generous bust` `NOT flat-chested` を入れ、
+>   新設した `MODESTY` に**襟の高さ・袖・エプロンの胸当て・視線の高さ**を書いた。
+>   **抽象語（`not sexualised`）は効きが不安定なうえ、副作用で体型を消す。削除した。**
+
+**本体は 3,649 字**（上限4,000字）。ネガティブは別欄なので字数に含めない。
 **`SKIN` `SETTING` `HAIR` `APRON` は削らない。** 4項目とも、抜いた結果が実際に出ている。
 
 ```
@@ -170,9 +178,16 @@ HAIR — long, straight, glossy hair to mid-back, visibly well cared for.
 PURE BLACK — not brown, not dark brown, not chestnut, not highlighted.
 A soft side-swept fringe, long strands framing the face. No waves, no curls.
 
-FIGURE — about 160cm, a soft, gently rounded adult figure, womanly waist and
-hips. Warm and enveloping. Motherly, NOT sexualised — do not exaggerate the
-chest, no clinging fabric, no cleavage.
+FIGURE — about 160cm, a full, soft, womanly adult figure: a generous bust, a
+gentle waist, rounded hips. Warm and enveloping. Not slender, not athletic,
+NOT flat-chested, not girlish. Her build should read clearly as a grown woman.
+
+MODESTY — her figure is shown through soft drape, never through skin.
+She is fully covered: a high round neckline, long sleeves, the apron bib across
+her chest. No bare skin below the collarbone, no open collar, no low neckline,
+no cleavage visible, no tight or clinging fabric pulled across the body.
+The camera stays at eye level and never emphasises her chest — no low angle,
+no close crop on the torso, no suggestive pose. Calm, homely, matter-of-fact.
 
 CLOTHES — a ribbed cotton knit in GREIGE, a warm grey-beige — not navy, not
 green, not blue, not pure white. Wide round neck, sleeves pushed up to
@@ -225,7 +240,9 @@ navy knit, green knit, blue top,
 embroidery, logo on clothing, lettering on apron, printed apron,
 bracelet, bangle, watch on right wrist, two watches,
 second person, background person, someone in the background,
-huge breasts, breast emphasis, cleavage, tight clinging top,
+flat chest, boyish figure, skinny, bare skin, low neckline, open collar,
+visible cleavage, skin-tight clothing, low camera angle, chest close-up,
+suggestive pose, fanservice,
 polka dots, patterned apron, bright red apron, floral print, loud pattern,
 frilled apron, lace apron, apron with ribbons,
 baggy shapeless clothing, cargo pants, rough hands, chapped skin, bandages,
