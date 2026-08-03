@@ -109,6 +109,192 @@ space for a chapter title. 3:4, high detail. Present-day Japan, not science fict
 
 ---
 
+## 九条 節奈——キャラクターデザイン
+
+**参照画像は3枚。生成時は必ず添えること。** 文章だけだと別人が出るのは、ミリナと同じ。
+
+| ファイル | 何のための正か |
+|---|---|
+| `ref/setsuna_ref.png` | **顔・髪・雰囲気の正**（三稿） |
+| `ref/setsuna_ref_b.png` | **色と衣装の正**（五稿）。生成りニット＋白い無地エプロン。台所も明るい |
+| `ref/setsuna_title.png` | **章扉に使う一枚**（七稿・全身）。黒髪／生成りのタートルネック／白い無地エプロン／こげ茶のロングスカート／左手首の金時計。**`novel/act1.md` 二節の外見描写はこの絵に合わせてある** |
+
+設定は `../STORY.md`「容姿」。
+
+> ## ⚠ 三度失敗している。同じ穴を踏まないこと
+> **一稿**: 濃い褐色肌の、レンガ造りの田舎家に立つ寸胴の女性。
+> 1. `lightly sun-tanned` と書き、`COLOR` にも `tanned skin` を入れた。
+>    **画像AIは日焼けを必ず過剰にかける。** しかも「日本人」と一度も書いていなかった。
+> 2. `COLOR` に `oatmeal, faded brick, olive` と置いた。**色名が背景に漏れて壁を建てた。**
+>    → **色は服にだけ指定し、舞台は必ず名指しする。**
+> 3. 体型の指定がゼロだった。→ **体型・身長・髪の長さは必ず明示する。**
+>
+> **二稿**: 赤い水玉のエプロン、ウェーブの巻き上げ髪、十代寄り。柄と髪を明示して解決。
+>
+> **三稿**（= 現在の参照画像）: 肌・髪・エプロン・ニット・腕時計・手がすべて出た。**採用。**
+>
+> **四稿**: 三稿を「二十代後半に見せる」ため `FACE` に
+> `adult eyes, NOT large round childlike anime eyes` と `No blush` を入れたら、
+> **可愛くなくなって却下**。
+> → **教訓: 若さの記号（大きな目・頬の赤み）を抜くと、この絵の魅力ごと消える。**
+>   **年齢は絵で解かない。** 姉であることは振る舞いが担保する（正典を修正済み）。
+>   同じ理由で `LIGHT` の `flat, even, neutral` も戻した。**暖かい光は残す。**
+
+> **五稿（4枚）で分かったこと——大人っぽさは顔ではなく構図で出る。**
+> 四稿で狙って失敗した「二十代半ばに見える」が、**若さの記号を抜かないまま達成された。**
+> 効いているのは目や blush ではなく、**参照画像＋姿勢**（カウンターに立つ、手を前で組む、
+> 伏し目がちの穏やかな笑み）。→ **年齢は `FACE` ではなく `POSE` で操作する。**
+>
+> 残った未達は4つ。**どれも参照画像の色に引っ張られたもの**なので、色は文章で押し切る。
+> 髪が茶色に転ぶ／ニットが紺・深緑に飛ぶ／台所が洋風のまま（**システムキッチンが一度も出ていない**）／
+> 腕時計が両手首に出る。加えて**背景に別人**と**エプロンの刺繍・ロゴ**が一度ずつ出た。
+
+> **六稿の修正——体型を否定語で抑えない。**
+> `do not exaggerate the chest` と `huge breasts, breast emphasis` を入れていたため、
+> **胸のない体型で出るようになっていた。** 抑えたかったのは体型ではなく**見せ方**である。
+> → **体型は肯定文で正確に描かせ、慎み深さは「服の被覆」と「カメラ」で作る。**
+>   `FIGURE` に `generous bust` `NOT flat-chested` を入れ、
+>   新設した `MODESTY` に**襟の高さ・袖・エプロンの胸当て・視線の高さ**を書いた。
+>   **抽象語（`not sexualised`）は効きが不安定なうえ、副作用で体型を消す。削除した。**
+
+**本体は 3,649 字**（上限4,000字）。ネガティブは別欄なので字数に含めない。
+**`SKIN` `SETTING` `HAIR` `APRON` は削らない。** 4項目とも、抜いた結果が実際に出ている。
+
+```
+Anime illustration, soft painterly rendering, warm and gentle. Vertical, waist-up.
+Modern Japan. Not science fiction, not fantasy, not rustic Europe.
+
+CHARACTER — use the attached reference image for her face, hair and clothing.
+Do not redesign her.
+
+WHO — a young Japanese woman living alone, with a quiet motherly warmth.
+Pretty, gentle, approachable. East Asian features, soft rounded face.
+Fair, clear, even Japanese skin tone. NOT tanned, NOT dark, NOT olive.
+
+FACE — large soft dark brown eyes with clear lashes. A gentle closed-lip smile.
+A light natural blush across the cheeks. Calm, kind, unhurried. She looks like
+someone who notices you have not eaten, and says so before you do.
+
+HAIR — long, straight, glossy hair to mid-back, visibly well cared for.
+PURE BLACK — not brown, not dark brown, not chestnut, not highlighted.
+A soft side-swept fringe, long strands framing the face. No waves, no curls.
+
+FIGURE — about 160cm, a full, soft, womanly adult figure: a generous bust, a
+gentle waist, rounded hips. Warm and enveloping. Not slender, not athletic,
+NOT flat-chested, not girlish. Her build should read clearly as a grown woman.
+
+MODESTY — her figure is shown through soft drape, never through skin.
+She is fully covered: a high round neckline, long sleeves, the apron bib across
+her chest. No bare skin below the collarbone, no open collar, no low neckline,
+no cleavage visible, no tight or clinging fabric pulled across the body.
+The camera stays at eye level and never emphasises her chest — no low angle,
+no close crop on the torso, no suggestive pose. Calm, homely, matter-of-fact.
+
+CLOTHES — a ribbed cotton knit in GREIGE, a warm grey-beige — not navy, not
+green, not blue, not pure white. Wide round neck, sleeves pushed up to
+mid-forearm. Over it a plain undyed off-white cotton apron with a chest bib,
+one front pocket and soft fabric ties at the waist — washed soft, never crisp,
+never starched. Dark brown trousers. The apron is COMPLETELY PLAIN: no
+embroidery, no logo, no lettering, no frills, no lace, no ribbons, no print,
+no pattern of any kind. It must not be the loudest thing in the picture.
+
+WATCH — a slim gold wristwatch with a small round face, on her LEFT wrist ONLY.
+Her right wrist is bare — no second watch, no bracelet, no bangle.
+It is plainly older and finer than anything else she owns, and plainly looked
+after: the only metallic glint in the frame.
+
+COLOUR — ON THE CLOTHING ONLY, low saturation, warm and muted: apron undyed
+off-white #EDE6DA, knit greige #C9B7A6, trousers dark brown #4A3B32.
+No jewel tones, no purple, no navy, no bright accent colour.
+These colours MUST NOT reach the background.
+
+FABRIC — everything she wears absorbs light rather than reflecting it: matte
+low-gauge ribbed cotton knit, plain-weave linen-cotton apron. No satin, no silk.
+
+SETTING — a modern Japanese system kitchen, and nothing else. Functional, clean
+and simple: flat handleless cabinet doors in white or pale wood, one continuous
+seamless worktop, a stainless two-burner GAS hob, a wide flat sink, a slim
+built-in rangehood, a plain flat wall. Uncluttered, tidy, well kept.
+She is ALONE in the frame.
+NOT a western kitchen: no dark wood cabinets, no subway or square wall tiles,
+no lattice or sash windows, no pendant lamp, no hanging utensils, no open wooden
+shelving, no hanging pots, nothing rustic, nothing vintage.
+
+POSE — standing at the counter, body slightly turned, hands resting easily,
+looking at the viewer.
+
+LIGHT — soft warm daylight from a window to one side. A gentle glow, a faint
+haze in the air. Warm and calm; do not blow out the highlights.
+
+MOOD — pretty, warm, homely, quietly caring.
+```
+
+**ネガティブ（共通のものに加えて）**
+```
+tanned skin, dark skin, deep tan, olive skin, sun-browned, gyaru,
+short hair, bob, wavy hair, curly hair, curled ends, ringlets, messy hair,
+high ponytail, twin tails, hair ribbons, blunt straight fringe, hime cut,
+short bangs,
+teenager, schoolgirl, college student, childlike face,
+brown hair, dark brown hair, chestnut hair, highlighted hair,
+navy knit, green knit, blue top,
+embroidery, logo on clothing, lettering on apron, printed apron,
+bracelet, bangle, watch on right wrist, two watches,
+second person, background person, someone in the background,
+flat chest, boyish figure, skinny, bare skin, low neckline, open collar,
+visible cleavage, skin-tight clothing, low camera angle, chest close-up,
+suggestive pose, fanservice,
+polka dots, patterned apron, bright red apron, floral print, loud pattern,
+frilled apron, lace apron, apron with ribbons,
+baggy shapeless clothing, cargo pants, rough hands, chapped skin, bandages,
+long manicured nails, shabby clothes, poverty, squalor,
+satin, silk, sheen, glossy fabric, lace, jewel tones, purple, navy blue,
+saturated colours, bright accent colour,
+brick wall, wooden farmhouse, rustic european cottage, stone floor, ivy,
+hanging copper pots, open wooden shelving, western country kitchen,
+dark wooden cabinets, electric coil stove, tiled plaster wall, lace curtain,
+vintage kitchen, cluttered counter, subway tile, square wall tiles,
+lattice window, sash window, pendant lamp, hanging utensils,
+maid outfit, frills, pointed ears, wings, pale blue hair, school uniform,
+heavy makeup, luxury interior, harsh flat lighting, blown-out highlights
+```
+
+**手について（基本プロンプトには入れない）**
+
+節奈の手は**構図の話**であって、キャラクターデザインの要素ではない。基本シートに
+「手のクローズアップを出せ」と書くと、それだけで一枚の情報量を食う。
+**手を見せたい場面（料理・冷蔵庫・皿）を描くときに、その絵のプロンプトで指定する。**
+根拠は正典の「ミリナには手がない」なので、**対比が要る絵でだけ効かせればいい。**
+
+**終盤版**（第3章以降で差し替える）
+```
+Same character, later. Her hair is tied back far more often than it is worn
+down, and the ends have lost their shine. The knit hangs looser at the
+shoulders than it used to. Her makeup is lighter, and then absent. The nails
+are still cut short, but the skin around them has gone dry.
+The kitchen behind her is the same kitchen, with less in it.
+The apron is the same apron, greyer and more worn.
+The old gold watch is still on her wrist, still looked after.
+She is still smiling.
+```
+
+> **終盤で残す2点**: エプロン（褪せる）と腕時計（褪せない）。
+> **手放さないものがあることで、手放したものが見える。**
+> 部屋は貧しくならない。**物が減るだけ。** 元から貧困ではないので、そこを間違えると別の話になる。
+
+> ⚠ **ミリナの消耗（輪郭が粒に解ける）を彼女に適用しないこと。** 減り方を分けているのが設計。
+
+**立ち絵（ゲーム側）**
+- 命名は `assets/chars/npc_setsuna_{emotion}.png`、感情は6種固定
+  （`neutral|happy|angry|sad|shy|surprise`）。
+- **未確認**: 既存の立ち絵は「立ち絵さん（キャラクター作成セット）」由来。日焼け肌・黒髪の
+  まとめ髪・**手が見える構図**がそのキットで作れるかは確認していない。作れない場合は
+  節奈だけ別手段になる（`scripts/render_npc.py` の前提が変わる）。
+- 未使用の `npc_haruka_*.png`（6枚）は glob 取り込みでビルドに乗ったままなので、
+  節奈を入れるときに一緒に消す。
+
+---
+
 ## 実務メモ
 - 章扉は**バストアップで止める**。全身にすると衣装の情報量が勝って、タイトル文字が置けない
 - タイトルが長い（「そろそろ、行きませんか　——A Life, Unwritten」）ので、**上三分の一を空ける**
