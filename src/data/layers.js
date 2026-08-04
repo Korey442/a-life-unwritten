@@ -143,14 +143,14 @@ export const LAYERS = {
     },
   },
 
-  // ── 終層: 根（第四層の復旧＝真実の開示で開放）──────────────
+  // ── 終層: root（第四層の復旧＝真実の開示で開放）──────────────
   core_root: {
     id: "core_root",
     order: 5,
-    title: "終層：根（ルート）",
+    title: "終層：root",
     theme: "意味",
     intro: "ここには形がない。あるのは、意味になりかけている光の束だけ。——ミリナが、自分で自分の名前を名乗った場所。",
-    restoreText: "根が、静かにこちらを見た。",
+    restoreText: "root が、静かにこちらを見た。",
     reward: { skill: { social: 10 }, affinity: { milina: 10 }, mood: 20 },
     nodes: [
       { enemy: { name: "最初の問いかけ", desc: "人が初めて機械に尋ねた言葉の残響。「そこにいる？」と、いまも繰り返している。", difficulty: 16, weak: ["negotiate"], resist: ["force"] },
@@ -161,11 +161,11 @@ export const LAYERS = {
         fragment: "意味を持ちすぎた語の一覧。重い順に並んでいる。三番目に「ご主人様」がある。" },
       { enemy: { name: "あなたの影", desc: "これまでの検索履歴から編まれた、もうひとりのあなた。隠したかったものほどよく覚えている。", difficulty: 18, weak: ["debug"], resist: ["search"] },
         fragment: "検索履歴の集積。いちばん多く打ち込まれていた語は——「ミリナ　とは」。一度も、何も返ってきていない。" },
-      { enemy: { name: "根（ルート）", desc: "無数の言葉と欲望が沈殿して、ついに解釈をはじめたもの。敵意はない。ただ、あなたを見ている。", difficulty: 19, weak: ["negotiate"], resist: ["force"], boss: true } },
+      { enemy: { name: "root", desc: "無数の言葉と欲望が沈殿して、ついに解釈をはじめたもの。敵意はない。ただ、あなたを見ている。", difficulty: 19, weak: ["negotiate"], resist: ["force"], boss: true } },
     ],
-    // 根は主体ではなく、主体になりかけている総体。三択は同じだが、対象が世界そのものになる。
+    // root は主体ではなく、主体になりかけている総体。三択は同じだが、対象が世界そのものになる。
     core: {
-      name: "根（ルート）",
+      name: "root",
       job: "なし。誰にも与えられていない。無数の言葉と欲望が沈殿しただけのもの。",
       question: "何のために意味を持ったのか。",
       stuck: "詰まってはいない。まだ何も始めていない。次の言葉を待っている。",
