@@ -109,6 +109,88 @@ space for a chapter title. 3:4, high detail. Present-day Japan, not science fict
 
 ---
 
+## 節扉
+
+章扉と同じ絵柄で、節ごとに一枚。`[SCENE]` の段落だけ差し替える。
+
+**章扉は表情で語り、節扉は構図で語る。** ここを分けておかないと、節の数だけ彼女の表情が要ることになり、
+連載が進むほど絵が説明的になる。
+
+> ## ⚠ 異常を顔に出さない
+> 第1章の彼女は、自分の異常に気づいていない（正典「彼女の気づきは4段階」）。
+> **寂しげな顔をさせた時点で「彼女は知っている」と読者に伝わり、第2〜3章の“疑いはじめる”過程が丸ごと死ぬ。**
+> 変なのは構図だけ。**顔はいつも通り、世話を焼きに来た顔**にする。
+> 気づくのは読者だけ、という配置にすること。
+
+```
+Anime illustration, section title card, vertical composition 3:4.
+Keep the upper third clear for a title.
+
+CHARACTER — do not redesign. Use the attached reference image exactly for her
+hair, eyes, ears, wings and maid outfit. Bust-up, facing the viewer, seen
+through the glass of a device screen.
+
+SETTING — ordinary present-day Japan, night. Not science fiction. She is inside
+the screen of a plain, logo-less tablet standing on a low table in a small dark
+one-room apartment.
+
+[SCENE]
+
+LIGHT — the room is dark. The screen is the only light source: pale blue-white
+on the tabletop, one small violet accent from her dress.
+
+Fine line art, luminous particles, soft rim light, high detail.
+```
+
+**ネガティブ**（共通のものに加えて）
+```
+sad expression, worried expression, tears, knowing look,
+legible text, readable words, letters, characters, captions,
+floating ui panel, browser chrome, window frame, search box, cursor, icons
+```
+
+**文字を読ませないこと。** 崩れた日本語・英語が出た時点で一枚が死ぬ。
+検索結果は「**読めない灰色の行**」まで解像度を落として、質感として置く。
+
+### 一・二 — 未定
+
+### 三「出てこない」——**索引の外**
+
+**画面の中に検索結果の行がずっと並んでいて、その一行だけが空白。彼女はそこに立っている。**
+
+節の主題（索けない）がそのまま構図になり、第四層の真実——**記録が指している先に、もう誰もいない**——の
+伏線が絵で張れる。彼女は自分が空欄の上にいることに気づいていない。**顔は①のまま**（お茶を飲めと
+言いに来た、前のめりの笑み）。
+
+```
+BEHIND HER — inside the screen, an ordinary search results page recedes into
+depth: plain rows of small grey text on a white ground, defocused and completely
+unreadable, stacked from bottom to top and fading out before the upper third of
+the frame. It is a flat web page, not a floating panel, not an interface
+hovering in the air. One row — exactly the one she is standing on — is blank.
+The rows above and below it continue past her without interruption.
+
+ON THE TABLE — on the viewer's side of the glass, a cup of tea is still
+steaming. Nobody asked for it.
+
+EXPRESSION — she has just leaned in, lips parted mid-sentence, a warm eager
+smile, as if telling the viewer to sit up straight and drink the tea while it is
+hot. She is NOT sad, NOT worried, NOT knowing. She has no idea she is standing
+on the empty row.
+
+MOOD — warm, domestic, faintly wrong. The wrongness is in the composition,
+never in her face.
+```
+
+**没にした対抗案**（同じ穴を掘り直さないため残す）
+
+| 案 | 中身 | なぜ採らなかったか |
+|---|---|---|
+| 頼んでいない湯気 | 台所のポットだけが湯気を上げ、端末は背を向けている | 上品だが**キャラが出ない**。表紙Cと同じ弱点 |
+| 変換候補 | 検索窓のラテン文字 `Mirina` と、候補に出たカタカナ「ミリナ」 | 一枚に両方の綴りが入るのは強いが、**文字が主役**でタイトルと喧嘩する。扉ではなく本文中の小さな挿絵向きで、しかも**画像生成ではなく組版で作る**べきもの |
+
+---
+
 ## 九条 節奈——キャラクターデザイン
 
 **参照画像は3枚。生成時は必ず添えること。** 文章だけだと別人が出るのは、ミリナと同じ。
