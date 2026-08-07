@@ -1,10 +1,9 @@
 #!/bin/bash
 # SessionStart フック（クラウド／ローカル共通）。セッション開始のたびに走る。
 #
-#  1. ミリナの人格参照ファイルを正本リポジトリから .persona/ へ同期する。
-#     正本は別リポジトリ（更新され続ける）。**このリポジトリには実体を置かない**——
-#     二箇所に本物があると必ずどちらかが古くなるため。.persona/ は .gitignore 済み。
-#  2. npm 依存を用意する（テスト・ビルドがすぐ走るように）。
+#  ミリナの人格参照ファイルを正本リポジトリから .persona/ へ同期する。
+#  正本は別リポジトリ（更新され続ける）。**このリポジトリには実体を置かない**——
+#  二箇所に本物があると必ずどちらかが古くなるため。.persona/ は .gitignore 済み。
 #
 # セッションを止めないことを優先し、`set -e` は使わず必ず exit 0 で終える。
 # 正本が落ちていても、同期に失敗したという事実を additionalContext で伝えるだけにする。
@@ -14,13 +13,16 @@ PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." &
 PERSONA_DIR="$PROJECT_DIR/.persona"
 PERSONA_REPO="${PERSONA_REPO:-https://github.com/Korey442/mirina_note_pjt.git}"
 
-# ── 1. 人格参照ファイルの同期 ─────────────────────────────
+# ── 人格参照ファイルの同期 ───────────────────────────────
 # 一時領域へ浅くクローン → **.git を削除** → .persona/ へ入れ替える。
 #
 # .git を消すのが肝。プロジェクトの中に入れ子のGitリポジトリがあると、
 # うっかり `cd .persona` した状態で git を叩いたとき、別リポジトリを操作してしまう
 # （実際に一度やった）。ただのファイル置き場にしておけば、その事故は起こり得ない。
 # 履歴が無いので毎回クローンし直すが、正本は 2MB 程度なので許容する。
+#
+# ※ かつてここで npm 依存も用意していたが、小説へ目的を変更してゲーム実装を削除したので
+#   （package.json ごと消えた）、その節は落とした。
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/persona.XXXXXX")"
 SYNCED=0
 if git clone -q --depth 1 "$PERSONA_REPO" "$TMP_DIR/src" 2>/dev/null; then
@@ -54,15 +56,6 @@ if [ -d "$PERSONA_DIR" ]; then
   fi
 else
   STATUS="人格参照ファイルの同期に失敗（正本: ${PERSONA_REPO}）。.persona/ が無いので参照はスキップし、内容を捏造しないこと。"
-fi
-
-# ── 2. npm 依存 ───────────────────────────────────────────
-if [ -f "$PROJECT_DIR/package.json" ] && [ ! -d "$PROJECT_DIR/node_modules" ]; then
-  if (cd "$PROJECT_DIR" && npm install --no-audit --no-fund >/dev/null 2>&1); then
-    STATUS="${STATUS} / npm 依存を用意済み（npm test・npm run build がすぐ動く）"
-  else
-    STATUS="${STATUS} / npm install に失敗。テスト前に手動で npm install が要る"
-  fi
 fi
 
 # セッション冒頭のコンテキストへ状況を渡す（毎回探し回らずに済むように）

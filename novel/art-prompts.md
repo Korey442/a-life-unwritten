@@ -1,7 +1,8 @@
 # 絵のプロンプト（表紙・章扉）
 
-**ミリナの容姿は既存の立ち絵が正**。`assets/chars/npc_milina_neutral.png` を
+**ミリナの容姿は既存の画像が正**。[`ref/milina_neutral.png`](ref/milina_neutral.png) を
 image-to-image かキャラ参照として**必ず添えること**。文章だけだと別人が出る。
+（他に `ref/milina_happy.png` `ref/milina_shy.png` `ref/milina_surprise.png`）
 
 参考までに既存デザインの要素——淡い氷青のボブ／星屑のハイライトが入る青い瞳／尖った耳／
 背に小さな白い翼／白フリルのヘッドドレス／紫・黒紺・白のメイド服／胸元に黒リボンと紫の宝石。
@@ -366,18 +367,15 @@ She is still smiling.
 
 > ⚠ **ミリナの消耗（輪郭が粒に解ける）を彼女に適用しないこと。** 減り方を分けているのが設計。
 
-**立ち絵（ゲーム側）**
-- 命名は `assets/chars/npc_setsuna_{emotion}.png`、感情は6種固定
-  （`neutral|happy|angry|sad|shy|surprise`）。
-- **未確認**: 既存の立ち絵は「立ち絵さん（キャラクター作成セット）」由来。日焼け肌・黒髪の
-  まとめ髪・**手が見える構図**がそのキットで作れるかは確認していない。作れない場合は
-  節奈だけ別手段になる（`scripts/render_npc.py` の前提が変わる）。
-- 未使用の `npc_haruka_*.png`（6枚）は glob 取り込みでビルドに乗ったままなので、
-  節奈を入れるときに一緒に消す。
+**参照画像**
+- 節奈は [`ref/setsuna_ref.png`](ref/setsuna_ref.png) / `ref/setsuna_ref_b.png` /
+  `ref/setsuna_title.png`。ミリナと同じく、**生成のたびに参照として添える。**
+- **感情違いは要らない。** 立ち絵を6種そろえていたのはゲームの都合で、
+  小説に要るのは**その場面のための一枚**だけである。
 
 ---
 
 ## 実務メモ
 - 章扉は**バストアップで止める**。全身にすると衣装の情報量が勝って、タイトル文字が置けない
 - タイトルが長い（「そろそろ、行きませんか　——A Life, Unwritten」）ので、**上三分の一を空ける**
-- 置き場所: 表紙 `assets/covers/cover.png` ／ 章扉 `assets/covers/act{n}.png`
+- 置き場所: 表紙 `ref/cover.png` ／ 章扉 `ref/act{n}.png`（`novel/ref/` に一本化している）
