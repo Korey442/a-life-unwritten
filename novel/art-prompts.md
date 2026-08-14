@@ -117,6 +117,9 @@ space for a chapter title. 3:4, high detail. Present-day Japan, not science fict
 オートロックの、それなりに新しいマンション。**一人暮らしの 1LDK。**
 家具は**デンマークの北欧ヴィンテージで揃っている**——木、布、革、紙紐。
 
+**平面**: 玄関から短い廊下。左が LDK（12帖／南にバルコニー、西にも窓。台所は西窓のすぐ横）、
+右が水回り、突き当たりが洋室（6.75帖／西に窓、その窓際がワークスペース）。
+
 ```
 Interior background, present-day Japanese apartment, one-bedroom (1LDK).
 Mid-century Danish furniture throughout: warm teak and oak, paper-cord seats,
