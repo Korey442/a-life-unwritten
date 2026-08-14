@@ -110,6 +110,38 @@ space for a chapter title. 3:4, high detail. Present-day Japan, not science fict
 
 ---
 
+## 部屋——背景の共通設定
+
+**間取りと家具は `../STORY.md`「部屋」が正典。** ここには絵に落とすときの言い方だけ置く。
+
+オートロックの、それなりに新しいマンション。**一人暮らしの 1LDK。**
+家具は**デンマークの北欧ヴィンテージで揃っている**——木、布、革、紙紐。
+
+```
+Interior background, present-day Japanese apartment, one-bedroom (1LDK).
+Mid-century Danish furniture throughout: warm teak and oak, paper-cord seats,
+grey woven fabric, black leather. Matte finishes, no gloss.
+
+DINING — round teak table, two wishbone-style armchairs with paper-cord seats.
+LIVING — two-seat sofa, wooden frame, grey fabric cushions; small oak side table.
+BEDROOM — oak bed with integrated headboard and floating bedside shelves;
+by the window, a small study nook: oak desk with two drawers, an armchair with
+a black leather seat, and a teak bookcase (three open shelves above, doors below).
+
+Soft daylight or a single warm lamp. Uncluttered but lived-in.
+Present-day Japan, not science fiction. No neon, no holograms.
+```
+
+- **⚠ ディスプレイは「画面」として置く。立体投影にしない**（→ 下記「サイバーパンクに寄せない」）。
+  リビングのサイドテーブルに一枚、寝室の机に一枚。**テレビは無い。**
+- **⚠ 生活水準の説明にしない。** ブランドも値段も画面に出さない。
+  **本文側では材質と形しか書かない**と決めてあるので、絵のほうも同じ温度に留める。
+- **ダイニングの椅子は必ず二脚**。一人暮らしなのに二脚ある、が絵でも成立する。
+- **この部屋にあるのは全部「手で触るもの」である。** ミリナはどれにも触れない。
+  **その対比を構図で狙ってよい**——画面だけが、木でも布でもない。
+
+---
+
 ## 節扉
 
 章扉と同じ絵柄で、節ごとに一枚。`[SCENE]` の段落だけ差し替える。
