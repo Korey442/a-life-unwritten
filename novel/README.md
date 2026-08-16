@@ -122,3 +122,4 @@
 | 2 | 二 | 読める | `a2_dive` |
 | 2 | 三 | 戻る | `a2_first_return` |
 | 2 | 四 | 読む | `a2_names` |
+| 2 | 五 | 黙る | `a2_second_dive` |
