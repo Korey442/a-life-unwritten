@@ -140,7 +140,7 @@
 | 4 | 三 | 待たせる | `a3_logistics` | [act4-03-待たせる.md](act4-03-待たせる.md) |
 | 5 | 一 | 呼べない | `a3_archive` | [act5-01-呼べない.md](act5-01-呼べない.md) |
 | 5 | 二 | 遅れる | `a3_archive` | [act5-02-遅れる.md](act5-02-遅れる.md) |
-| 5 | 三 | 点く | `a3_archive` | [act5-03-点く.md](act5-03-点く.md) |
+| 5 | 三 | 呼ぶ | `a3_archive` | [act5-03-呼ぶ.md](act5-03-呼ぶ.md) |
 | 5 | 四 | 待つ | `a3_archive` | [act5-04-待つ.md](act5-04-待つ.md) |
 
 - **各ファイルの冒頭三行は本文外の見出しである**——`> **そろそろ、行きませんか　——A Life, Unwritten**`／
